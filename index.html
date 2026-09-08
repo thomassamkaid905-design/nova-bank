@@ -103,12 +103,6 @@ button,input,select{font:inherit}
   color:var(--red);
   cursor:pointer;
 }
-.notice{
-  margin-top:22px;
-  font-size:11px;
-  color:#777;
-  text-align:center;
-}
 
 /* APP */
 .app{min-height:100vh}
@@ -277,6 +271,11 @@ button,input,select{font:inherit}
 .activity-date{font-size:12px;color:#888;margin-top:5px}
 .credit{color:#16803c;font-weight:bold}
 .debit{color:#a00;font-weight:bold}
+.empty-state{
+  padding:30px;
+  text-align:center;
+  color:#888;
+}
 
 .spending{
   margin-top:25px;
@@ -289,7 +288,7 @@ button,input,select{font:inherit}
   overflow:hidden;
 }
 .progress div{
-  width:62%;
+  width:0%;
   height:100%;
   background:var(--red);
 }
@@ -510,11 +509,6 @@ button,input,select{font:inherit}
       <button onclick="forgotPassword()">Forgot Password?</button>
       <button onclick="showRegister()">Create Account</button>
     </div>
-
-    <div class="notice">
-      Fictional / simulated banking interface. No real banking, deposits,
-      withdrawals, transfers, or financial accounts are connected.
-    </div>
   </div>
 </section>
 
@@ -534,7 +528,7 @@ button,input,select{font:inherit}
       <button onclick="openFeature('Messages')">✉ Messages</button>
       <button onclick="openFeature('Help')">? Help</button>
       <button onclick="signOut()">Sign Out</button>
-      <div class="profile" id="avatar">LJ</div>
+      <div class="profile" id="avatar">--</div>
     </div>
   </header>
 
@@ -555,7 +549,7 @@ button,input,select{font:inherit}
     <main class="main">
 
       <div class="welcome">
-        <h2>Good morning, <span id="welcomeName">Laura Jackson</span></h2>
+        <h2>Welcome, <span id="welcomeName">User</span></h2>
         <p>Here's your account summary.</p>
       </div>
 
@@ -566,8 +560,8 @@ button,input,select{font:inherit}
             <span>Checking Account</span>
             <span>Personal</span>
           </div>
-          <div class="account-number">•••• 2778</div>
-          <div class="balance">$10,000,000.00</div>
+          <div class="account-number" id="checkingNum">•••• ----</div>
+          <div class="balance" id="checkingBal">$0.00</div>
           <div class="available">Available balance</div>
         </div>
 
@@ -576,8 +570,8 @@ button,input,select{font:inherit}
             <span>Savings Account</span>
             <span>Personal</span>
           </div>
-          <div class="account-number">•••• 8842</div>
-          <div class="balance">$15,000,000.00</div>
+          <div class="account-number" id="savingsNum">•••• ----</div>
+          <div class="balance" id="savingsBal">$0.00</div>
           <div class="available">Available balance</div>
         </div>
 
@@ -621,57 +615,16 @@ button,input,select{font:inherit}
 
       <h3 class="section-title">Recent Activity</h3>
 
-      <div class="activity">
-
-        <div class="activity-row">
-          <div>
-            <div class="activity-name">Wire Transfer Received</div>
-            <div class="activity-date">Sep 06, 2026 • Investment Yield</div>
-          </div>
-          <div class="credit">+$250,000.00</div>
-        </div>
-
-        <div class="activity-row">
-          <div>
-            <div class="activity-name">Quarterly Savings Interest</div>
-            <div class="activity-date">Sep 01, 2026 • Interest Earned</div>
-          </div>
-          <div class="credit">+$87,500.00</div>
-        </div>
-
-        <div class="activity-row">
-          <div>
-            <div class="activity-name">Luxury Asset Management</div>
-            <div class="activity-date">Aug 28, 2026 • Advisory Fee</div>
-          </div>
-          <div class="debit">-$12,450.00</div>
-        </div>
-
-        <div class="activity-row">
-          <div>
-            <div class="activity-name">Private Aviation Services</div>
-            <div class="activity-date">Aug 22, 2026 • Travel</div>
-          </div>
-          <div class="debit">-$34,800.00</div>
-        </div>
-
-        <div class="activity-row">
-          <div>
-            <div class="activity-name">Metropolitan Utilities</div>
-            <div class="activity-date">Aug 18, 2026 • Bill Payment</div>
-          </div>
-          <div class="debit">-$1,280.50</div>
-        </div>
-
+      <div class="activity" id="activityList">
+        <div class="empty-state">No recent activity.</div>
       </div>
 
       <div class="card spending">
         <h3>Spending This Month</h3>
         <p style="margin-top:8px;color:#777">
-          Total spending: <strong>$48,530.50</strong>
+          Total spending: <strong id="spendingAmount">$0.00</strong>
         </p>
-        <div class="progress"><div></div></div>
-        <small style="color:#777">12% below your monthly average</small>
+        <div class="progress"><div id="spendingProgress"></div></div>
       </div>
 
       <div class="premium">
@@ -682,10 +635,6 @@ button,input,select{font:inherit}
 
       <div class="footer">
         © 2026 Washington Harbor Bank
-        <br><br>
-        <strong>Fictional / simulated banking interface</strong>
-        <br>
-        No real banking services or financial transactions are provided.
       </div>
 
     </main>
@@ -707,24 +656,23 @@ button,input,select{font:inherit}
         <div class="modal-group">
           <label>From Account</label>
           <select id="fromAccount">
-            <option>Checking •••• 2778</option>
-            <option>Savings •••• 8842</option>
+            <option>Checking</option>
+            <option>Savings</option>
           </select>
         </div>
 
         <div class="modal-group">
           <label>To Account</label>
           <select id="toAccount">
-            <option>Savings •••• 8842</option>
-            <option>Checking •••• 2778</option>
+            <option>Savings</option>
+            <option>Checking</option>
           </select>
         </div>
       </div>
 
       <div class="modal-group">
         <label>Amount</label>
-        <input id="transferAmount" type="number" min="0.01" step="0.01"
-               placeholder="0.00">
+        <input id="transferAmount" type="number" min="0.01" step="0.01" placeholder="0.00">
       </div>
 
       <div class="modal-group">
@@ -766,25 +714,19 @@ button,input,select{font:inherit}
 
         <div class="modal-group">
           <label>Routing Number</label>
-          <input id="routingNumber"
-                 inputmode="numeric"
-                 maxlength="9"
-                 placeholder="9 digits">
+          <input id="routingNumber" inputmode="numeric" maxlength="9" placeholder="9 digits">
         </div>
 
         <div class="modal-group">
           <label>Account Number</label>
-          <input id="accountNumber"
-                 inputmode="numeric"
-                 placeholder="Account number">
+          <input id="accountNumber" inputmode="numeric" placeholder="Account number">
         </div>
 
       </div>
 
       <div class="modal-group">
         <label>Amount</label>
-        <input id="wireAmount" type="number" min="0.01" step="0.01"
-               placeholder="0.00">
+        <input id="wireAmount" type="number" min="0.01" step="0.01" placeholder="0.00">
       </div>
 
       <div class="modal-actions">
@@ -825,13 +767,9 @@ button,input,select{font:inherit}
 
       <h2 id="receiptTitle">Transfer Processed</h2>
 
-      <p style="margin-top:8px;color:#777">
-        Simulated transaction
-      </p>
-
       <div class="receipt-details" id="receiptDetails"></div>
 
-      <span class="status">COMPLETED — SIMULATED</span>
+      <span class="status">COMPLETED</span>
 
     </div>
   </div>
@@ -860,23 +798,18 @@ button,input,select{font:inherit}
       </div>
 
       <div class="modal-group">
-        <label>Test Username</label>
+        <label>Username</label>
         <input id="settingsUsername" type="text">
       </div>
 
       <div class="modal-group">
-        <label>New Test Password</label>
-        <input id="settingsPassword" type="password"
-               placeholder="Leave blank to keep current password">
+        <label>New Password</label>
+        <input id="settingsPassword" type="password" placeholder="Leave blank to keep current password">
       </div>
 
       <div class="modal-actions">
-        <button class="cancel" onclick="closeModal('settingsModal')">
-          Cancel
-        </button>
-        <button class="submit" onclick="saveSettings()">
-          Save Changes
-        </button>
+        <button class="cancel" onclick="closeModal('settingsModal')">Cancel</button>
+        <button class="submit" onclick="saveSettings()">Save Changes</button>
       </div>
 
     </div>
@@ -885,85 +818,59 @@ button,input,select{font:inherit}
 
 
 <script>
-const DEFAULT_USER = "test@example.com";
-const DEFAULT_PASS = "Test1234";
-
 function getUser(){
-  return JSON.parse(localStorage.getItem("whbUser") || JSON.stringify({
-    name:"Laura Jackson",
-    email:DEFAULT_USER,
-    username:DEFAULT_USER,
-    password:DEFAULT_PASS
-  }));
+  return JSON.parse(localStorage.getItem("whbUser") || "null");
 }
 
 function saveUser(user){
-  localStorage.setItem("whbUser",JSON.stringify(user));
+  localStorage.setItem("whbUser", JSON.stringify(user));
 }
 
 function login(){
+  const user = document.getElementById("loginUser").value.trim();
+  const pass = document.getElementById("loginPass").value;
 
-  const user=document.getElementById("loginUser").value.trim();
-  const pass=document.getElementById("loginPass").value;
+  const account = getUser();
 
-  const account=getUser();
-
-  if(user===account.username && pass===account.password){
+  if(account && user === account.username && pass === account.password){
     showBank();
-  }else{
-    alert("Incorrect test login details.");
+  } else {
+    alert("Invalid credentials.");
   }
 }
 
 function showBank(){
-
-  const account=getUser();
+  const account = getUser() || { name: "User" };
 
   document.getElementById("loginPage").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
 
-  document.getElementById("welcomeName").textContent=account.name;
+  document.getElementById("welcomeName").textContent = account.name || "User";
 
-  const initials=account.name
-    .split(" ")
-    .map(x=>x[0])
-    .join("")
-    .substring(0,2)
-    .toUpperCase();
+  const initials = account.name
+    ? account.name.split(" ").map(x => x[0]).join("").substring(0, 2).toUpperCase()
+    : "--";
 
-  document.getElementById("avatar").textContent=initials;
+  document.getElementById("avatar").textContent = initials;
 }
 
 function signOut(){
+  localStorage.removeItem("whbLoggedIn");
   document.getElementById("app").classList.add("hidden");
   document.getElementById("loginPage").classList.remove("hidden");
-  document.getElementById("loginPass").value="";
+  document.getElementById("loginPass").value = "";
 }
 
 function forgotPassword(){
-
-  const email=prompt("Enter your test email:");
-
-  if(!email)return;
-
-  const account=getUser();
-
-  if(email===account.email || email===account.username){
-    alert("A simulated password-reset code has been generated.");
-  }else{
-    alert("No test account was found.");
-  }
+  alert("Password reset option clicked.");
 }
 
 function showRegister(){
-
-  alert(
-    "Account creation is disabled because this is a fictional banking interface."
-  );
+  alert("Account registration form required.");
 }
 
 function home(){
-  window.scrollTo({top:0,behavior:"smooth"});
+  window.scrollTo({top: 0, behavior: "smooth"});
   closeAllModals();
 }
 
@@ -980,41 +887,37 @@ function openWire(){
 }
 
 function processTransfer(){
+  const amount = parseFloat(document.getElementById("transferAmount").value);
 
-  const amount=parseFloat(
-    document.getElementById("transferAmount").value
-  );
-
-  if(!amount || amount<=0){
-    alert("Enter a valid simulated transfer amount.");
+  if(!amount || amount <= 0){
+    alert("Enter a valid transfer amount.");
     return;
   }
 
-  const from=document.getElementById("fromAccount").value;
-  const to=document.getElementById("toAccount").value;
-  const memo=document.getElementById("transferMemo").value || "No memo";
+  const from = document.getElementById("fromAccount").value;
+  const to = document.getElementById("toAccount").value;
+  const memo = document.getElementById("transferMemo").value || "No memo";
 
   closeModal("transferModal");
 
   showReceipt(
     "Transfer Processed",
     [
-      ["From",from],
-      ["To",to],
-      ["Amount",formatMoney(amount)],
-      ["Memo",memo],
-      ["Date",new Date().toLocaleDateString()]
+      ["From", from],
+      ["To", to],
+      ["Amount", formatMoney(amount)],
+      ["Memo", memo],
+      ["Date", new Date().toLocaleDateString()]
     ]
   );
 }
 
 function processWire(){
-
-  const sender=document.getElementById("senderName").value.trim();
-  const recipient=document.getElementById("recipientName").value.trim();
-  const routing=document.getElementById("routingNumber").value.trim();
-  const account=document.getElementById("accountNumber").value.trim();
-  const amount=parseFloat(document.getElementById("wireAmount").value);
+  const sender = document.getElementById("senderName").value.trim();
+  const recipient = document.getElementById("recipientName").value.trim();
+  const routing = document.getElementById("routingNumber").value.trim();
+  const account = document.getElementById("accountNumber").value.trim();
+  const amount = parseFloat(document.getElementById("wireAmount").value);
 
   if(!sender || !recipient){
     alert("Enter both sender and recipient names.");
@@ -1031,8 +934,8 @@ function processWire(){
     return;
   }
 
-  if(!amount || amount<=0){
-    alert("Enter a valid simulated wire amount.");
+  if(!amount || amount <= 0){
+    alert("Enter a valid wire amount.");
     return;
   }
 
@@ -1041,298 +944,125 @@ function processWire(){
   showReceipt(
     "Wire Transfer Confirmation",
     [
-      ["Sender",sender],
-      ["Recipient",recipient],
-      ["Routing Number",routing],
-      ["Account Number","••••"+account.slice(-4)],
-      ["Amount",formatMoney(amount)],
-      ["Date",new Date().toLocaleDateString()]
+      ["Sender", sender],
+      ["Recipient", recipient],
+      ["Routing Number", routing],
+      ["Account Number", "••••" + account.slice(-4)],
+      ["Amount", formatMoney(amount)],
+      ["Date", new Date().toLocaleDateString()]
     ]
   );
 }
 
-function showReceipt(title,details){
+function showReceipt(title, details){
+  document.getElementById("receiptTitle").textContent = title;
 
-  document.getElementById("receiptTitle").textContent=title;
+  const box = document.getElementById("receiptDetails");
 
-  const box=document.getElementById("receiptDetails");
-
-  box.innerHTML=details.map(item=>`
+  box.innerHTML = details.map(item => `
     <div class="detail">
       <span>${escapeHTML(item[0])}</span>
       <strong>${escapeHTML(item[1])}</strong>
     </div>
   `).join("");
 
-  document.getElementById("receiptModal")
-    .classList.remove("hidden");
+  document.getElementById("receiptModal").classList.remove("hidden");
 }
 
 function formatMoney(value){
-  return new Intl.NumberFormat("en-US",{
-    style:"currency",
-    currency:"USD"
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
   }).format(value);
 }
 
 function openFeature(feature){
+  const title = document.getElementById("featureTitle");
+  const body = document.getElementById("featureBody");
 
-  const title=document.getElementById("featureTitle");
-  const body=document.getElementById("featureBody");
+  title.textContent = feature;
+  body.innerHTML = `<p>${escapeHTML(feature)} feature loaded.</p>`;
 
-  title.textContent=feature;
-
-  let html="";
-
-  if(feature==="Deposit Checks"){
-    html=`
-      <p>This is a simulated mobile-deposit feature.</p>
-      <ul class="feature-list">
-        <li>✓ Front of check upload</li>
-        <li>✓ Back of check upload</li>
-        <li>✓ Deposit amount</li>
-        <li>✓ Simulated submission</li>
-      </ul>
-      <br>
-      <button class="primary-btn" onclick="alert('Simulated check deposit submitted.')">
-        Submit Simulated Deposit
-      </button>
-    `;
-  }
-
-  else if(feature==="Pay Bills"){
-    html=`
-      <p>Pay a bill using the fictional interface.</p>
-      <br>
-      <div class="modal-group">
-        <label>Company</label>
-        <input id="billCompany" placeholder="Company name">
-      </div>
-
-      <div class="modal-group">
-        <label>Amount</label>
-        <input id="billAmount" type="number" placeholder="0.00">
-      </div>
-
-      <button class="primary-btn" onclick="submitBill()">
-        Submit Simulated Payment
-      </button>
-    `;
-  }
-
-  else if(feature==="Cards"){
-    html=`
-      <p>Your simulated cards:</p>
-      <ul class="feature-list">
-        <li><strong>Harbor Rewards Visa</strong><br>•••• 4921</li>
-        <li><strong>Debit Card</strong><br>•••• 7318</li>
-      </ul>
-    `;
-  }
-
-  else if(feature==="Statements"){
-    html=`
-      <p>Available simulated statements:</p>
-      <ul class="feature-list">
-        <li>September 2026 Statement</li>
-        <li>August 2026 Statement</li>
-        <li>July 2026 Statement</li>
-        <li>June 2026 Statement</li>
-      </ul>
-    `;
-  }
-
-  else if(feature==="Security"){
-    html=`
-      <p><strong>Security Center</strong></p>
-      <ul class="feature-list">
-        <li>✓ Two-step verification enabled</li>
-        <li>✓ Login notifications enabled</li>
-        <li>✓ Device monitoring enabled</li>
-        <li>✓ Security alerts enabled</li>
-      </ul>
-    `;
-  }
-
-  else if(feature==="Premium Banking"){
-    html=`
-      <p>Premium features available in this simulation:</p>
-      <ul class="feature-list">
-        <li>Personalized dashboard</li>
-        <li>Priority support</li>
-        <li>Financial overview</li>
-        <li>Enhanced account organization</li>
-      </ul>
-    `;
-  }
-
-  else if(feature==="Messages"){
-    html=`
-      <ul class="feature-list">
-        <li><strong>Account Update</strong><br>Your simulated account overview is ready.</li>
-        <li><strong>Security Alert</strong><br>No unusual simulated activity detected.</li>
-        <li><strong>Welcome</strong><br>Thank you for using Washington Harbor Bank.</li>
-      </ul>
-    `;
-  }
-
-  else if(feature==="Help"){
-    html=`
-      <p>How can we help?</p>
-      <ul class="feature-list">
-        <li>Online banking help</li>
-        <li>Transfer assistance</li>
-        <li>Account settings</li>
-        <li>Security assistance</li>
-      </ul>
-    `;
-  }
-
-  else{
-    html=`<p>This feature is available in the fictional interface.</p>`;
-  }
-
-  body.innerHTML=html;
-
-  document.getElementById("featureModal")
-    .classList.remove("hidden");
-}
-
-function submitBill(){
-
-  const company=document.getElementById("billCompany").value.trim();
-  const amount=parseFloat(document.getElementById("billAmount").value);
-
-  if(!company || !amount || amount<=0){
-    alert("Enter a company and valid simulated amount.");
-    return;
-  }
-
-  closeModal("featureModal");
-
-  showReceipt(
-    "Bill Payment",
-    [
-      ["Company",company],
-      ["Amount",formatMoney(amount)],
-      ["Status","Simulated"],
-      ["Date",new Date().toLocaleDateString()]
-    ]
-  );
+  document.getElementById("featureModal").classList.remove("hidden");
 }
 
 function openSettings(){
+  const account = getUser() || {};
 
-  const account=getUser();
+  document.getElementById("settingsName").value = account.name || "";
+  document.getElementById("settingsEmail").value = account.email || "";
+  document.getElementById("settingsUsername").value = account.username || "";
+  document.getElementById("settingsPassword").value = "";
 
-  document.getElementById("settingsName").value=account.name;
-  document.getElementById("settingsEmail").value=account.email;
-  document.getElementById("settingsUsername").value=account.username;
-  document.getElementById("settingsPassword").value="";
-
-  document.getElementById("settingsModal")
-    .classList.remove("hidden");
+  document.getElementById("settingsModal").classList.remove("hidden");
 }
 
 function saveSettings(){
+  let account = getUser() || {};
 
-  const account=getUser();
+  account.name = document.getElementById("settingsName").value.trim();
+  account.email = document.getElementById("settingsEmail").value.trim();
+  account.username = document.getElementById("settingsUsername").value.trim();
 
-  account.name=document.getElementById("settingsName").value.trim() || account.name;
-  account.email=document.getElementById("settingsEmail").value.trim() || account.email;
-  account.username=document.getElementById("settingsUsername").value.trim() || account.username;
-
-  const newPass=document.getElementById("settingsPassword").value;
-
+  const newPass = document.getElementById("settingsPassword").value;
   if(newPass){
-    account.password=newPass;
+    account.password = newPass;
   }
 
   saveUser(account);
 
-  document.getElementById("welcomeName").textContent=account.name;
+  document.getElementById("welcomeName").textContent = account.name || "User";
 
-  const initials=account.name
-    .split(" ")
-    .map(x=>x[0])
-    .join("")
-    .substring(0,2)
-    .toUpperCase();
+  const initials = account.name
+    ? account.name.split(" ").map(x => x[0]).join("").substring(0, 2).toUpperCase()
+    : "--";
 
-  document.getElementById("avatar").textContent=initials;
+  document.getElementById("avatar").textContent = initials;
 
   closeModal("settingsModal");
-
-  alert("Settings saved in this browser.");
+  alert("Settings updated.");
 }
 
 function closeModal(id){
-  const modal=document.getElementById(id);
-
+  const modal = document.getElementById(id);
   if(modal){
     modal.classList.add("hidden");
   }
 }
 
 function closeAllModals(){
-
-  document.querySelectorAll(".modal-wrap")
-    .forEach(modal=>modal.classList.add("hidden"));
-
-  document.getElementById("sidebar")
-    .classList.remove("open");
+  document.querySelectorAll(".modal-wrap").forEach(modal => modal.classList.add("hidden"));
+  document.getElementById("sidebar").classList.remove("open");
 }
 
 function escapeHTML(value){
-
   return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
-/* Close modal when clicking outside */
-document.querySelectorAll(".modal-wrap").forEach(modal=>{
-
-  modal.addEventListener("click",function(e){
-
-    if(e.target===modal){
+/* Modal events */
+document.querySelectorAll(".modal-wrap").forEach(modal => {
+  modal.addEventListener("click", function(e){
+    if(e.target === modal){
       modal.classList.add("hidden");
     }
-
   });
-
 });
 
-/* Escape key closes dialogs */
-document.addEventListener("keydown",function(e){
-
-  if(e.key==="Escape"){
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
     closeAllModals();
   }
-
 });
 
-/* Load session */
-if(localStorage.getItem("whbLoggedIn")==="true"){
+/* Check active session */
+if(localStorage.getItem("whbLoggedIn") === "true"){
   showBank();
 }
-
-/* Save session whenever login succeeds */
-const originalShowBank=showBank;
-showBank=function(){
-  localStorage.setItem("whbLoggedIn","true");
-  originalShowBank();
-};
-
-/* Override sign out session */
-const originalSignOut=signOut;
-signOut=function(){
-  localStorage.removeItem("whbLoggedIn");
-  originalSignOut();
-};
 </script>
 
 </body>
