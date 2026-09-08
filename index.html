@@ -597,6 +597,21 @@ color:#737b8c;
 margin:8px 0 25px;
 }
 
+.forgot-link{
+display:block;
+text-align:right;
+margin-top:10px;
+color:#8b1119;
+font-size:13px;
+font-weight:600;
+cursor:pointer;
+text-decoration:none;
+}
+
+.forgot-link:hover{
+text-decoration:underline;
+}
+
 /* MOBILE */
 @media(max-width:800px){
 
@@ -701,6 +716,8 @@ Secure account access
   autocomplete="current-password"
   placeholder="Enter password">
 
+  <span class="forgot-link" onclick="showResetStep1()">Forgot Password?</span>
+
   <button class="primary" onclick="startLogin()">
   Sign In
   </button>
@@ -727,6 +744,59 @@ Secure account access
 
   <button class="gold-button" onclick="cancel2FA()">
   Back to Login
+  </button>
+</div>
+
+<!-- RESET STEP 1: REQUEST CODE -->
+<div id="resetStep1" class="hidden">
+  <div style="background:#f7f4ec;padding:15px;border-radius:12px;margin-bottom:15px;text-align:center;">
+    <strong>Reset Password</strong>
+    <p style="font-size:13px;color:#666;margin:5px 0 0;">Enter your registered email address to receive a verification code.</p>
+  </div>
+
+  <label>Registered Email</label>
+  <input
+  id="resetEmail"
+  type="email"
+  value="Laurajacksonxtt200@gmail.com"
+  placeholder="Enter registered email">
+
+  <button class="primary" onclick="sendResetCode()">
+  Send Reset Code
+  </button>
+
+  <button class="gold-button" onclick="cancelReset()">
+  Back to Login
+  </button>
+</div>
+
+<!-- RESET STEP 2: VERIFY CODE & SET NEW PASSWORD -->
+<div id="resetStep2" class="hidden">
+  <div style="background:#f7f4ec;padding:15px;border-radius:12px;margin-bottom:15px;text-align:center;">
+    <strong>Verify & Create Password</strong>
+    <p style="font-size:13px;color:#666;margin:5px 0 0;">Enter the verification code sent to your email and your new password.</p>
+  </div>
+
+  <label>Verification Code</label>
+  <input
+  id="resetCodeInput"
+  type="text"
+  inputmode="numeric"
+  maxlength="6"
+  placeholder="Enter 6-digit code">
+
+  <label>New Password</label>
+  <input
+  id="resetNewPassword"
+  type="password"
+  placeholder="Enter new password">
+
+  <button class="primary" onclick="submitPasswordReset()">
+  Reset Password
+  </button>
+
+  <button class="gold-button" onclick="cancelReset()">
+  Cancel
   </button>
 </div>
 
@@ -1557,6 +1627,79 @@ function cancel2FA(){
 }
 
 
+/* RESET PASSWORD FLOW */
+
+let resetGeneratedCode = null;
+
+function showResetStep1(){
+  document.getElementById("loginStep1").classList.add("hidden");
+  document.getElementById("loginStep2").classList.add("hidden");
+  document.getElementById("resetStep1").classList.remove("hidden");
+}
+
+function sendResetCode(){
+  const resetEmail = document.getElementById("resetEmail").value.trim();
+  const savedEmail = localStorage.getItem("novaEmail") || DEFAULT_USER;
+  const savedUser = localStorage.getItem("novaUsername") || DEFAULT_USER;
+
+  if(!resetEmail){
+    alert("Please enter your email address.");
+    return;
+  }
+
+  if(resetEmail !== savedEmail && resetEmail !== savedUser){
+    alert("Email address not found.");
+    return;
+  }
+
+  // Generate 6-digit reset code
+  resetGeneratedCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  document.getElementById("resetStep1").classList.add("hidden");
+  document.getElementById("resetStep2").classList.remove("hidden");
+
+  setTimeout(() => {
+    alert(`[NOVA BANK PASSWORD RESET]\n\nYour password reset code is: ${resetGeneratedCode}`);
+  }, 300);
+}
+
+function submitPasswordReset(){
+  const userCode = document.getElementById("resetCodeInput").value.trim();
+  const newPass = document.getElementById("resetNewPassword").value;
+
+  if(!userCode){
+    alert("Please enter the reset code.");
+    return;
+  }
+
+  if(userCode !== resetGeneratedCode){
+    alert("Invalid verification code.");
+    return;
+  }
+
+  if(!newPass || newPass.length < 6){
+    alert("Please enter a new password (at least 6 characters).");
+    return;
+  }
+
+  // Save new password
+  localStorage.setItem("novaPassword", newPass);
+
+  alert("Password reset successfully! You can now log in with your new password.");
+
+  // Clean up and go back to login step
+  cancelReset();
+}
+
+function cancelReset(){
+  document.getElementById("resetStep1").classList.add("hidden");
+  document.getElementById("resetStep2").classList.add("hidden");
+  document.getElementById("loginStep1").classList.remove("hidden");
+  document.getElementById("resetCodeInput").value = "";
+  document.getElementById("resetNewPassword").value = "";
+}
+
+
 /* SHOW BANK */
 
 function showBank(){
@@ -1723,6 +1866,7 @@ closeAllModals();
 
 // Reset login steps
 cancel2FA();
+cancelReset();
 
 document
 .getElementById("bankPage")
