@@ -1,73 +1,342 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova Bank</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f7fb;color:#172033}
-.top{background:#101a2e;color:#fff;padding:18px 24px;font-size:22px;font-weight:800}
-.wrap{max-width:1000px;margin:35px auto;padding:0 18px}.panel{background:#fff;border-radius:18px;padding:28px;box-shadow:0 8px 30px #17203312}
-.login{max-width:430px;margin:70px auto}.muted{color:#667085}label{display:block;margin-top:15px;font-weight:600}
-input{width:100%;padding:14px;margin-top:7px;border:1px solid #d0d5dd;border-radius:10px;font-size:16px}
-button{width:100%;padding:14px;margin-top:18px;border:0;border-radius:10px;background:#101a2e;color:#fff;font-weight:700;font-size:16px}
-.hidden{display:none}.balance{font-size:42px;font-weight:850;margin:12px 0 8px}.notice{font-size:13px;background:#fff4d6;padding:10px 12px;border-radius:9px;margin:16px 0}
-.grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}.item{padding:14px 0;border-bottom:1px solid #eee}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.balance{font-size:34px}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+}
+
+.header {
+  background: #b51f1f;
+  color: white;
+  padding: 24px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  border-bottom: 5px solid #8f1515;
+}
+
+.container {
+  max-width: 440px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 6px;
+  border-top: 5px solid #b51f1f;
+  box-shadow: 0 5px 20px rgba(0,0,0,.12);
+}
+
+h1 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  line-height: 1.5;
+}
+
+label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 22px;
+  border: none;
+  border-radius: 4px;
+  background: #b51f1f;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+button:active {
+  opacity: .85;
+}
+
+.hidden {
+  display: none;
+}
+
+.error {
+  color: #b00020;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.code-input {
+  text-align: center;
+  font-size: 25px;
+  letter-spacing: 8px;
+}
+
+.dashboard {
+  max-width: 900px;
+  margin: 35px auto;
+  padding: 20px;
+}
+
+.balance {
+  background: #b51f1f;
+  color: white;
+  border-radius: 6px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.balance h2 {
+  margin-top: 0;
+}
+
+.amount {
+  font-size: 38px;
+  font-weight: bold;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.tile {
+  background: white;
+  padding: 25px;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.08);
+}
+
+.logout {
+  max-width: 220px;
+  display: block;
+  margin: 25px auto;
+}
+
+@media (max-width: 700px) {
+  .tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    margin: 30px auto;
+  }
+}
 </style>
 </head>
-<body>
-<div class="top">Nova Bank</div>
 
-<div id="login" class="wrap login">
-  <div class="panel">
+<body>
+
+<header class="header">
+  Nova Bank
+</header>
+
+<!-- SIGN IN -->
+<div class="container" id="loginScreen">
+
+  <div class="card">
+
     <h1>Sign in</h1>
-    <p class="muted">Access your Nova Bank account.</p>
+
+    <p class="subtitle">
+      Access your Nova Bank account
+    </p>
+
     <label>Email</label>
-    <input id="email" type="email" autocomplete="username" placeholder="Email">
+    <input
+      id="email"
+      type="email"
+      placeholder="Email address"
+      autocomplete="off"
+    >
+
     <label>Password</label>
-    <input id="password" type="password" autocomplete="current-password" placeholder="Password">
-    <button onclick="signIn()">Sign in</button>
-    <p id="error" class="muted"></p>
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      autocomplete="off"
+    >
+
+    <button onclick="continueLogin()">
+      Continue
+    </button>
+
+    <p id="loginError" class="error"></p>
+
   </div>
+
 </div>
 
-<div id="dashboard" class="wrap hidden">
-  <div class="panel">
-    <p class="muted">Available balance</p>
-    <div class="balance">$25,000,000.00</div>
-    <div class="notice"><b>Sandbox funds:</b> This balance is for testing and is not real money or proof of funds.</div>
-    <div class="grid">
-      <div>
-        <h2>Recent activity</h2>
-        <div class="item"><b>Opening test balance</b><br><span class="muted">Sandbox account</span><br>+$25,000,000.00</div>
-        <div class="item"><b>Account opened</b><br><span class="muted">Nova Bank</span></div>
-      </div>
-      <div>
-        <h2>Account</h2>
-        <p><b id="accountEmail"></b></p>
-        <p class="muted">Checking •••• 4821</p>
-        <button onclick="signOut()">Sign out</button>
-      </div>
-    </div>
+<!-- VERIFICATION -->
+<div class="container hidden" id="verificationScreen">
+
+  <div class="card">
+
+    <h1>Verification</h1>
+
+    <p class="subtitle">
+      Enter the 6-digit verification code to continue.
+    </p>
+
+    <label>Verification code</label>
+
+    <input
+      id="verificationCode"
+      class="code-input"
+      type="text"
+      inputmode="numeric"
+      maxlength="6"
+      placeholder="000000"
+      autocomplete="off"
+    >
+
+    <button onclick="verifyCode()">
+      Verify
+    </button>
+
+    <p id="codeError" class="error"></p>
+
   </div>
+
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard hidden" id="dashboardScreen">
+
+  <div class="balance">
+    <h2>Welcome to Nova Bank</h2>
+    <p>Available balance</p>
+    <div class="amount">$25,000.00</div>
+  </div>
+
+  <div class="tiles">
+
+    <div class="tile">
+      <h3>Checking</h3>
+      <p>$18,500.00</p>
+    </div>
+
+    <div class="tile">
+      <h3>Savings</h3>
+      <p>$6,500.00</p>
+    </div>
+
+    <div class="tile">
+      <h3>Recent activity</h3>
+      <p>No recent transactions</p>
+    </div>
+
+  </div>
+
+  <button class="logout" onclick="logout()">
+    Sign out
+  </button>
+
 </div>
 
 <script>
-const DEMO_EMAIL="Laurajacksonxtt200@gmail.com";
-const DEMO_PASSWORD="samkaid12@";
-function signIn(){
- const e=document.getElementById("email").value.trim();
- const p=document.getElementById("password").value;
- if(e===DEMO_EMAIL && p===DEMO_PASSWORD){
-   document.getElementById("accountEmail").textContent=e;
-   document.getElementById("login").classList.add("hidden");
-   document.getElementById("dashboard").classList.remove("hidden");
- }else{
-   document.getElementById("error").textContent="Incorrect email or password.";
- }
+
+function continueLogin() {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value.trim();
+
+  const error =
+    document.getElementById("loginError");
+
+  if (!email || !password) {
+    error.textContent =
+      "Please enter your email and password.";
+    return;
+  }
+
+  error.textContent = "";
+
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("verificationScreen")
+    .classList.remove("hidden");
 }
-function signOut(){location.reload()}
+
+function verifyCode() {
+
+  const code =
+    document.getElementById("verificationCode").value.trim();
+
+  const error =
+    document.getElementById("codeError");
+
+  if (code === "123456") {
+
+    error.textContent = "";
+
+    document
+      .getElementById("verificationScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("dashboardScreen")
+      .classList.remove("hidden");
+
+  } else {
+
+    error.textContent =
+      "Incorrect verification code.";
+
+  }
+}
+
+function logout() {
+
+  document
+    .getElementById("dashboardScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginScreen")
+    .classList.remove("hidden");
+
+  document.getElementById("email").value = "";
+  document.getElementById("password").value = "";
+  document.getElementById("verificationCode").value = "";
+}
+
 </script>
+
 </body>
 </html>
