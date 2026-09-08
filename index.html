@@ -1,885 +1,369 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nova Bank</title>
 
 <style>
 *{box-sizing:border-box}
-
 body{
-  margin:0;
-  background:#f5f7fb;
-  color:#101828;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+ margin:0;background:#f4f6fa;color:#101828;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
 }
-
-button,input{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-
-.topbar{
-  height:76px;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-  border-bottom:1px solid #e4e7ec;
+header{
+ height:78px;background:#fff;display:flex;align-items:center;
+ justify-content:space-between;padding:0 5%;
+ border-bottom:1px solid #e5e7eb
 }
-
-.logo{
-  font-size:25px;
-  font-weight:800;
-  color:#2458c5;
-}
-
+.logo{font-size:30px;font-weight:800;color:#285bb5}
 .avatar{
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:#356bd5;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
+ width:52px;height:52px;border-radius:50%;background:#3972d8;
+ color:#fff;display:flex;align-items:center;justify-content:center;
+ font-size:22px;font-weight:700
+}
+main{max-width:900px;margin:auto;padding-bottom:60px}
+
+.hero{
+ margin-top:0;background:linear-gradient(135deg,#173b79,#315fae);
+ color:#fff;padding:32px 6%;border-radius:0 0 38px 38px
+}
+.greeting{font-size:22px;margin-bottom:32px}
+.label{letter-spacing:3px;opacity:.8;font-size:15px}
+.balance{font-size:48px;font-weight:800;margin-top:8px}
+
+.actions{
+ background:#fff;margin:22px 4%;padding:22px;
+ border-radius:25px;display:grid;grid-template-columns:repeat(4,1fr);
+ box-shadow:0 2px 10px #00000012
+}
+.action{
+ border:0;background:none;text-align:center;font-size:15px;
+ font-weight:700;color:#101828;padding:10px;cursor:pointer
+}
+.icon{
+ width:60px;height:60px;border-radius:50%;background:#edf3ff;
+ color:#3972d8;font-size:27px;margin:auto auto 9px;
+ display:flex;align-items:center;justify-content:center
 }
 
-.content{
-  max-width:850px;
-  margin:auto;
-  padding:0 24px 50px;
-}
-
-.balance-card{
-  margin:0 -24px;
-  padding:30px;
-  color:#fff;
-  background:#1b407f;
-  border-radius:0 0 30px 30px;
-  position:relative;
-  overflow:hidden;
-}
-
-.balance-card:after{
-  content:"";
-  position:absolute;
-  width:350px;
-  height:350px;
-  border-radius:50%;
-  background:rgba(255,255,255,.07);
-  right:-100px;
-  top:-100px;
-}
-
-.greeting{
-  font-size:23px;
-  position:relative;
-  z-index:2;
-}
-
-.label{
-  margin-top:38px;
-  font-size:15px;
-  letter-spacing:2px;
-  opacity:.78;
-}
-
-.balance{
-  font-size:40px;
-  font-weight:800;
-  margin-top:8px;
-  position:relative;
-  z-index:2;
-}
-
-.quick{
-  background:#fff;
-  margin-top:24px;
-  padding:25px 8px;
-  border-radius:20px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  box-shadow:0 3px 14px rgba(0,0,0,.07);
-}
-
-.quick button{
-  border:0;
-  background:transparent;
-  color:#101828;
-}
-
-.qicon{
-  width:58px;
-  height:58px;
-  margin:auto;
-  border-radius:50%;
-  background:#edf2ff;
-  color:#356bd5;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:26px;
-}
-
-.quick p{
-  font-size:13px;
-  font-weight:650;
-}
-
-.section{
-  margin-top:32px;
-}
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:0 7px 15px;
-}
-
-.section-head h2{
-  margin:0;
-  font-size:21px;
-}
+section{margin:30px 4%}
+.section-title{font-size:25px;font-weight:800;margin-bottom:16px}
 
 .card{
-  background:#fff;
-  border-radius:20px;
-  padding:23px;
-  box-shadow:0 3px 14px rgba(0,0,0,.06);
+ background:#fff;border-radius:23px;padding:24px;
+ box-shadow:0 2px 10px #00000010;margin-bottom:20px
 }
+.account{display:flex;align-items:center;justify-content:space-between}
+.account-left{display:flex;align-items:center;gap:16px}
+.wallet{
+ width:60px;height:60px;border-radius:18px;background:#edf3ff;
+ display:flex;align-items:center;justify-content:center;font-size:27px
+}
+.account-name{font-size:23px;font-weight:800}
+.muted{color:#667085;margin-top:5px}
+.amount{text-align:right;font-size:25px;font-weight:800}
+.available{font-size:13px;color:#667085;margin-top:5px}
 
-.account{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+.spending{display:flex;justify-content:space-between;font-size:22px;font-weight:800}
+.no-spending{text-align:center;color:#667085;padding:35px 0}
 
-.account-left{
-  display:flex;
-  align-items:center;
-  gap:15px;
+.activity{
+ display:flex;justify-content:space-between;
+ padding:17px 0;border-bottom:1px solid #e5e7eb
 }
-
-.account-icon{
-  width:58px;
-  height:58px;
-  border-radius:17px;
-  background:#edf2ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:25px;
-}
-
-.account-name{
-  font-size:20px;
-  font-weight:700;
-}
-
-.muted{
-  color:#667085;
-}
-
-.amount{
-  font-size:19px;
-  font-weight:800;
-}
-
-.available{
-  text-align:right;
-  color:#667085;
-  font-size:12px;
-  margin-top:4px;
-}
-
-.spending{
-  min-height:170px;
-}
-
-.spending-top{
-  display:flex;
-  justify-content:space-between;
-  font-weight:700;
-}
-
-.no-spending{
-  text-align:center;
-  color:#667085;
-  margin-top:55px;
-}
-
-.transaction{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px 0;
-  border-bottom:1px solid #eaecf0;
-}
-
-.transaction:last-child{
-  border-bottom:0;
-}
-
-.tx-left{
-  display:flex;
-  gap:13px;
-  align-items:center;
-}
-
-.tx-icon{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  background:#f2f4f7;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.tx-name{
-  font-weight:650;
-}
-
-.tx-date{
-  font-size:13px;
-  color:#667085;
-  margin-top:4px;
-}
-
-.tx-amount{
-  font-weight:750;
-}
-
-.profile input,
-.transfer input{
-  width:100%;
-  padding:14px;
-  margin-top:7px;
-  border:1px solid #d0d5dd;
-  border-radius:9px;
-}
-
-.profile label,
-.transfer label{
-  display:block;
-  margin-top:17px;
-  font-weight:650;
-}
-
-.primary{
-  width:100%;
-  border:0;
-  border-radius:9px;
-  background:#356bd5;
-  color:white;
-  padding:15px;
-  margin-top:22px;
-  font-weight:700;
-}
-
-.secondary{
-  width:100%;
-  border:1px solid #d0d5dd;
-  border-radius:9px;
-  background:#fff;
-  padding:14px;
-  margin-top:12px;
-  font-weight:650;
-}
+.activity:last-child{border-bottom:0}
+.activity-name{font-weight:700}
+.activity-date{color:#667085;margin-top:5px}
+.out{font-weight:800}
 
 .modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:20;
+ position:fixed;inset:0;background:#0008;display:none;
+ align-items:center;justify-content:center;padding:20px;z-index:20
 }
-
 .modal-box{
-  width:100%;
-  max-width:450px;
-  background:#fff;
-  border-radius:20px;
-  padding:25px;
-  max-height:90vh;
-  overflow:auto;
+ background:#fff;width:100%;max-width:500px;border-radius:24px;
+ padding:26px
 }
-
+.modal h2{margin-top:0}
+input{
+ width:100%;padding:15px;margin:8px 0 15px;
+ border:1px solid #ccd3df;border-radius:12px;font-size:16px
+}
+button.primary{
+ width:100%;padding:16px;border:0;border-radius:12px;
+ background:#326bd0;color:#fff;font-size:17px;font-weight:700;
+ cursor:pointer
+}
+button.secondary{
+ width:100%;padding:14px;border:1px solid #ccd3df;
+ background:#fff;border-radius:12px;margin-top:10px;cursor:pointer
+}
 .receipt{
-  border:1px solid #d0d5dd;
-  border-radius:12px;
-  padding:18px;
-  margin-top:20px;
+ background:#f7f8fa;padding:18px;border-radius:15px;margin:15px 0
+}
+.receipt-row{display:flex;justify-content:space-between;padding:8px 0}
+
+.notice{
+ margin:20px 4%;padding:15px;background:#fff3cd;
+ color:#765b00;border-radius:12px;font-size:13px;text-align:center
 }
 
-.receipt-title{
-  text-align:center;
-  font-weight:800;
-  font-size:20px;
-}
-
-.sandbox{
-  text-align:center;
-  color:#b42318;
-  font-size:12px;
-  font-weight:700;
-  margin-top:7px;
-}
-
-.receipt-row{
-  display:flex;
-  justify-content:space-between;
-  padding:10px 0;
-  border-bottom:1px solid #eaecf0;
-}
-
-.receipt-row:last-child{
-  border-bottom:0;
-}
-
-.close{
-  float:right;
-  border:0;
-  background:none;
-  font-size:25px;
-}
-
-@media(max-width:600px){
-  .content{padding:0 16px 45px}
-
-  .balance-card{
-    margin:0 -16px;
-    padding:28px 25px;
-  }
-
-  .balance{font-size:34px}
-
-  .quick{padding:22px 2px}
-
-  .qicon{
-    width:52px;
-    height:52px;
-  }
-
-  .quick p{font-size:11px}
+@media(max-width:650px){
+ .balance{font-size:38px}
+ .actions{grid-template-columns:repeat(2,1fr)}
+ .account{align-items:flex-start}
+ .amount{font-size:21px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">
-  <div class="logo">Nova Bank</div>
-  <div class="avatar" id="avatar">N</div>
+<header>
+ <div class="logo">Nova Bank</div>
+ <div class="avatar" id="avatar">L</div>
+</header>
+
+<main>
+
+<div class="hero">
+ <div class="greeting">Good morning, <b>Nova User</b></div>
+ <div class="label">TOTAL BALANCE</div>
+ <div class="balance" id="balance">$25,000,000.00</div>
 </div>
 
-<div class="content">
+<div class="actions">
+ <button class="action" onclick="openTransfer()">
+  <div class="icon">➤</div>Pay &<br>Transfer
+ </button>
 
-  <div class="balance-card">
-    <div class="greeting">
-      Good morning, <span id="nameDisplay">Nova User</span>
-    </div>
+ <button class="action" onclick="showMessage('Deposit is available in this fictional account.')">
+  <div class="icon">↓</div>Deposit
+ </button>
 
-    <div class="label">TOTAL BALANCE</div>
+ <button class="action" onclick="showMessage('Mobile services opened.')">
+  <div class="icon">▣</div>Mobile
+ </button>
 
-    <div class="balance">$25,000,000.00</div>
-  </div>
-
-
-  <div class="quick">
-
-    <button onclick="openTransfer()">
-      <div class="qicon">➤</div>
-      <p>Pay &<br>Transfer</p>
-    </button>
-
-    <button onclick="showMessage('Deposits are available only in the sandbox.')">
-      <div class="qicon">↓</div>
-      <p>Deposit</p>
-    </button>
-
-    <button onclick="showMessage('Mobile payments are available only in the sandbox.')">
-      <div class="qicon">▣</div>
-      <p>Mobile</p>
-    </button>
-
-    <button onclick="showMessage('Bill payments are available only in the sandbox.')">
-      <div class="qicon">▤</div>
-      <p>Pay Bills</p>
-    </button>
-
-  </div>
-
-
-  <div class="section">
-
-    <div class="section-head">
-      <h2>Your accounts</h2>
-      <span class="muted">See all</span>
-    </div>
-
-    <div class="card account">
-
-      <div class="account-left">
-
-        <div class="account-icon">▣</div>
-
-        <div>
-          <div class="account-name">Checking</div>
-          <div class="muted">•••• 2778</div>
-        </div>
-
-      </div>
-
-      <div>
-        <div class="amount">$25,000,000.00</div>
-        <div class="available">AVAILABLE</div>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="section">
-
-    <div class="section-head">
-      <h2>Spending this month</h2>
-      <strong>$0.00</strong>
-    </div>
-
-    <div class="card spending">
-      <div class="no-spending">
-        No spending this month yet.
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="section">
-
-    <div class="section-head">
-      <h2>Recent activity</h2>
-    </div>
-
-    <div class="card" id="activity">
-
-      <div class="transaction">
-
-        <div class="tx-left">
-          <div class="tx-icon">₿</div>
-
-          <div>
-            <div class="tx-name">Bitcoin transaction</div>
-            <div class="tx-date">25 Aug</div>
-          </div>
-        </div>
-
-        <div class="tx-amount">-$5,000.00</div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="section">
-
-    <div class="section-head">
-      <h2>Profile & settings</h2>
-    </div>
-
-    <div class="card profile">
-
-      <label>Name</label>
-      <input id="profileName" placeholder="Your name">
-
-      <label>Email</label>
-      <input id="profileEmail" type="email" placeholder="Your email">
-
-      <label>Phone number</label>
-      <input id="profilePhone" type="tel" placeholder="Your phone number">
-
-      <button class="primary" onclick="saveProfile()">
-        Save profile
-      </button>
-
-      <div id="saveMessage" class="muted"></div>
-
-    </div>
-
-  </div>
-
-
-  <div style="text-align:center;margin-top:25px">
-    <button class="secondary" onclick="signOut()">
-      Sign out
-    </button>
-  </div>
-
-  <div class="muted" style="text-align:center;font-size:11px;margin-top:25px">
-    Fictional Nova Bank sandbox. Displayed balance and transactions are not real funds.
-  </div>
-
+ <button class="action" onclick="showMessage('Pay Bills opened.')">
+  <div class="icon">▤</div>Pay Bills
+ </button>
 </div>
 
+<section>
+ <div class="section-title">Your accounts</div>
 
-<!-- TRANSFER MODAL -->
-
-<div id="transferModal" class="modal hidden">
-
-  <div class="modal-box">
-
-    <button class="close" onclick="closeTransfer()">×</button>
-
-    <h2>Pay & Transfer</h2>
-
-    <p class="muted">
-      Create a fictional sandbox transaction.
-    </p>
-
-    <div class="transfer">
-
-      <label>Recipient name</label>
-      <input id="recipient" placeholder="Recipient name">
-
-      <label>Recipient reference</label>
-      <input id="reference" placeholder="Account/reference">
-
-      <label>Amount</label>
-      <input id="transferAmount"
-             type="number"
-             min="0.01"
-             step="0.01"
-             placeholder="0.00">
-
-      <button class="primary" onclick="makeTransfer()">
-        Review transfer
-      </button>
-
-      <div id="transferError"
-           style="color:#b42318;text-align:center;margin-top:12px">
-      </div>
-
-    </div>
-
+ <div class="card account">
+  <div class="account-left">
+   <div class="wallet">▣</div>
+   <div>
+    <div class="account-name">Checking</div>
+    <div class="muted">•••• 2778</div>
+   </div>
   </div>
 
+  <div>
+   <div class="amount" id="accountBalance">$25,000,000.00</div>
+   <div class="available">AVAILABLE</div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="section-title">Spending this month</div>
+ <div class="card">
+  <div class="spending">
+   <span>Total spending</span>
+   <span id="spending">$0.00</span>
+  </div>
+  <div class="no-spending" id="emptySpend">
+   No spending this month yet.
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="section-title">Recent activity</div>
+
+ <div class="card" id="activity">
+  <div class="activity">
+   <div>
+    <div class="activity-name">Account opened</div>
+    <div class="activity-date">Today</div>
+   </div>
+   <div>+$25,000,000.00</div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="section-title">Profile & settings</div>
+
+ <div class="card">
+  <label><b>Name</b></label>
+  <input id="name" value="Nova User">
+
+  <label><b>Email</b></label>
+  <input id="email" value="testuser@example.com">
+
+  <label><b>Phone number</b></label>
+  <input id="phone" value="">
+
+  <button class="primary" onclick="saveProfile()">Save profile</button>
+  <button class="secondary" onclick="logout()">Sign out</button>
+ </div>
+</section>
+
+<div class="notice">
+ Fictional Nova Bank sandbox interface. The displayed balance is not real money and cannot be transferred or withdrawn.
 </div>
 
+</main>
 
-<!-- RECEIPT MODAL -->
+<!-- TRANSFER WINDOW -->
+<div class="modal" id="transferModal">
+ <div class="modal-box">
+  <h2>Pay & Transfer</h2>
 
-<div id="receiptModal" class="modal hidden">
+  <label>Recipient</label>
+  <input id="recipient" placeholder="Recipient name">
 
-  <div class="modal-box">
+  <label>Amount</label>
+  <input id="transferAmount" type="number" placeholder="0.00">
 
-    <button class="close" onclick="closeReceipt()">×</button>
+  <label>Memo</label>
+  <input id="memo" placeholder="Optional">
 
-    <div class="receipt">
+  <button class="primary" onclick="makeTransfer()">Continue</button>
+  <button class="secondary" onclick="closeModal()">Cancel</button>
+ </div>
+</div>
 
-      <div class="receipt-title">
-        Nova Bank Receipt
-      </div>
+<!-- RECEIPT -->
+<div class="modal" id="receiptModal">
+ <div class="modal-box">
+  <h2>Transfer receipt</h2>
 
-      <div class="sandbox">
-        SANDBOX / FICTIONAL TRANSACTION
-      </div>
-
-      <br>
-
-      <div class="receipt-row">
-        <span>Status</span>
-        <strong>Completed</strong>
-      </div>
-
-      <div class="receipt-row">
-        <span>Recipient</span>
-        <strong id="receiptRecipient"></strong>
-      </div>
-
-      <div class="receipt-row">
-        <span>Reference</span>
-        <strong id="receiptReference"></strong>
-      </div>
-
-      <div class="receipt-row">
-        <span>Amount</span>
-        <strong id="receiptAmount"></strong>
-      </div>
-
-      <div class="receipt-row">
-        <span>Date</span>
-        <strong id="receiptDate"></strong>
-      </div>
-
-      <div class="receipt-row">
-        <span>Transaction ID</span>
-        <strong id="receiptId"></strong>
-      </div>
-
-    </div>
-
-    <button class="primary" onclick="window.print()">
-      Print / Save Receipt
-    </button>
-
-    <button class="secondary" onclick="closeReceipt()">
-      Close
-    </button>
-
+  <div class="receipt">
+   <div class="receipt-row">
+    <span>Status</span><b>Simulated</b>
+   </div>
+   <div class="receipt-row">
+    <span>Recipient</span><b id="rRecipient"></b>
+   </div>
+   <div class="receipt-row">
+    <span>Amount</span><b id="rAmount"></b>
+   </div>
+   <div class="receipt-row">
+    <span>Reference</span><b id="rReference"></b>
+   </div>
+   <div class="receipt-row">
+    <span>Date</span><b id="rDate"></b>
+   </div>
   </div>
 
+  <button class="primary" onclick="window.print()">Print receipt</button>
+  <button class="secondary" onclick="closeReceipt()">Done</button>
+ </div>
 </div>
-
 
 <script>
+let balance = 25000000;
+let spending = 0;
 
-let transactions =
-  JSON.parse(localStorage.getItem("novaTransactions") || "[]");
+function money(n){
+ return n.toLocaleString("en-US",{
+  style:"currency",currency:"USD"
+ });
+}
 
+function updateBalance(){
+ document.getElementById("balance").textContent=money(balance);
+ document.getElementById("accountBalance").textContent=money(balance);
+ document.getElementById("spending").textContent=money(spending);
+}
 
 function openTransfer(){
-  document
-    .getElementById("transferModal")
-    .classList.remove("hidden");
+ document.getElementById("transferModal").style.display="flex";
 }
 
-
-function closeTransfer(){
-  document
-    .getElementById("transferModal")
-    .classList.add("hidden");
+function closeModal(){
+ document.getElementById("transferModal").style.display="none";
 }
-
 
 function makeTransfer(){
+ const recipient=document.getElementById("recipient").value.trim();
+ const amount=Number(document.getElementById("transferAmount").value);
+ const memo=document.getElementById("memo").value.trim();
 
-  const recipient =
-    document.getElementById("recipient").value.trim();
+ if(!recipient || !amount || amount<=0){
+  alert("Enter a recipient and a valid amount.");
+  return;
+ }
 
-  const reference =
-    document.getElementById("reference").value.trim();
+ if(amount>balance){
+  alert("Insufficient fictional balance.");
+  return;
+ }
 
-  const amount =
-    Number(document.getElementById("transferAmount").value);
+ balance-=amount;
+ spending+=amount;
+ updateBalance();
 
-  const error =
-    document.getElementById("transferError");
+ const ref="NV-"+Date.now().toString().slice(-8);
 
-  error.textContent = "";
+ const row=document.createElement("div");
+ row.className="activity";
+ row.innerHTML=
+ `<div>
+   <div class="activity-name">Transfer to ${escapeHtml(recipient)}</div>
+   <div class="activity-date">${new Date().toLocaleDateString()}</div>
+  </div>
+  <div class="out">-${money(amount)}</div>`;
 
-  if(!recipient || !reference || !amount || amount <= 0){
+ document.getElementById("activity").prepend(row);
 
-    error.textContent =
-      "Please complete all fields.";
+ document.getElementById("emptySpend").textContent=
+ "Your simulated transfer has been recorded.";
 
-    return;
-  }
+ document.getElementById("rRecipient").textContent=recipient;
+ document.getElementById("rAmount").textContent=money(amount);
+ document.getElementById("rReference").textContent=ref;
+ document.getElementById("rDate").textContent=new Date().toLocaleString();
 
-  const id =
-    "NOVA-" +
-    Date.now().toString().slice(-10);
-
-  const date =
-    new Date().toLocaleString();
-
-  const transaction = {
-    id,
-    recipient,
-    reference,
-    amount,
-    date
-  };
-
-  transactions.unshift(transaction);
-
-  localStorage.setItem(
-    "novaTransactions",
-    JSON.stringify(transactions)
-  );
-
-  closeTransfer();
-
-  document.getElementById("receiptRecipient").textContent =
-    recipient;
-
-  document.getElementById("receiptReference").textContent =
-    reference;
-
-  document.getElementById("receiptAmount").textContent =
-    "$" + amount.toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    });
-
-  document.getElementById("receiptDate").textContent =
-    date;
-
-  document.getElementById("receiptId").textContent =
-    id;
-
-  document
-    .getElementById("receiptModal")
-    .classList.remove("hidden");
-
-  renderTransactions();
+ closeModal();
+ document.getElementById("receiptModal").style.display="flex";
 }
-
 
 function closeReceipt(){
-  document
-    .getElementById("receiptModal")
-    .classList.add("hidden");
+ document.getElementById("receiptModal").style.display="none";
 }
-
-
-function renderTransactions(){
-
-  const activity =
-    document.getElementById("activity");
-
-  let html = "";
-
-  transactions.forEach(tx => {
-
-    html += `
-      <div class="transaction">
-
-        <div class="tx-left">
-
-          <div class="tx-icon">↗</div>
-
-          <div>
-            <div class="tx-name">
-              Transfer to ${escapeHTML(tx.recipient)}
-            </div>
-
-            <div class="tx-date">
-              ${escapeHTML(tx.date)}
-            </div>
-          </div>
-
-        </div>
-
-        <div class="tx-amount">
-          -$${Number(tx.amount).toLocaleString("en-US",{
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-          })}
-        </div>
-
-      </div>
-    `;
-  });
-
-  html += `
-    <div class="transaction">
-
-      <div class="tx-left">
-
-        <div class="tx-icon">₿</div>
-
-        <div>
-          <div class="tx-name">Bitcoin transaction</div>
-          <div class="tx-date">25 Aug</div>
-        </div>
-
-      </div>
-
-      <div class="tx-amount">-$5,000.00</div>
-
-    </div>
-  `;
-
-  activity.innerHTML = html;
-}
-
-
-function escapeHTML(value){
-
-  return value
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
 
 function saveProfile(){
-
-  const name =
-    document.getElementById("profileName").value.trim();
-
-  const email =
-    document.getElementById("profileEmail").value.trim();
-
-  const phone =
-    document.getElementById("profilePhone").value.trim();
-
-  localStorage.setItem("novaName",name);
-  localStorage.setItem("novaEmail",email);
-  localStorage.setItem("novaPhone",phone);
-
-  document.getElementById("nameDisplay").textContent =
-    name || "Nova User";
-
-  document.getElementById("avatar").textContent =
-    (name || "N").charAt(0).toUpperCase();
-
-  document.getElementById("saveMessage").textContent =
-    "Profile saved on this device.";
+ const name=document.getElementById("name").value.trim()||"Nova User";
+ document.querySelector(".greeting").innerHTML=
+ "Good morning, <b>"+escapeHtml(name)+"</b>";
+ document.getElementById("avatar").textContent=name.charAt(0).toUpperCase();
+ alert("Profile saved on this device.");
 }
 
-
-function loadProfile(){
-
-  const name =
-    localStorage.getItem("novaName") || "";
-
-  const email =
-    localStorage.getItem("novaEmail") || "";
-
-  const phone =
-    localStorage.getItem("novaPhone") || "";
-
-  document.getElementById("profileName").value = name;
-  document.getElementById("profileEmail").value = email;
-  document.getElementById("profilePhone").value = phone;
-
-  document.getElementById("nameDisplay").textContent =
-    name || "Nova User";
-
-  document.getElementById("avatar").textContent =
-    (name || "N").charAt(0).toUpperCase();
+function logout(){
+ location.reload();
 }
 
-
-function showMessage(message){
-  alert(message);
+function showMessage(text){
+ alert(text);
 }
 
-
-function signOut(){
-
-  alert("Signed out of the fictional Nova Bank sandbox.");
+function escapeHtml(text){
+ return text.replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#039;"}[c];
+ });
 }
 
-
-loadProfile();
-renderTransactions();
-
+updateBalance();
 </script>
 
 </body>
