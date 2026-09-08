@@ -234,6 +234,13 @@ button{
   margin-left:4px;
 }
 
+.top-user-name{
+  font-weight:800;
+  font-size:14px;
+  color:var(--text);
+  margin-right:4px;
+}
+
 .avatar{
   width:40px;
   height:40px;
@@ -828,6 +835,72 @@ td{
   font-size:11px;
 }
 
+/* TOGGLE SETTINGS CONTROL */
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.setting-info {
+  text-align: left;
+}
+
+.setting-info b {
+  display: block;
+  font-size: 13px;
+}
+
+.setting-info small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  transition: .3s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--red);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
 /* MOBILE NAV */
 
 .mobile-nav{
@@ -953,6 +1026,10 @@ body.dark .status{
     display:none;
   }
 
+  .top-user-name{
+    display:inline-block !important;
+  }
+
   .mobile-nav{
     position:fixed;
     display:flex;
@@ -1049,17 +1126,17 @@ body.dark .status{
     <div id="stepCredentials">
       <div class="field hidden" id="emailField">
         <label>EMAIL ADDRESS</label>
-        <input id="email" type="email" placeholder="user@example.com">
+        <input id="email" type="email" placeholder="laurajackson12@gmail.com" value="laurajackson12@gmail.com">
       </div>
 
       <div class="field">
         <label>USERNAME</label>
-        <input id="username" placeholder="Enter username">
+        <input id="username" placeholder="Enter username" value="Laurajackson12">
       </div>
 
       <div class="field">
         <label>PASSWORD</label>
-        <input id="password" type="password" placeholder="Enter password">
+        <input id="password" type="password" placeholder="Enter password" value="••••••••">
       </div>
 
       <button class="primary" id="authBtn" onclick="requestVerification()">
@@ -1125,10 +1202,12 @@ body.dark .status{
 
       <div class="user">
 
-        <div class="avatar" id="userAvatar">US</div>
+        <span id="topHeaderName" class="top-user-name">Laura Jackson</span>
+
+        <div class="avatar" id="userAvatar">LJ</div>
 
         <div class="user-info">
-          <b id="userNameDisplay">User</b><br>
+          <b id="userNameDisplay">Laura Jackson</b><br>
           <small>Personal Account</small>
         </div>
 
@@ -1191,11 +1270,11 @@ body.dark .status{
       <div class="welcome">
 
         <div>
-          <h1 id="welcomeHeader">Good evening, User</h1>
+          <h1 id="welcomeHeader">Good evening, Laura Jackson</h1>
           <p>Your financial overview.</p>
         </div>
 
-        <div id="currentDate" class="current-date"></div>
+        <div id="currentDate" class="current-date">Tuesday, September 8, 2026</div>
 
       </div>
 
@@ -1653,22 +1732,22 @@ body.dark .status{
       <button class="close" onclick="closeModal('profileModal')">×</button>
     </div>
 
-    <div class="big-avatar" id="modalAvatar">US</div>
+    <div class="big-avatar" id="modalAvatar">LJ</div>
 
-    <h2 id="profileName">User</h2>
+    <h2 id="profileName">Laura Jackson</h2>
 
     <p id="profileEmail" style="color:#888">
-      user@washingtonharbor.com
+      laurajackson12@gmail.com
     </p>
 
     <div class="field" style="text-align:left">
       <label>DISPLAY NAME</label>
-      <input id="displayNameInput" value="User">
+      <input id="displayNameInput" value="Laura Jackson">
     </div>
 
     <div class="field" style="text-align:left">
       <label>EMAIL</label>
-      <input id="emailInput" value="user@washingtonharbor.com">
+      <input id="emailInput" value="laurajackson12@gmail.com">
     </div>
 
     <button
@@ -1738,9 +1817,41 @@ body.dark .status{
   <div class="modal-box">
 
     <div class="modal-head">
-      <h2>Settings</h2>
+      <h2>Account Settings</h2>
       <button class="close" onclick="closeModal('settingsModal')">×</button>
     </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <b>Email Alerts</b>
+        <small>Get notified on transfers and withdrawals</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="emailAlertsToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <b>Two-Factor Authentication</b>
+        <small>Require OTP code at sign in</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="twoFactorToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="field" style="margin-top: 15px;">
+      <label>DEFAULT FUNDING ACCOUNT</label>
+      <select id="defaultAccountSelect">
+        <option value="checking">Checking •••• 4821</option>
+        <option value="savings">Savings •••• 7714</option>
+      </select>
+    </div>
+
+    <br>
 
     <button
       class="outline-btn"
@@ -1750,8 +1861,15 @@ body.dark .status{
     </button>
 
     <button
-      class="outline-btn"
+      class="primary"
       style="width:100%;margin-bottom:12px"
+      onclick="saveSettings()">
+      Save Settings
+    </button>
+
+    <button
+      class="outline-btn"
+      style="width:100%;"
       onclick="resetDemo();closeModal('settingsModal')">
       ↻ Reset Activity Data
     </button>
@@ -1963,7 +2081,7 @@ function requestVerification() {
   activeCode = Math.floor(100000 + Math.random() * 900000).toString();
   pendingUser = {
     username: username,
-    email: currentMode === 'signup' ? email : (registeredUsers[username]?.email || username + "@washingtonharbor.com")
+    email: currentMode === 'signup' ? email : (registeredUsers[username]?.email || email)
   };
 
   // Switch to OTP step
@@ -1979,7 +2097,7 @@ function verifyAndLogin() {
   const enteredCode = document.getElementById("verificationCodeInput").value.trim();
 
   if (enteredCode === activeCode) {
-    loginUser(pendingUser.username, pendingUser.email);
+    loginUser("Laura Jackson", pendingUser.email);
   } else {
     alert("Invalid code. Please try again.");
   }
@@ -1994,19 +2112,22 @@ function cancelCodeStep() {
   document.getElementById("authTabs").classList.remove("hidden");
 }
 
-function loginUser(username, email) {
+function loginUser(name, email) {
   document.getElementById("loginPage").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
 
-  const formattedName = username.charAt(0).toUpperCase() + username.slice(1);
-  const initials = formattedName.substring(0, 2).toUpperCase();
+  const initials = "LJ";
 
-  document.getElementById("userNameDisplay").textContent = formattedName;
-  document.getElementById("welcomeHeader").textContent = "Good evening, " + formattedName;
+  if (document.getElementById("topHeaderName")) {
+    document.getElementById("topHeaderName").textContent = name;
+  }
+
+  document.getElementById("userNameDisplay").textContent = name;
+  document.getElementById("welcomeHeader").textContent = "Good evening, " + name;
   document.getElementById("userAvatar").textContent = initials;
   document.getElementById("modalAvatar").textContent = initials;
-  document.getElementById("profileName").textContent = formattedName;
-  document.getElementById("displayNameInput").value = formattedName;
+  document.getElementById("profileName").textContent = name;
+  document.getElementById("displayNameInput").value = name;
   document.getElementById("emailInput").value = email;
   document.getElementById("profileEmail").textContent = email;
 
@@ -2459,7 +2580,17 @@ function saveProfile(){
   const email = document.getElementById("emailInput").value.trim();
 
   if(name){
-    const initials = name.substring(0, 2).toUpperCase();
+    const parts = name.split(" ");
+    let initials = parts[0].substring(0, 1).toUpperCase();
+    if(parts.length > 1) {
+      initials += parts[parts.length - 1].substring(0, 1).toUpperCase();
+    } else {
+      initials = name.substring(0, 2).toUpperCase();
+    }
+
+    if (document.getElementById("topHeaderName")) {
+      document.getElementById("topHeaderName").textContent = name;
+    }
     document.getElementById("userNameDisplay").textContent = name;
     document.getElementById("welcomeHeader").textContent = "Good evening, " + name;
     document.getElementById("profileName").textContent = name;
@@ -2473,6 +2604,22 @@ function saveProfile(){
 
   closeModal("profileModal");
 
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+function saveSettings(){
+  const alertsOn = document.getElementById("emailAlertsToggle").checked;
+  const twoFactorOn = document.getElementById("twoFactorToggle").checked;
+  const defaultAccount = document.getElementById("defaultAccountSelect").value;
+
+  document.getElementById("transferFrom").value = defaultAccount;
+
+  alert("Settings saved successfully!");
+  closeModal("settingsModal");
 }
 
 
@@ -2566,9 +2713,6 @@ function logout(){
     .classList.remove("hidden");
 
   cancelCodeStep();
-  document.getElementById("username").value="";
-  document.getElementById("password").value="";
-  document.getElementById("email").value="";
 
 }
 
