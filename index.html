@@ -341,7 +341,7 @@ overflow:hidden;
 
 .progress span{
 display:block;
-width:12%;
+width:0%;
 height:100%;
 background:linear-gradient(90deg,#8d0d15,#d4a62f);
 border-radius:20px;
@@ -400,11 +400,6 @@ color:#98680f;
 font-family:Georgia,serif;
 font-size:20px;
 letter-spacing:2px;
-}
-
-.footer-note{
-font-size:10px;
-color:#8a8f99;
 }
 
 /* MODALS */
@@ -571,16 +566,6 @@ color:#737b8c;
 margin:8px 0 25px;
 }
 
-.login-note{
-background:#fff7df;
-border:1px solid #e6ce82;
-border-radius:10px;
-padding:11px;
-color:#66521d;
-font-size:12px;
-margin-bottom:18px;
-}
-
 /* MOBILE */
 @media(max-width:800px){
 
@@ -668,11 +653,6 @@ NOVA BANK
 Secure account access
 </div>
 
-<div class="login-note">
-Fictional banking interface. Login credentials are stored
-locally in this browser for testing.
-</div>
-
 <label>Username</label>
 
 <input
@@ -694,7 +674,7 @@ Sign In
 </button>
 
 <button class="gold-button" onclick="createLogin()">
-Create / Reset Login
+Create / Reset Account
 </button>
 
 </div>
@@ -735,11 +715,9 @@ BANKING FOR A BRIGHTER TOMORROW
 <div class="profile">
 
 <div class="profile-circle" id="avatar">
-LJ
 </div>
 
 <span id="topName">
-Laura Jackson
 </span>
 
 <button onclick="openSettings()">
@@ -772,7 +750,7 @@ Transfer & Pay
 Wire Transfer
 </button>
 
-<button class="nav-item" onclick="simulated('Deposit Checks');setActive(this)">
+<button class="nav-item" onclick="openFeature('Deposit Checks');setActive(this)">
 <span class="nav-icon">▣</span>
 Deposit Checks
 </button>
@@ -810,11 +788,10 @@ Settings
 <section class="hero">
 
 <small>
-Good morning,
+Good day,
 </small>
 
 <h1 id="heroName">
-Laura Jackson
 </h1>
 
 <p>
@@ -851,12 +828,12 @@ onclick="openFeature('Checking Account')">
 Checking
 </h3>
 
-<div class="account-number">
-•••• 2778
+<div class="account-number" id="checkingNum">
+•••• --
 </div>
 
-<div class="account-balance">
-$10,000,000.00
+<div class="account-balance" id="checkingBal">
+$0.00
 </div>
 
 <div class="available">
@@ -874,12 +851,12 @@ onclick="openFeature('Savings Account')">
 Savings
 </h3>
 
-<div class="account-number">
-•••• 8842
+<div class="account-number" id="savingsNum">
+•••• --
 </div>
 
-<div class="account-balance">
-$15,000,000.00
+<div class="account-balance" id="savingsBal">
+$0.00
 </div>
 
 <div class="available">
@@ -921,7 +898,7 @@ Wire Transfer
 </button>
 
 
-<button class="quick" onclick="simulated('Deposit Check')">
+<button class="quick" onclick="openFeature('Deposit Check')">
 
 <div class="quick-icon">
 ▣
@@ -1024,81 +1001,10 @@ View all ›
 </div>
 
 
-<div class="activity-card">
+<div class="activity-card" id="activityList">
 
 <div class="activity">
-
-<div>
-<div class="activity-name">
-Account transfer
-</div>
-
-<div class="activity-date">
-Yesterday • Savings
-</div>
-</div>
-
-<div class="positive">
-+$4,250.00
-</div>
-
-</div>
-
-
-<div class="activity">
-
-<div>
-<div class="activity-name">
-Online purchase
-</div>
-
-<div class="activity-date">
-Sep 6 • Checking
-</div>
-</div>
-
-<div class="negative">
--$185.50
-</div>
-
-</div>
-
-
-<div class="activity">
-
-<div>
-<div class="activity-name">
-Interest credit
-</div>
-
-<div class="activity-date">
-Sep 5 • Savings
-</div>
-</div>
-
-<div class="positive">
-+$1,250.00
-</div>
-
-</div>
-
-
-<div class="activity">
-
-<div>
-<div class="activity-name">
-Account funding
-</div>
-
-<div class="activity-date">
-Sep 1 • Savings
-</div>
-</div>
-
-<div class="positive">
-+$15,000,000.00
-</div>
-
+<div style="color:#747d8d;padding:10px 0;">No recent transactions.</div>
 </div>
 
 </div>
@@ -1131,14 +1037,14 @@ View details ›
 Total spending
 </span>
 
-<span>
-$185.50
+<span id="spendingTotal">
+$0.00
 </span>
 
 </div>
 
 <div class="progress">
-<span></span>
+<span id="spendingBar"></span>
 </div>
 
 <p>
@@ -1190,10 +1096,6 @@ Online Agreement &nbsp; | &nbsp;
 Contact Us
 </div>
 
-<div class="footer-note">
-Fictional / simulated banking interface
-</div>
-
 </footer>
 
 </div>
@@ -1214,10 +1116,6 @@ onclick="closeModal('transferModal')">
 <h2>
 Transfer Money
 </h2>
-
-<p style="color:#777;font-size:13px">
-Create a simulated transfer.
-</p>
 
 <label>
 Recipient
@@ -1244,11 +1142,11 @@ From account
 <select id="fromAccount">
 
 <option value="Checking">
-Checking — $10,000,000.00
+Checking
 </option>
 
 <option value="Savings">
-Savings — $15,000,000.00
+Savings
 </option>
 
 </select>
@@ -1278,10 +1176,6 @@ onclick="closeModal('wireTransferModal')">
 Wire Transfer
 </h2>
 
-<p style="color:#777;font-size:13px">
-Simulated wire-transfer details.
-</p>
-
 <label>
 Sender / Recipient Name
 </label>
@@ -1300,7 +1194,7 @@ id="wireRouting"
 type="text"
 inputmode="numeric"
 maxlength="9"
-placeholder="9-digit test routing number">
+placeholder="9-digit routing number">
 
 <label>
 Account Number
@@ -1310,7 +1204,7 @@ Account Number
 id="wireAccount"
 type="text"
 inputmode="numeric"
-placeholder="Test account number">
+placeholder="Account number">
 
 <label>
 Amount
@@ -1352,12 +1246,8 @@ color:#16834e;
 </div>
 
 <h2 style="text-align:center">
-Transfer Recorded
+Transfer Processed
 </h2>
-
-<p style="text-align:center;color:#777">
-Simulated transaction confirmation
-</p>
 
 <div class="info-box">
 
@@ -1378,7 +1268,7 @@ Simulated transaction confirmation
 
 <p>
 <strong>Status:</strong>
-SIMULATED
+COMPLETED
 </p>
 
 </div>
@@ -1504,7 +1394,7 @@ return;
 localStorage.setItem("novaUsername",username);
 localStorage.setItem("novaPassword",password);
 
-alert("Your login has been saved on this browser.");
+alert("Your account credentials have been saved.");
 }
 
 
@@ -1519,7 +1409,7 @@ const savedPassword =
 localStorage.getItem("novaPassword");
 
 if(!savedUsername || !savedPassword){
-alert("Create your login first.");
+alert("Please create an account first.");
 return;
 }
 
@@ -1557,7 +1447,7 @@ document
 
 const name =
 localStorage.getItem("novaName") ||
-"Laura Jackson";
+"Valued Customer";
 
 document
 .getElementById("heroName")
@@ -1573,7 +1463,7 @@ name
 .map(word => word.charAt(0))
 .join("")
 .substring(0,2)
-.toUpperCase();
+.toUpperCase() || "NB";
 
 document
 .getElementById("avatar")
@@ -1615,7 +1505,7 @@ document
 .getElementById("displayName")
 .value =
 localStorage.getItem("novaName") ||
-"Laura Jackson";
+"";
 
 document
 .getElementById("displayEmail")
@@ -1833,7 +1723,7 @@ return;
 if(!/^\d{9}$/.test(routing)){
 
 alert(
-"Enter a 9-digit test routing number."
+"Enter a valid 9-digit routing number."
 );
 
 return;
@@ -1842,7 +1732,7 @@ return;
 if(!/^\d+$/.test(account)){
 
 alert(
-"Enter a numeric test account number."
+"Enter a valid numeric account number."
 );
 
 return;
@@ -1850,7 +1740,7 @@ return;
 
 closeModal("wireTransferModal");
 
-openFeature("Wire Transfer Recorded");
+openFeature("Wire Transfer Confirmation");
 
 }
 
@@ -1881,17 +1771,17 @@ NOVA BANK
 </div>
 
 <div class="card-number">
-•••• •••• •••• 4821
+•••• •••• •••• ----
 </div>
 
 <div class="card-bottom">
 
 <span>
-LAURA JACKSON
+${localStorage.getItem("novaName") || "CARDHOLDER"}
 </span>
 
 <span>
-TEST CARD
+DEBIT
 </span>
 
 </div>
@@ -1903,10 +1793,6 @@ TEST CARD
 <h3>
 Card Controls
 </h3>
-
-<p style="color:#707887">
-Manage your fictional card settings.
-</p>
 
 <button class="primary"
 onclick="alert('Card settings updated.')">
@@ -1932,73 +1818,7 @@ content.innerHTML = `
 Transaction History
 </h3>
 
-<div class="activity">
-
-<div>
-<div class="activity-name">
-Account transfer
-</div>
-<div class="activity-date">
-Yesterday • Savings
-</div>
-</div>
-
-<div class="positive">
-+$4,250.00
-</div>
-
-</div>
-
-<div class="activity">
-
-<div>
-<div class="activity-name">
-Online purchase
-</div>
-<div class="activity-date">
-Sep 6 • Checking
-</div>
-</div>
-
-<div class="negative">
--$185.50
-</div>
-
-</div>
-
-<div class="activity">
-
-<div>
-<div class="activity-name">
-Interest credit
-</div>
-<div class="activity-date">
-Sep 5 • Savings
-</div>
-</div>
-
-<div class="positive">
-+$1,250.00
-</div>
-
-</div>
-
-<div class="activity">
-
-<div>
-<div class="activity-name">
-Account funding
-</div>
-<div class="activity-date">
-Sep 1 • Savings
-</div>
-</div>
-
-<div class="positive">
-+$15,000,000.00
-</div>
-
-</div>
+<p style="color:#777">No active statements found.</p>
 
 </div>
 
@@ -2031,15 +1851,7 @@ Enabled
 <strong>Two-step verification</strong>
 <br>
 <span style="color:#777">
-Available as a setting
-</span>
-</div>
-
-<div class="info-box">
-<strong>Session security</strong>
-<br>
-<span style="color:#777">
-Browser session protected
+Available in settings
 </span>
 </div>
 
@@ -2060,10 +1872,6 @@ Update Security
 else if(feature === "Pay Bills"){
 
 content.innerHTML = `
-
-<p style="color:#777;font-size:13px">
-Create a simulated bill payment.
-</p>
 
 <label>
 Biller
@@ -2090,11 +1898,11 @@ From account
 <select id="billAccount">
 
 <option>
-Checking — $10,000,000.00
+Checking
 </option>
 
 <option>
-Savings — $15,000,000.00
+Savings
 </option>
 
 </select>
@@ -2130,11 +1938,6 @@ Premium Banking
 More control. More possibilities.
 </p>
 
-<p>
-Explore additional features available in this
-fictional banking interface.
-</p>
-
 </div>
 
 `;
@@ -2152,16 +1955,6 @@ feature === "Savings Account"
 const checking =
 feature === "Checking Account";
 
-const amount =
-checking
-? "$10,000,000.00"
-: "$15,000,000.00";
-
-const number =
-checking
-? "•••• 2778"
-: "•••• 8842";
-
 content.innerHTML = `
 
 <div class="feature-card">
@@ -2171,19 +1964,7 @@ ${checking ? "Checking Account" : "Savings Account"}
 </h3>
 
 <p style="color:#777">
-Account number ${number}
-</p>
-
-<div style="
-font-size:34px;
-font-weight:800;
-margin:25px 0 5px;
-">
-${amount}
-</div>
-
-<p style="color:#777">
-Available balance
+Account Details
 </p>
 
 <button class="primary"
@@ -2273,28 +2054,8 @@ font-size:30px;
 font-weight:800;
 margin-top:8px;
 ">
-$185.50
+$0.00
 </div>
-
-</div>
-
-<div class="info-box">
-
-<strong>
-Online purchase
-</strong>
-
-<br>
-
-<span style="color:#777">
-Sep 6 • Checking
-</span>
-
-<br><br>
-
-<strong>
--$185.50
-</strong>
 
 </div>
 
@@ -2307,7 +2068,7 @@ Sep 6 • Checking
 
 /* WIRE RESULT */
 
-else if(feature === "Wire Transfer Recorded"){
+else if(feature === "Wire Transfer Confirmation"){
 
 content.innerHTML = `
 
@@ -2320,12 +2081,8 @@ color:#16834e;
 </div>
 
 <h3 style="text-align:center">
-Wire Transfer Recorded
+Wire Transfer Processed
 </h3>
-
-<p style="text-align:center;color:#777">
-The wire was recorded as a simulated transaction.
-</p>
 
 <div class="info-box">
 
@@ -2333,7 +2090,7 @@ The wire was recorded as a simulated transaction.
 Status:
 </strong>
 
-SIMULATED
+COMPLETED
 
 </div>
 
@@ -2392,27 +2149,23 @@ content.innerHTML = `
 Help Center
 </h3>
 
-<p style="color:#777">
-Select an area for assistance.
-</p>
-
 <button class="gold-button"
 onclick="
-alert('Transfer help: open Transfer Money to create a simulated transfer.')
+alert('Navigate to Transfer Money to complete transfers.')
 ">
 Transfer Help
 </button>
 
 <button class="gold-button"
 onclick="
-alert('Settings help: open Settings to update your profile.')
+alert('Navigate to Settings to update your profile.')
 ">
 Settings Help
 </button>
 
 <button class="gold-button"
 onclick="
-alert('Cards help: open Cards to view the card interface.')
+alert('Navigate to Cards to manage active cards.')
 ">
 Cards Help
 </button>
@@ -2435,10 +2188,6 @@ content.innerHTML = `
 <h3>
 ${feature}
 </h3>
-
-<p style="color:#777">
-This section is available in the fictional banking interface.
-</p>
 
 </div>
 
@@ -2482,22 +2231,10 @@ return;
 }
 
 alert(
-"Bill payment recorded as a simulated transaction."
+"Bill payment completed."
 );
 
 closeModal("featureModal");
-
-}
-
-
-/* DEPOSIT CHECK */
-
-function simulated(feature){
-
-alert(
-feature +
-" is simulated in this fictional interface."
-);
 
 }
 
