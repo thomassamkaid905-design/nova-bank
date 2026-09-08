@@ -109,52 +109,59 @@ button,input,select{font:inherit}
 .app{min-height:100vh}
 
 .topbar{
-  height:76px;
+  min-height:76px;
   background:linear-gradient(90deg,#65050d,#a50a1c);
   color:white;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 28px;
+  padding:12px 28px;
+  gap:15px;
 }
 .logo{
   font-family:Georgia,serif;
   color:var(--gold);
-  font-size:25px;
+  font-size:22px;
   font-weight:bold;
   letter-spacing:1px;
+  line-height:1.2;
 }
 .logo small{
   display:block;
   font-family:Arial;
   color:#fff;
   font-size:9px;
-  letter-spacing:2px;
+  letter-spacing:1.5px;
   margin-top:2px;
 }
 .top-actions{
   display:flex;
-  gap:10px;
+  gap:8px;
   align-items:center;
+  flex-wrap:nowrap;
+  flex-shrink:0;
 }
 .top-actions button{
   background:transparent;
   color:white;
   border:1px solid #ffffff44;
-  padding:8px 12px;
+  padding:8px 10px;
   border-radius:7px;
   cursor:pointer;
+  font-size:13px;
+  white-space:nowrap;
 }
 .profile{
   background:#fff;
   color:var(--red);
-  width:38px;
-  height:38px;
+  width:36px;
+  height:36px;
   border-radius:50%;
   display:flex;
   justify-content:center;
   align-items:center;
   font-weight:bold;
+  flex-shrink:0;
 }
 
 .layout{
@@ -368,10 +375,36 @@ button,input,select{font:inherit}
 .cancel{background:#eee;border:0}
 .submit{background:var(--red);color:#fff;border:0}
 
+/* RESPONSIVE DESIGN ADJUSTMENTS FOR MOBILE SCREEN */
 @media(max-width:850px){
-  .topbar{padding:0 15px}
-  .logo{font-size:19px}
-  .top-actions button{padding:6px 10px;font-size:12px}
+  .topbar{
+    padding:8px 10px;
+    gap:6px;
+    flex-wrap:nowrap;
+  }
+  .logo{
+    font-size:11px !important;
+    max-width:115px;
+    word-wrap:break-word;
+    flex-shrink:0;
+    line-height:1.1;
+  }
+  .logo small{
+    font-size:6px !important;
+    letter-spacing:0.5px;
+  }
+  .top-actions{
+    gap:4px;
+  }
+  .top-actions button{
+    padding:4px 5px !important;
+    font-size:9px !important;
+  }
+  .profile{
+    width:26px !important;
+    height:26px !important;
+    font-size:10px !important;
+  }
   .sidebar{position:fixed;top:76px;bottom:0;left:-240px;z-index:50;transition:.25s}
   .sidebar.open{left:0}
   .main{padding:20px 15px}
@@ -518,7 +551,7 @@ button,input,select{font:inherit}
 <div id="settingsModal" class="modal-wrap hidden">
   <div class="modal">
     <div class="modal-head">
-      <h3>Account Settings & Figures</h3>
+      <h3>Account Settings</h3>
       <button type="button" class="close" onclick="closeModal('settingsModal')">×</button>
     </div>
 
@@ -537,18 +570,6 @@ button,input,select{font:inherit}
         <div class="modal-group">
           <label for="setSavNum">Savings Last 4 Digits</label>
           <input id="setSavNum" type="text" maxlength="4" required placeholder="2017">
-        </div>
-      </div>
-
-      <div class="modal-row">
-        <div class="modal-group">
-          <label for="setChkBal">Checking Balance ($)</label>
-          <input id="setChkBal" type="number" step="0.01" required placeholder="10000000.00">
-        </div>
-
-        <div class="modal-group">
-          <label for="setSavBal">Savings Balance ($)</label>
-          <input id="setSavBal" type="number" step="0.01" required placeholder="15000000.00">
         </div>
       </div>
 
@@ -1012,16 +1033,12 @@ function openSettingsModal() {
   const user = getActiveUser() || {
     name: "Laura Jackson",
     checkingNumber: "1174",
-    savingsNumber: "2017",
-    checkingBalance: DEFAULT_CHECKING,
-    savingsBalance: DEFAULT_SAVINGS
+    savingsNumber: "2017"
   };
 
   document.getElementById("setAccountName").value = user.name || "Laura Jackson";
   document.getElementById("setChkNum").value = user.checkingNumber || "1174";
   document.getElementById("setSavNum").value = user.savingsNumber || "2017";
-  document.getElementById("setChkBal").value = user.checkingBalance;
-  document.getElementById("setSavBal").value = user.savingsBalance;
 
   document.getElementById("settingsModal").classList.remove("hidden");
 }
@@ -1036,13 +1053,11 @@ function handleSettingsSubmit(e) {
   user.name = document.getElementById("setAccountName").value.trim();
   user.checkingNumber = document.getElementById("setChkNum").value.trim();
   user.savingsNumber = document.getElementById("setSavNum").value.trim();
-  user.checkingBalance = parseFloat(document.getElementById("setChkBal").value);
-  user.savingsBalance = parseFloat(document.getElementById("setSavBal").value);
 
   setActiveUser(user);
   showApp();
   closeModal("settingsModal");
-  alert("Account settings and figures updated!");
+  alert("Account settings updated!");
 }
 
 // App View Render
