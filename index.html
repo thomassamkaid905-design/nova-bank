@@ -43,7 +43,7 @@ button{
   display:none!important;
 }
 
-/* LOGIN */
+/* LOGIN / AUTH */
 
 .login-page{
   min-height:100vh;
@@ -86,13 +86,37 @@ button{
 }
 
 .login-card h1{
-  font-size:30px;
-  margin:32px 0 7px;
+  font-size:28px;
+  margin:24px 0 7px;
 }
 
 .login-sub{
   color:var(--muted);
-  margin-bottom:27px;
+  margin-bottom:20px;
+  font-size:14px;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--line);
+}
+
+.auth-tab {
+  padding: 8px 12px;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--muted);
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.auth-tab.active {
+  color: var(--red);
+  border-bottom-color: var(--red);
 }
 
 .field{
@@ -1002,7 +1026,7 @@ body.dark .status{
 
 <body>
 
-<!-- LOGIN -->
+<!-- LOGIN / SIGN UP PAGE -->
 
 <section id="loginPage" class="login-page">
 
@@ -1013,25 +1037,50 @@ body.dark .status{
       Washington Harbor
     </div>
 
-    <h1>Welcome back</h1>
+    <h1 id="authTitle">Welcome back</h1>
+    <div id="authSub" class="login-sub">Sign in to your account dashboard.</div>
 
-    <div class="login-sub">
-      Sign in to your account dashboard.
+    <div class="auth-tabs" id="authTabs">
+      <button class="auth-tab active" onclick="switchTab('signin')">Sign In</button>
+      <button class="auth-tab" onclick="switchTab('signup')">Create Account</button>
     </div>
 
-    <div class="field">
-      <label>USERNAME</label>
-      <input id="username" placeholder="Enter username">
+    <!-- Step 1: Credentials Form -->
+    <div id="stepCredentials">
+      <div class="field hidden" id="emailField">
+        <label>EMAIL ADDRESS</label>
+        <input id="email" type="email" placeholder="user@example.com">
+      </div>
+
+      <div class="field">
+        <label>USERNAME</label>
+        <input id="username" placeholder="Enter username">
+      </div>
+
+      <div class="field">
+        <label>PASSWORD</label>
+        <input id="password" type="password" placeholder="Enter password">
+      </div>
+
+      <button class="primary" id="authBtn" onclick="requestVerification()">
+        Continue
+      </button>
     </div>
 
-    <div class="field">
-      <label>PASSWORD</label>
-      <input id="password" type="password" placeholder="Enter password">
-    </div>
+    <!-- Step 2: Verification Code Form -->
+    <div id="stepCode" class="hidden">
+      <div class="field">
+        <label>ENTER 6-DIGIT CODE</label>
+        <input id="verificationCodeInput" placeholder="Enter 6-digit code" maxlength="6">
+      </div>
 
-    <button class="primary" onclick="login()">
-      Sign In
-    </button>
+      <button class="primary" onclick="verifyAndLogin()">
+        Verify & Sign In
+      </button>
+      <button class="outline-btn" style="width:100%; margin-top:10px;" onclick="cancelCodeStep()">
+        Back
+      </button>
+    </div>
 
   </div>
 
@@ -1778,8 +1827,13 @@ body.dark .status{
 <script>
 
 /* =========================
-   ACCOUNT DATA
+   ACCOUNT & AUTH DATA
 ========================= */
+
+let registeredUsers = {}; // Key: username, Value: { password, email }
+let currentMode = 'signin';
+let activeCode = null;
+let pendingUser = null;
 
 let accounts = {
   checking:10000000,
@@ -1861,45 +1915,102 @@ function safe(text){
 
 
 /* =========================
-   LOGIN
+   AUTHENTICATION & CREATION
 ========================= */
 
-function login(){
+function switchTab(mode) {
+  currentMode = mode;
+  const tabs = document.querySelectorAll('.auth-tab');
+  tabs[0].classList.toggle('active', mode === 'signin');
+  tabs[1].classList.toggle('active', mode === 'signup');
 
-  const username =
-    document.getElementById("username").value.trim();
+  document.getElementById('emailField').classList.toggle('hidden', mode === 'signin');
+  document.getElementById('authTitle').textContent = mode === 'signin' ? 'Welcome back' : 'Create Account';
+  document.getElementById('authSub').textContent = mode === 'signin' 
+    ? 'Sign in to your account dashboard.' 
+    : 'Enter your email, username, and password to sign up.';
+  document.getElementById('authBtn').textContent = mode === 'signin' ? 'Sign In' : 'Create & Get Code';
+  
+  cancelCodeStep();
+}
 
-  const password =
-    document.getElementById("password").value;
+function requestVerification() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
 
-  if(username && password){
-
-    document
-      .getElementById("loginPage")
-      .classList.add("hidden");
-
-    document
-      .getElementById("app")
-      .classList.remove("hidden");
-
-    const formattedName = username.charAt(0).toUpperCase() + username.slice(1);
-    const initials = formattedName.substring(0, 2).toUpperCase();
-
-    document.getElementById("userNameDisplay").textContent = formattedName;
-    document.getElementById("welcomeHeader").textContent = "Good evening, " + formattedName;
-    document.getElementById("userAvatar").textContent = initials;
-    document.getElementById("modalAvatar").textContent = initials;
-    document.getElementById("profileName").textContent = formattedName;
-    document.getElementById("displayNameInput").value = formattedName;
-
-    loadDashboard();
-
-  }else{
-
-    alert("Please enter a valid username and password.");
-
+  if (!username || !password) {
+    alert("Please enter both username and password.");
+    return;
   }
 
+  if (currentMode === 'signup') {
+    if (!email) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    // Save account temporarily
+    registeredUsers[username] = { password: password, email: email };
+  } else {
+    // Check if account exists or matches demo credentials
+    if (registeredUsers[username] && registeredUsers[username].password !== password) {
+      alert("Incorrect password.");
+      return;
+    }
+  }
+
+  // Generate 6-digit Code
+  activeCode = Math.floor(100000 + Math.random() * 900000).toString();
+  pendingUser = {
+    username: username,
+    email: currentMode === 'signup' ? email : (registeredUsers[username]?.email || username + "@washingtonharbor.com")
+  };
+
+  // Switch to OTP step
+  document.getElementById("stepCredentials").classList.add("hidden");
+  document.getElementById("authTabs").classList.add("hidden");
+  document.getElementById("stepCode").classList.remove("hidden");
+
+  // Simulate Sending Code to Email
+  alert("Verification Code sent to " + pendingUser.email + ": " + activeCode);
+}
+
+function verifyAndLogin() {
+  const enteredCode = document.getElementById("verificationCodeInput").value.trim();
+
+  if (enteredCode === activeCode) {
+    loginUser(pendingUser.username, pendingUser.email);
+  } else {
+    alert("Invalid code. Please try again.");
+  }
+}
+
+function cancelCodeStep() {
+  activeCode = null;
+  pendingUser = null;
+  document.getElementById("verificationCodeInput").value = "";
+  document.getElementById("stepCode").classList.add("hidden");
+  document.getElementById("stepCredentials").classList.remove("hidden");
+  document.getElementById("authTabs").classList.remove("hidden");
+}
+
+function loginUser(username, email) {
+  document.getElementById("loginPage").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  const formattedName = username.charAt(0).toUpperCase() + username.slice(1);
+  const initials = formattedName.substring(0, 2).toUpperCase();
+
+  document.getElementById("userNameDisplay").textContent = formattedName;
+  document.getElementById("welcomeHeader").textContent = "Good evening, " + formattedName;
+  document.getElementById("userAvatar").textContent = initials;
+  document.getElementById("modalAvatar").textContent = initials;
+  document.getElementById("profileName").textContent = formattedName;
+  document.getElementById("displayNameInput").value = formattedName;
+  document.getElementById("emailInput").value = email;
+  document.getElementById("profileEmail").textContent = email;
+
+  loadDashboard();
 }
 
 
@@ -2454,8 +2565,10 @@ function logout(){
     .getElementById("loginPage")
     .classList.remove("hidden");
 
+  cancelCodeStep();
   document.getElementById("username").value="";
   document.getElementById("password").value="";
+  document.getElementById("email").value="";
 
 }
 
