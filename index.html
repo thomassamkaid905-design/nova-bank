@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nova Bank</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f7fb;color:#172033}
+.top{background:#101a2e;color:#fff;padding:18px 24px;font-size:22px;font-weight:800}
+.wrap{max-width:1000px;margin:35px auto;padding:0 18px}.panel{background:#fff;border-radius:18px;padding:28px;box-shadow:0 8px 30px #17203312}
+.login{max-width:430px;margin:70px auto}.muted{color:#667085}label{display:block;margin-top:15px;font-weight:600}
+input{width:100%;padding:14px;margin-top:7px;border:1px solid #d0d5dd;border-radius:10px;font-size:16px}
+button{width:100%;padding:14px;margin-top:18px;border:0;border-radius:10px;background:#101a2e;color:#fff;font-weight:700;font-size:16px}
+.hidden{display:none}.balance{font-size:42px;font-weight:850;margin:12px 0 8px}.notice{font-size:13px;background:#fff4d6;padding:10px 12px;border-radius:9px;margin:16px 0}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}.item{padding:14px 0;border-bottom:1px solid #eee}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.balance{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="top">Nova Bank</div>
+
+<div id="login" class="wrap login">
+  <div class="panel">
+    <h1>Sign in</h1>
+    <p class="muted">Access your Nova Bank account.</p>
+    <label>Email</label>
+    <input id="email" type="email" autocomplete="username" placeholder="Email">
+    <label>Password</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Password">
+    <button onclick="signIn()">Sign in</button>
+    <p id="error" class="muted"></p>
+  </div>
+</div>
+
+<div id="dashboard" class="wrap hidden">
+  <div class="panel">
+    <p class="muted">Available balance</p>
+    <div class="balance">$25,000,000.00</div>
+    <div class="notice"><b>Sandbox funds:</b> This balance is for testing and is not real money or proof of funds.</div>
+    <div class="grid">
+      <div>
+        <h2>Recent activity</h2>
+        <div class="item"><b>Opening test balance</b><br><span class="muted">Sandbox account</span><br>+$25,000,000.00</div>
+        <div class="item"><b>Account opened</b><br><span class="muted">Nova Bank</span></div>
+      </div>
+      <div>
+        <h2>Account</h2>
+        <p><b id="accountEmail"></b></p>
+        <p class="muted">Checking •••• 4821</p>
+        <button onclick="signOut()">Sign out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DEMO_EMAIL="Laurajacksonxtt200@gmail.com";
+const DEMO_PASSWORD="samkaid12@";
+function signIn(){
+ const e=document.getElementById("email").value.trim();
+ const p=document.getElementById("password").value;
+ if(e===DEMO_EMAIL && p===DEMO_PASSWORD){
+   document.getElementById("accountEmail").textContent=e;
+   document.getElementById("login").classList.add("hidden");
+   document.getElementById("dashboard").classList.remove("hidden");
+ }else{
+   document.getElementById("error").textContent="Incorrect email or password.";
+ }
+}
+function signOut(){location.reload()}
+</script>
+</body>
+</html>
