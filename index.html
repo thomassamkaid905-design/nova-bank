@@ -18,6 +18,7 @@ button,input,select{font:inherit}
   --red:#8d0715;
   --red2:#b20d20;
   --gold:#d8b35a;
+  --circle-bg:#fdf5e6;
   --dark:#42040a;
   --light:#f7f7f7;
 }
@@ -231,28 +232,46 @@ button,input,select{font:inherit}
   font-size:19px;
 }
 
-.quick-actions{
+/* QUICK ACTION CARDS DESIGN */
+.action-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:13px;
+  gap:16px;
 }
-.action{
-  background:white;
-  border:1px solid #eee;
-  padding:18px 12px;
-  border-radius:12px;
-  cursor:pointer;
+.action-card{
+  background:#ffffff;
+  border:1px solid #ebebeb;
+  border-radius:20px;
+  padding:32px 20px;
   text-align:center;
-  font-weight:bold;
+  cursor:pointer;
+  transition:transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow:0 2px 10px rgba(0,0,0,0.03);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
-.action:hover{
-  border-color:var(--gold);
+.action-card:hover{
   transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.06);
 }
-.action span{
-  display:block;
-  font-size:25px;
-  margin-bottom:8px;
+.action-icon-circle{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background-color:var(--circle-bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:14px;
+  color:var(--red);
+  font-size:24px;
+}
+.action-label{
+  font-weight:bold;
+  font-size:16px;
+  color:#111;
 }
 
 .activity{
@@ -351,12 +370,12 @@ button,input,select{font:inherit}
 @media(max-width:850px){
   .topbar{padding:0 15px}
   .logo{font-size:19px}
-  .top-actions button{display:none}
+  .top-actions button{padding:6px 10px;font-size:12px}
   .sidebar{position:fixed;top:76px;bottom:0;left:-240px;z-index:50;transition:.25s}
   .sidebar.open{left:0}
   .main{padding:20px 15px}
   .accounts{grid-template-columns:1fr}
-  .quick-actions{grid-template-columns:1fr}
+  .action-grid{grid-template-columns:repeat(2,1fr)}
   .modal-row{grid-template-columns:1fr}
 }
 </style>
@@ -405,6 +424,7 @@ button,input,select{font:inherit}
     </div>
 
     <div class="top-actions">
+      <button type="button" onclick="resetBalancesToDefault()">Reset Balances</button>
       <button type="button" onclick="signOut()">Sign Out</button>
       <div class="profile" id="avatar">--</div>
     </div>
@@ -415,6 +435,9 @@ button,input,select{font:inherit}
       <button type="button" class="active">▣ Dashboard</button>
       <button type="button" onclick="openTransferModal()">⇄ Internal Transfer</button>
       <button type="button" onclick="openWireModal()">↗ Wire Transfer</button>
+      <button type="button" onclick="openDepositModal()">▣ Deposit Check</button>
+      <button type="button" onclick="openBillModal()">▤ Pay Bills</button>
+      <button type="button" onclick="openSendModal()">➢ Send Money</button>
     </aside>
 
     <main class="main">
@@ -430,8 +453,8 @@ button,input,select{font:inherit}
             <span>Checking Account</span>
             <span>Personal</span>
           </div>
-          <div class="account-number" id="chkNumber">•••• 0000</div>
-          <div class="balance" id="chkBalance">$0.00</div>
+          <div class="account-number" id="chkNumber">•••• 1001</div>
+          <div class="balance" id="chkBalance">$10,000,000.00</div>
           <div class="available">Available Balance</div>
         </div>
 
@@ -440,22 +463,40 @@ button,input,select{font:inherit}
             <span>Savings Account</span>
             <span>Personal</span>
           </div>
-          <div class="account-number" id="savNumber">•••• 0000</div>
-          <div class="balance" id="savBalance">$0.00</div>
+          <div class="account-number" id="savNumber">•••• 2002</div>
+          <div class="balance" id="savBalance">$15,000,000.00</div>
           <div class="available">Available Balance</div>
         </div>
       </div>
 
       <!-- QUICK ACTIONS -->
       <h3 class="section-title">Quick Actions</h3>
-      <div class="quick-actions">
-        <button type="button" class="action" onclick="openTransferModal()">
-          <span>⇄</span>Internal Transfer
-        </button>
+      <div class="action-grid">
+        <div class="action-card" onclick="openTransferModal()">
+          <div class="action-icon-circle">⇄</div>
+          <div class="action-label">Internal Transfer</div>
+        </div>
 
-        <button type="button" class="action" onclick="openWireModal()">
-          <span>↗</span>Wire Transfer
-        </button>
+        <div class="action-card" onclick="openWireModal()">
+          <div class="action-icon-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="action-label">Wire Transfer</div>
+        </div>
+
+        <div class="action-card" onclick="openDepositModal()">
+          <div class="action-icon-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="10" fill="currentColor"/></svg>
+          </div>
+          <div class="action-label">Deposit Check</div>
+        </div>
+
+        <div class="action-card" onclick="openBillModal()">
+          <div class="action-icon-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </div>
+          <div class="action-label">Pay Bills</div>
+        </div>
       </div>
 
       <!-- RECENT ACTIVITY -->
@@ -483,7 +524,7 @@ button,input,select{font:inherit}
     <form onsubmit="handleRegister(event)" class="modal-body">
       <div class="modal-group">
         <label for="regName">Full Name</label>
-        <input id="regName" type="text" required placeholder="e.g. Jane Doe">
+        <input id="regName" type="text" required placeholder="e.g. Laura Jackson">
       </div>
 
       <div class="modal-group">
@@ -538,7 +579,7 @@ button,input,select{font:inherit}
 </div>
 
 
-<!-- INTERNAL TRANSFER MODAL -->
+<!-- TRANSFER MONEY MODAL -->
 <div id="transferModal" class="modal-wrap hidden">
   <div class="modal">
     <div class="modal-head">
@@ -632,10 +673,121 @@ button,input,select{font:inherit}
 </div>
 
 
+<!-- DEPOSIT CHECK MODAL -->
+<div id="depositModal" class="modal-wrap hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Deposit Check</h3>
+      <button type="button" class="close" onclick="closeModal('depositModal')">×</button>
+    </div>
+
+    <form onsubmit="handleDepositSubmit(event)" class="modal-body">
+      <div class="modal-group">
+        <label for="depositAccount">Deposit To</label>
+        <select id="depositAccount" required>
+          <option value="checking">Checking Account</option>
+          <option value="savings">Savings Account</option>
+        </select>
+      </div>
+
+      <div class="modal-group">
+        <label for="checkAmount">Check Amount ($)</label>
+        <input id="checkAmount" type="number" min="0.01" step="0.01" required placeholder="0.00">
+      </div>
+
+      <div class="modal-group">
+        <label for="checkPayer">Payer / Issuer Name</label>
+        <input id="checkPayer" type="text" required placeholder="Name on check">
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel" onclick="closeModal('depositModal')">Cancel</button>
+        <button type="submit" class="submit">Submit Deposit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- PAY BILLS MODAL -->
+<div id="billModal" class="modal-wrap hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Pay Bills</h3>
+      <button type="button" class="close" onclick="closeModal('billModal')">×</button>
+    </div>
+
+    <form onsubmit="handleBillSubmit(event)" class="modal-body">
+      <div class="modal-group">
+        <label for="billFrom">Pay From</label>
+        <select id="billFrom" required>
+          <option value="checking">Checking Account</option>
+          <option value="savings">Savings Account</option>
+        </select>
+      </div>
+
+      <div class="modal-group">
+        <label for="billerName">Biller / Payee</label>
+        <input id="billerName" type="text" required placeholder="e.g. Electric Co., Credit Card, Internet">
+      </div>
+
+      <div class="modal-group">
+        <label for="billAmount">Amount ($)</label>
+        <input id="billAmount" type="number" min="0.01" step="0.01" required placeholder="0.00">
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel" onclick="closeModal('billModal')">Cancel</button>
+        <button type="submit" class="submit">Pay Bill</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- SEND MONEY MODAL -->
+<div id="sendModal" class="modal-wrap hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Send Money</h3>
+      <button type="button" class="close" onclick="closeModal('sendModal')">×</button>
+    </div>
+
+    <form onsubmit="handleSendSubmit(event)" class="modal-body">
+      <div class="modal-group">
+        <label for="sendFrom">Source Account</label>
+        <select id="sendFrom" required>
+          <option value="checking">Checking Account</option>
+          <option value="savings">Savings Account</option>
+        </select>
+      </div>
+
+      <div class="modal-group">
+        <label for="recipientName">Recipient Name or Email</label>
+        <input id="recipientName" type="text" required placeholder="Full Name or Email">
+      </div>
+
+      <div class="modal-group">
+        <label for="sendAmount">Amount ($)</label>
+        <input id="sendAmount" type="number" min="0.01" step="0.01" required placeholder="0.00">
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel" onclick="closeModal('sendModal')">Cancel</button>
+        <button type="submit" class="submit">Send Funds</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 <script>
 document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-// Storage Management
+const DEFAULT_CHECKING = 10000000.00;
+const DEFAULT_SAVINGS = 15000000.00;
+
+// Storage Helpers
 function getUsers() {
   return JSON.parse(localStorage.getItem("whb_users") || "[]");
 }
@@ -650,7 +802,6 @@ function getActiveUser() {
 
 function setActiveUser(user) {
   localStorage.setItem("whb_active_user", JSON.stringify(user));
-  // Keep master database updated as user state mutates
   const users = getUsers();
   const index = users.findIndex(u => u.id === user.id);
   if (index !== -1) {
@@ -659,7 +810,7 @@ function setActiveUser(user) {
   }
 }
 
-// Account Registration
+// User Registration
 function handleRegister(e) {
   e.preventDefault();
   const name = document.getElementById("regName").value.trim();
@@ -679,22 +830,22 @@ function handleRegister(e) {
     email,
     username,
     password,
-    checkingNumber: String(Math.floor(1000 + Math.random() * 9000)),
-    savingsNumber: String(Math.floor(1000 + Math.random() * 9000)),
-    checkingBalance: 10000000.00, // $10 Million
-    savingsBalance: 15000000.00,  // $15 Million
+    checkingNumber: "1001",
+    savingsNumber: "2002",
+    checkingBalance: DEFAULT_CHECKING,
+    savingsBalance: DEFAULT_SAVINGS,
     transactions: [
       {
         id: "tx_1",
         description: "Initial Deposit - Checking",
-        amount: 10000000.00,
+        amount: DEFAULT_CHECKING,
         date: new Date().toLocaleDateString(),
         type: "credit"
       },
       {
         id: "tx_2",
         description: "Initial Deposit - Savings",
-        amount: 15000000.00,
+        amount: DEFAULT_SAVINGS,
         date: new Date().toLocaleDateString(),
         type: "credit"
       }
@@ -704,12 +855,12 @@ function handleRegister(e) {
   users.push(newUser);
   saveUsers(users);
 
-  alert("Account successfully created! You can now sign in.");
+  alert("Account created successfully!");
   closeModal("registerModal");
   e.target.reset();
 }
 
-// Authentication Handlers
+// Authentication
 function handleLogin(e) {
   e.preventDefault();
   const loginInput = document.getElementById("loginUser").value.trim().toLowerCase();
@@ -719,13 +870,13 @@ function handleLogin(e) {
   const user = users.find(u => (u.email === loginInput || u.username === loginInput) && u.password === password);
 
   if (!user) {
-    alert("Invalid credentials. Create an account if you haven't registered.");
+    alert("Invalid credentials.");
     return;
   }
 
-  // Ensure user object has requested baseline defaults if missing
-  if (user.checkingBalance === undefined) user.checkingBalance = 10000000.00;
-  if (user.savingsBalance === undefined) user.savingsBalance = 15000000.00;
+  // Force minimum default balances if missing or zero
+  if (!user.checkingBalance) user.checkingBalance = DEFAULT_CHECKING;
+  if (!user.savingsBalance) user.savingsBalance = DEFAULT_SAVINGS;
   if (!user.transactions) user.transactions = [];
 
   setActiveUser(user);
@@ -741,35 +892,90 @@ function handleForgotPassword(e) {
   const userIndex = users.findIndex(u => u.email === email);
 
   if (userIndex === -1) {
-    alert("No account found matching that email address.");
+    alert("No account found with that email.");
     return;
   }
 
   users[userIndex].password = newPassword;
   saveUsers(users);
 
-  alert("Password reset completed! Please sign in.");
+  alert("Password reset completed!");
   closeModal("forgotModal");
   e.target.reset();
 }
 
-// UI Controllers
+// Force-reset option for active user
+function resetBalancesToDefault() {
+  let user = getActiveUser();
+  if (!user) {
+    user = {
+      id: "usr_guest",
+      name: "Laura Jackson",
+      checkingNumber: "1001",
+      savingsNumber: "2002",
+      checkingBalance: DEFAULT_CHECKING,
+      savingsBalance: DEFAULT_SAVINGS,
+      transactions: []
+    };
+  } else {
+    user.checkingBalance = DEFAULT_CHECKING;
+    user.savingsBalance = DEFAULT_SAVINGS;
+  }
+  
+  setActiveUser(user);
+  showApp();
+  alert("Balances successfully updated to $10M Checking / $15M Savings!");
+}
+
+// App View Render
 function showApp() {
-  const user = getActiveUser();
-  if (!user) return;
+  let user = getActiveUser();
+  
+  // Auto-upgrade empty fallback/guest accounts
+  if (!user) {
+    user = {
+      id: "usr_default",
+      name: "Laura Jackson",
+      checkingNumber: "1001",
+      savingsNumber: "2002",
+      checkingBalance: DEFAULT_CHECKING,
+      savingsBalance: DEFAULT_SAVINGS,
+      transactions: [
+        {
+          id: "tx_1",
+          description: "Initial Deposit - Checking",
+          amount: DEFAULT_CHECKING,
+          date: new Date().toLocaleDateString(),
+          type: "credit"
+        },
+        {
+          id: "tx_2",
+          description: "Initial Deposit - Savings",
+          amount: DEFAULT_SAVINGS,
+          date: new Date().toLocaleDateString(),
+          type: "credit"
+        }
+      ]
+    };
+    setActiveUser(user);
+  } else if (!user.checkingBalance || !user.savingsBalance) {
+    user.checkingBalance = user.checkingBalance || DEFAULT_CHECKING;
+    user.savingsBalance = user.savingsBalance || DEFAULT_SAVINGS;
+    setActiveUser(user);
+  }
 
   document.getElementById("loginPage").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
 
-  document.getElementById("welcomeName").textContent = user.name;
+  document.getElementById("welcomeName").textContent = user.name || "Laura Jackson";
   document.getElementById("chkNumber").textContent = "•••• " + (user.checkingNumber || "1001");
   document.getElementById("savNumber").textContent = "•••• " + (user.savingsNumber || "2002");
   
   document.getElementById("chkBalance").textContent = formatMoney(user.checkingBalance);
   document.getElementById("savBalance").textContent = formatMoney(user.savingsBalance);
 
-  const initials = user.name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
-  document.getElementById("avatar").textContent = initials || "--";
+  const initials = (user.name || "LJ").split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+  document.getElementById("avatar").textContent = initials || "LJ";
 
   renderActivityList(user.transactions || []);
 }
@@ -778,7 +984,7 @@ function renderActivityList(transactions) {
   const activityList = document.getElementById("activityList");
 
   if (!transactions || transactions.length === 0) {
-    activityList.innerHTML = `<div class="empty-state">No recent transactions.</div>`;
+    activityList.innerHTML = `<div class="empty-state">No recent activity.</div>`;
     return;
   }
 
@@ -795,7 +1001,7 @@ function renderActivityList(transactions) {
   `).join("");
 }
 
-// Transaction Processing
+// Transactions Processing
 function handleTransferSubmit(e) {
   e.preventDefault();
   const fromAcc = document.getElementById("fromAccount").value;
@@ -812,11 +1018,10 @@ function handleTransferSubmit(e) {
   const srcBalance = fromAcc === "checking" ? user.checkingBalance : user.savingsBalance;
 
   if (amount > srcBalance) {
-    alert("Insufficient funds for this transfer.");
+    alert("Insufficient funds.");
     return;
   }
 
-  // Deduct & Add funds
   if (fromAcc === "checking") {
     user.checkingBalance -= amount;
     user.savingsBalance += amount;
@@ -876,17 +1081,119 @@ function handleWireSubmit(e) {
   alert("Wire transfer submitted successfully.");
 }
 
+function handleDepositSubmit(e) {
+  e.preventDefault();
+  const targetAcc = document.getElementById("depositAccount").value;
+  const amount = parseFloat(document.getElementById("checkAmount").value);
+  const payer = document.getElementById("checkPayer").value.trim();
+
+  const user = getActiveUser();
+
+  if (targetAcc === "checking") {
+    user.checkingBalance += amount;
+  } else {
+    user.savingsBalance += amount;
+  }
+
+  user.transactions.push({
+    id: "tx_" + Date.now(),
+    description: `Mobile Check Deposit from ${payer}`,
+    amount: amount,
+    date: new Date().toLocaleDateString(),
+    type: "credit"
+  });
+
+  setActiveUser(user);
+  showApp();
+  closeModal("depositModal");
+  e.target.reset();
+  alert("Check deposit submitted successfully.");
+}
+
+function handleBillSubmit(e) {
+  e.preventDefault();
+  const srcAcc = document.getElementById("billFrom").value;
+  const biller = document.getElementById("billerName").value.trim();
+  const amount = parseFloat(document.getElementById("billAmount").value);
+
+  const user = getActiveUser();
+  const srcBalance = srcAcc === "checking" ? user.checkingBalance : user.savingsBalance;
+
+  if (amount > srcBalance) {
+    alert("Insufficient funds.");
+    return;
+  }
+
+  if (srcAcc === "checking") {
+    user.checkingBalance -= amount;
+  } else {
+    user.savingsBalance -= amount;
+  }
+
+  user.transactions.push({
+    id: "tx_" + Date.now(),
+    description: `Bill Payment to ${biller}`,
+    amount: amount,
+    date: new Date().toLocaleDateString(),
+    type: "debit"
+  });
+
+  setActiveUser(user);
+  showApp();
+  closeModal("billModal");
+  e.target.reset();
+  alert("Bill payment executed.");
+}
+
+function handleSendSubmit(e) {
+  e.preventDefault();
+  const srcAcc = document.getElementById("sendFrom").value;
+  const recipient = document.getElementById("recipientName").value.trim();
+  const amount = parseFloat(document.getElementById("sendAmount").value);
+
+  const user = getActiveUser();
+  const srcBalance = srcAcc === "checking" ? user.checkingBalance : user.savingsBalance;
+
+  if (amount > srcBalance) {
+    alert("Insufficient funds.");
+    return;
+  }
+
+  if (srcAcc === "checking") {
+    user.checkingBalance -= amount;
+  } else {
+    user.savingsBalance -= amount;
+  }
+
+  user.transactions.push({
+    id: "tx_" + Date.now(),
+    description: `Money Sent to ${recipient}`,
+    amount: amount,
+    date: new Date().toLocaleDateString(),
+    type: "debit"
+  });
+
+  setActiveUser(user);
+  showApp();
+  closeModal("sendModal");
+  e.target.reset();
+  alert("Payment sent successfully.");
+}
+
 function signOut() {
   localStorage.removeItem("whb_active_user");
   document.getElementById("app").classList.add("hidden");
   document.getElementById("loginPage").classList.remove("hidden");
 }
 
-// Helpers
+// Modal Helpers
 function openRegisterModal() { document.getElementById("registerModal").classList.remove("hidden"); }
 function openForgotPasswordModal() { document.getElementById("forgotModal").classList.remove("hidden"); }
 function openTransferModal() { document.getElementById("transferModal").classList.remove("hidden"); }
 function openWireModal() { document.getElementById("wireModal").classList.remove("hidden"); }
+function openDepositModal() { document.getElementById("depositModal").classList.remove("hidden"); }
+function openBillModal() { document.getElementById("billModal").classList.remove("hidden"); }
+function openSendModal() { document.getElementById("sendModal").classList.remove("hidden"); }
 function closeModal(id) { document.getElementById(id).classList.add("hidden"); }
 
 function formatMoney(value) {
@@ -905,10 +1212,8 @@ function escapeHTML(str) {
     .replace(/'/g, "&#039;");
 }
 
-// Load current session
-if (getActiveUser()) {
-  showApp();
-}
+// Auto load dashboard directly
+showApp();
 </script>
 
 </body>
