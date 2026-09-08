@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Washington Harbor — Simulated Banking Demo</title>
+<title>Washington Harbor — Demo Banking</title>
 
 <style>
 :root{
-  --red:#9d1118;
-  --red2:#c51d27;
+  --red:#9f1018;
+  --red2:#d0202b;
   --gold:#d5a84b;
-  --bg:#f5f6f8;
-  --card:#ffffff;
+  --bg:#f4f6f8;
+  --card:#fff;
   --text:#17191d;
-  --muted:#737982;
-  --border:#e5e7eb;
+  --muted:#7a8088;
+  --line:#e6e8ec;
   --green:#16834d;
-  --danger:#c62828;
-  --shadow:0 12px 35px rgba(20,25,35,.08);
+  --danger:#c72a35;
+  --shadow:0 15px 40px rgba(25,30,40,.08);
 }
 
 *{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -41,184 +43,188 @@ button{
   display:none!important;
 }
 
-/* DEMO BANNER */
-.demo-banner{
+/* DEMO NOTICE */
+
+.demo-notice{
   position:fixed;
   top:0;
   left:0;
   right:0;
-  z-index:9999;
-  background:#111;
-  color:#fff;
+  z-index:99999;
+  background:#101010;
+  color:white;
   text-align:center;
-  padding:7px;
-  font-size:12px;
-  letter-spacing:.5px;
+  padding:7px 12px;
+  font-size:11px;
+  letter-spacing:.35px;
 }
 
-.demo-banner b{
-  color:#ffd36a;
+.demo-notice strong{
+  color:#ffd46b;
 }
 
 /* LOGIN */
+
 .login-page{
   min-height:100vh;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   padding:30px 18px;
   background:
-    radial-gradient(circle at top right,rgba(197,29,39,.18),transparent 35%),
-    linear-gradient(135deg,#fafafa,#eee);
+    radial-gradient(circle at 90% 10%,rgba(159,16,24,.18),transparent 32%),
+    radial-gradient(circle at 10% 90%,rgba(213,168,75,.12),transparent 30%),
+    linear-gradient(135deg,#fafafa,#eceef1);
 }
 
-.login-box{
+.login-card{
   width:100%;
   max-width:430px;
-  background:#fff;
-  border-radius:25px;
   padding:38px;
-  box-shadow:0 25px 70px rgba(0,0,0,.13);
+  background:white;
+  border-radius:28px;
+  box-shadow:0 30px 80px rgba(0,0,0,.14);
 }
 
 .logo{
   display:flex;
   align-items:center;
-  gap:12px;
-  font-weight:800;
-  font-size:22px;
+  gap:11px;
+  font-size:21px;
+  font-weight:900;
 }
 
-.logo-mark{
-  width:46px;
-  height:46px;
+.logo-icon{
+  width:45px;
+  height:45px;
   border-radius:14px;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,var(--red),var(--red2));
   color:white;
-  font-weight:900;
-  box-shadow:0 8px 20px rgba(157,17,24,.25);
+  background:linear-gradient(135deg,var(--red),var(--red2));
+  box-shadow:0 9px 20px rgba(159,16,24,.25);
 }
 
-.login-title{
-  margin:35px 0 7px;
+.login-card h1{
   font-size:30px;
+  margin:32px 0 7px;
 }
 
 .login-sub{
   color:var(--muted);
-  margin-bottom:28px;
+  margin-bottom:27px;
 }
 
 .field{
-  margin-bottom:17px;
+  margin-bottom:16px;
 }
 
 .field label{
   display:block;
-  font-size:13px;
-  font-weight:700;
   margin-bottom:7px;
+  font-size:12px;
+  font-weight:800;
 }
 
 .field input,
 .field select{
   width:100%;
-  padding:14px 15px;
-  border:1px solid var(--border);
+  border:1px solid var(--line);
+  background:#fafafa;
+  padding:14px;
   border-radius:12px;
   outline:none;
-  background:#fff;
 }
 
 .field input:focus,
 .field select:focus{
   border-color:var(--red2);
-  box-shadow:0 0 0 3px rgba(197,29,39,.08);
+  box-shadow:0 0 0 3px rgba(208,32,43,.08);
 }
 
 .primary{
   width:100%;
   border:0;
-  color:white;
-  padding:14px;
   border-radius:12px;
+  padding:14px;
+  color:white;
   font-weight:800;
   background:linear-gradient(135deg,var(--red),var(--red2));
+  box-shadow:0 8px 18px rgba(159,16,24,.2);
 }
 
 .demo-login{
-  margin-top:15px;
+  margin-top:16px;
   padding:13px;
-  background:#f7f7f8;
+  background:#f5f6f8;
   border-radius:12px;
+  color:#777;
   font-size:12px;
-  color:#666;
+  line-height:1.7;
 }
 
 /* APP */
+
 .app{
   min-height:100vh;
-  padding-top:28px;
+  padding-top:27px;
 }
 
 .topbar{
   height:72px;
-  background:#fff;
-  border-bottom:1px solid var(--border);
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:27px;
+  z-index:900;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 28px;
-  position:sticky;
-  top:28px;
-  z-index:100;
+  padding:0 27px;
 }
 
 .top-left{
   display:flex;
   align-items:center;
-  gap:25px;
+  gap:28px;
 }
 
 .menu-btn{
   display:none;
   border:0;
   background:none;
-  font-size:25px;
+  font-size:24px;
 }
 
 .search{
-  width:270px;
-  position:relative;
+  width:280px;
 }
 
 .search input{
   width:100%;
-  border:1px solid var(--border);
-  border-radius:12px;
   padding:11px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#f8f9fa;
   outline:none;
-  background:#fafafa;
 }
 
 .top-actions{
   display:flex;
   align-items:center;
-  gap:13px;
+  gap:12px;
 }
 
 .icon-btn{
-  width:42px;
-  height:42px;
-  border:1px solid var(--border);
+  width:41px;
+  height:41px;
+  border:1px solid var(--line);
   border-radius:12px;
-  background:#fff;
+  background:var(--card);
   position:relative;
 }
 
-.dot{
+.notification-dot{
   position:absolute;
   top:7px;
   right:7px;
@@ -228,47 +234,49 @@ button{
   background:var(--red2);
 }
 
-.profile{
+.user{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding-left:8px;
+  gap:9px;
+  margin-left:4px;
 }
 
 .avatar{
-  width:39px;
-  height:39px;
+  width:40px;
+  height:40px;
   border-radius:50%;
   display:grid;
   place-items:center;
   color:white;
-  font-weight:800;
+  font-weight:900;
   background:linear-gradient(135deg,var(--red),var(--gold));
 }
 
-/* LAYOUT */
-.layout{
-  display:flex;
+.user small{
+  color:var(--muted);
 }
 
+/* SIDEBAR */
+
 .sidebar{
-  width:245px;
-  min-height:calc(100vh - 100px);
-  background:#fff;
-  border-right:1px solid var(--border);
-  padding:25px 15px;
   position:fixed;
-  top:100px;
+  left:0;
+  top:99px;
   bottom:0;
+  width:245px;
+  background:var(--card);
+  border-right:1px solid var(--line);
+  padding:25px 14px;
+  z-index:800;
 }
 
 .nav-title{
-  font-size:11px;
   color:#a0a4aa;
-  font-weight:800;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.2px;
   padding:10px 14px;
   text-transform:uppercase;
-  letter-spacing:1px;
 }
 
 .nav-item{
@@ -278,215 +286,268 @@ button{
   padding:13px 14px;
   margin:3px 0;
   border-radius:12px;
-  color:#60656c;
-  font-weight:650;
+  color:#656a72;
+  font-size:14px;
+  font-weight:700;
   cursor:pointer;
 }
 
 .nav-item:hover,
 .nav-item.active{
-  background:#fff1f2;
   color:var(--red);
+  background:#fff0f1;
 }
+
+/* MAIN */
 
 .main{
   margin-left:245px;
-  width:calc(100% - 245px);
-  padding:30px;
-  max-width:1600px;
+  padding:31px;
+  max-width:1650px;
 }
 
 .welcome{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:25px;
+  margin-bottom:23px;
 }
 
 .welcome h1{
   margin:0;
-  font-size:30px;
+  font-size:29px;
 }
 
 .welcome p{
   color:var(--muted);
-  margin:7px 0 0;
+  margin:6px 0 0;
 }
 
-.date{
-  color:#777;
+.current-date{
   font-size:13px;
+  color:#777;
 }
 
 /* HERO */
+
 .hero{
   position:relative;
+  min-height:235px;
   overflow:hidden;
-  border-radius:25px;
-  padding:30px;
-  min-height:220px;
-  color:#fff;
+  padding:32px;
+  border-radius:27px;
+  color:white;
+  margin-bottom:20px;
   background:
-    radial-gradient(circle at 90% 10%,rgba(255,255,255,.18),transparent 25%),
-    linear-gradient(125deg,#721018,#b31a24 55%,#891018);
+    radial-gradient(circle at 85% 20%,rgba(255,255,255,.17),transparent 22%),
+    linear-gradient(125deg,#6e0c13,#b71823 55%,#8d1018);
   box-shadow:var(--shadow);
-  margin-bottom:25px;
+}
+
+.hero-label{
+  font-size:12px;
+  opacity:.78;
+  letter-spacing:.8px;
+  text-transform:uppercase;
 }
 
 .hero h2{
-  margin:0 0 8px;
+  margin:7px 0;
   font-size:25px;
 }
 
-.hero p{
-  opacity:.82;
+.hero-balance{
+  margin-top:26px;
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:-1px;
 }
 
-.hero-number{
-  margin-top:30px;
-  font-size:39px;
-  font-weight:850;
+.hero-bottom{
+  margin-top:13px;
+  font-size:12px;
+  opacity:.72;
 }
 
-.hero-art{
+.hero-circle{
   position:absolute;
-  right:30px;
-  bottom:-35px;
-  width:260px;
-  height:220px;
-  opacity:.16;
-  border:35px solid white;
+  width:350px;
+  height:350px;
+  right:-100px;
+  top:-120px;
+  border:50px solid rgba(255,255,255,.07);
   border-radius:50%;
 }
 
-/* GRID */
+.hero-circle:after{
+  content:"";
+  position:absolute;
+  inset:45px;
+  border:25px solid rgba(255,255,255,.06);
+  border-radius:50%;
+}
+
+/* CARDS */
+
 .grid{
   display:grid;
   gap:18px;
 }
 
-.cards-4{
+.stats{
   grid-template-columns:repeat(4,1fr);
-}
-
-.cards-3{
-  grid-template-columns:repeat(3,1fr);
 }
 
 .card{
   background:var(--card);
-  border:1px solid var(--border);
-  border-radius:19px;
+  border:1px solid var(--line);
+  border-radius:20px;
   padding:21px;
-  box-shadow:0 7px 25px rgba(20,25,35,.035);
+  box-shadow:0 6px 25px rgba(20,25,35,.035);
+}
+
+.stat-icon{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  background:#f7e9ea;
+  color:var(--red);
+  border-radius:11px;
 }
 
 .stat-label{
+  margin-top:15px;
+  font-size:12px;
   color:var(--muted);
-  font-size:13px;
 }
 
 .stat-value{
-  margin-top:9px;
+  margin-top:7px;
   font-size:25px;
-  font-weight:850;
+  font-weight:900;
 }
 
 .stat-change{
-  font-size:12px;
-  margin-top:8px;
+  margin-top:7px;
+  font-size:11px;
   color:var(--green);
 }
 
-/* ACCOUNT CARDS */
-.account-card{
-  min-height:190px;
-  border-radius:21px;
-  padding:23px;
-  color:#fff;
+/* ACCOUNTS */
+
+.accounts{
+  grid-template-columns:1fr 1fr;
+  margin-top:18px;
+}
+
+.account{
+  min-height:210px;
+  border-radius:23px;
+  padding:25px;
+  color:white;
   position:relative;
   overflow:hidden;
 }
 
-.account-card.checking{
-  background:linear-gradient(135deg,#17191d,#363a40);
+.account.checking{
+  background:linear-gradient(135deg,#17191d,#3c4148);
 }
 
-.account-card.savings{
-  background:linear-gradient(135deg,#8b121a,#cf242f);
+.account.savings{
+  background:linear-gradient(135deg,#851019,#d01f2a);
 }
 
-.account-card:after{
+.account:before{
   content:"";
   position:absolute;
-  width:160px;
-  height:160px;
-  border:28px solid rgba(255,255,255,.08);
+  width:210px;
+  height:210px;
+  right:-80px;
+  top:-85px;
+  border:30px solid rgba(255,255,255,.06);
   border-radius:50%;
-  right:-40px;
-  bottom:-60px;
 }
 
-.account-top{
+.account-head{
   display:flex;
   justify-content:space-between;
   font-size:12px;
-  opacity:.85;
+  opacity:.8;
+}
+
+.chip{
+  width:39px;
+  height:28px;
+  margin-top:25px;
+  border-radius:7px;
+  background:linear-gradient(135deg,#e5bd67,#fff0a6);
 }
 
 .account-balance{
-  font-size:28px;
-  font-weight:850;
-  margin:30px 0 24px;
+  margin-top:16px;
+  font-size:29px;
+  font-weight:900;
 }
 
 .account-number{
-  font-size:13px;
-  opacity:.75;
+  margin-top:18px;
+  font-size:12px;
+  opacity:.65;
 }
 
-/* QUICK */
-.quick{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:13px;
+/* QUICK ACTIONS */
+
+.quick-card{
+  margin-top:18px;
 }
 
-.quick button{
-  border:1px solid var(--border);
-  background:#fff;
-  padding:17px 10px;
-  border-radius:15px;
-  font-weight:750;
-  color:#333;
-}
-
-.quick button:hover{
-  border-color:#e4a3a7;
-  background:#fff7f7;
-  color:var(--red);
-}
-
-/* TABLE */
 .section-head{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  margin-bottom:15px;
+  align-items:center;
+  margin-bottom:16px;
 }
 
 .section-head h2{
-  font-size:19px;
   margin:0;
+  font-size:19px;
 }
 
-.small-btn{
-  border:1px solid var(--border);
-  background:#fff;
-  padding:9px 13px;
-  border-radius:10px;
-  font-weight:700;
+.section-head small{
+  color:var(--muted);
 }
+
+.quick{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+}
+
+.quick button{
+  min-height:83px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--card);
+  font-weight:800;
+  color:#444;
+  transition:.2s;
+}
+
+.quick button:hover{
+  transform:translateY(-2px);
+  border-color:#e1a5a9;
+  color:var(--red);
+}
+
+/* LOWER GRID */
+
+.lower{
+  grid-template-columns:1.45fr .85fr;
+  margin-top:18px;
+}
+
+/* TRANSACTIONS */
 
 .transactions{
   overflow:auto;
@@ -494,28 +555,29 @@ button{
 
 table{
   width:100%;
-  border-collapse:collapse;
   min-width:650px;
+  border-collapse:collapse;
 }
 
 th{
   text-align:left;
-  color:#8a8f96;
-  font-size:12px;
-  padding:13px 10px;
-  border-bottom:1px solid var(--border);
+  padding:12px 9px;
+  color:#92979d;
+  font-size:10px;
+  letter-spacing:.6px;
+  border-bottom:1px solid var(--line);
 }
 
 td{
-  padding:16px 10px;
-  border-bottom:1px solid #f0f1f3;
-  font-size:14px;
+  padding:15px 9px;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
 }
 
-.tx{
+.transaction-name{
   display:flex;
   align-items:center;
-  gap:11px;
+  gap:10px;
 }
 
 .tx-icon{
@@ -523,39 +585,52 @@ td{
   height:39px;
   display:grid;
   place-items:center;
-  border-radius:12px;
-  background:#f2f3f5;
+  border-radius:11px;
+  background:#f3f4f5;
 }
 
 .credit{
   color:var(--green);
-  font-weight:800;
+  font-weight:900;
 }
 
 .debit{
   color:var(--danger);
+  font-weight:900;
+}
+
+.status{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:7px;
+  background:#eaf7f0;
+  color:var(--green);
+  font-size:10px;
   font-weight:800;
 }
 
 /* CHART */
-.chart-wrap{
+
+.chart{
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:245px;
+  min-height:240px;
 }
 
 .donut{
-  width:170px;
-  height:170px;
+  width:165px;
+  height:165px;
   border-radius:50%;
-  background:conic-gradient(
-    var(--red) 0 42%,
-    var(--gold) 42% 67%,
-    #5d6775 67% 84%,
-    #dfe2e6 84% 100%
-  );
+  background:
+    conic-gradient(
+      var(--red) 0 42%,
+      var(--gold) 42% 67%,
+      #66707d 67% 84%,
+      #dfe2e6 84% 100%
+    );
   position:relative;
+  animation:spinIn 1s ease;
 }
 
 .donut:after{
@@ -563,46 +638,63 @@ td{
   position:absolute;
   inset:40px;
   border-radius:50%;
-  background:#fff;
+  background:var(--card);
+}
+
+@keyframes spinIn{
+  from{transform:rotate(-90deg) scale(.8);opacity:.2}
+  to{transform:rotate(0) scale(1);opacity:1}
 }
 
 .legend{
-  margin-left:30px;
+  margin-left:25px;
 }
 
-.legend div{
-  margin:12px 0;
-  font-size:13px;
+.legend-item{
+  margin:13px 0;
+  font-size:12px;
 }
 
-.legend span{
+.legend-dot{
   display:inline-block;
-  width:10px;
-  height:10px;
+  width:9px;
+  height:9px;
   border-radius:3px;
   margin-right:7px;
 }
 
-/* MODAL */
+/* BUTTONS */
+
+.outline-btn{
+  border:1px solid var(--line);
+  background:var(--card);
+  padding:9px 13px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:800;
+}
+
+/* MODALS */
+
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.5);
+  z-index:5000;
+  background:rgba(0,0,0,.55);
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:20px;
-  z-index:5000;
+  padding:18px;
 }
 
 .modal-box{
   width:100%;
-  max-width:500px;
+  max-width:520px;
   max-height:90vh;
   overflow:auto;
-  background:#fff;
-  border-radius:22px;
-  padding:25px;
+  padding:26px;
+  border-radius:23px;
+  background:var(--card);
 }
 
 .modal-head{
@@ -614,138 +706,205 @@ td{
 
 .modal-head h2{
   margin:0;
+  font-size:21px;
 }
 
 .close{
-  border:0;
-  background:#f1f2f4;
   width:36px;
   height:36px;
+  border:0;
   border-radius:10px;
+  background:#f0f1f3;
   font-size:20px;
 }
 
 /* RECEIPT */
+
 .receipt{
   text-align:center;
 }
 
-.receipt-icon{
-  width:70px;
-  height:70px;
-  margin:0 auto 15px;
-  border-radius:50%;
+.success{
+  width:68px;
+  height:68px;
   display:grid;
   place-items:center;
-  background:#e8f7ef;
+  margin:0 auto 15px;
+  border-radius:50%;
+  background:#e7f7ee;
   color:var(--green);
-  font-size:32px;
+  font-size:31px;
+  font-weight:900;
+}
+
+.receipt-label{
+  color:#999;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.7px;
 }
 
 .receipt-amount{
-  font-size:34px;
+  margin:10px 0 22px;
+  font-size:36px;
   font-weight:900;
-  margin:15px 0;
 }
 
 .receipt-row{
   display:flex;
   justify-content:space-between;
+  gap:20px;
   padding:12px 0;
-  border-bottom:1px solid var(--border);
-  font-size:13px;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
 }
 
-.receipt-row span:first-child{
-  color:#777;
+.receipt-row span{
+  color:#888;
 }
 
-.receipt-actions{
+.receipt-buttons{
   display:flex;
   gap:10px;
   margin-top:20px;
 }
 
-.receipt-actions button{
+.receipt-buttons button{
   flex:1;
   padding:12px;
   border-radius:11px;
-  border:1px solid var(--border);
-  background:#fff;
-  font-weight:750;
+  border:1px solid var(--line);
+  background:var(--card);
+  font-weight:800;
 }
 
-.receipt-actions .print{
+.receipt-buttons .print{
+  color:white;
   background:var(--red);
-  color:#fff;
   border-color:var(--red);
 }
 
+/* PROFILE */
+
+.profile-box{
+  text-align:center;
+}
+
+.big-avatar{
+  width:80px;
+  height:80px;
+  margin:0 auto 13px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  color:white;
+  font-size:25px;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--red),var(--gold));
+}
+
+.profile-box h2{
+  margin:5px 0;
+}
+
 /* NOTIFICATIONS */
+
 .notification{
-  padding:14px 0;
-  border-bottom:1px solid var(--border);
+  display:flex;
+  gap:12px;
+  padding:15px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.notification-icon{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:#fff0f1;
 }
 
 .notification b{
-  display:block;
-  margin-bottom:4px;
+  font-size:13px;
 }
 
-.notification small{
+.notification p{
+  margin:4px 0 0;
   color:#888;
+  font-size:11px;
 }
 
 /* MOBILE NAV */
+
 .mobile-nav{
   display:none;
 }
 
 /* DARK MODE */
-body.dark{
-  --bg:#101214;
-  --card:#181b1f;
-  --text:#f4f5f6;
-  --muted:#9ba1a8;
-  --border:#292e34;
-}
 
-body.dark .topbar,
-body.dark .sidebar,
-body.dark .card,
-body.dark .small-btn,
-body.dark .quick button,
-body.dark .icon-btn,
-body.dark .modal-box,
-body.dark .login-box{
-  background:#181b1f;
-  color:#f4f5f6;
+body.dark{
+  --bg:#0f1114;
+  --card:#181b1f;
+  --text:#f2f3f4;
+  --muted:#a0a6ad;
+  --line:#2b3036;
 }
 
 body.dark .search input,
 body.dark .field input,
 body.dark .field select{
   background:#101214;
-  color:#fff;
+  color:white;
   border-color:#30353b;
 }
 
-body.dark .donut:after{
-  background:#181b1f;
+body.dark .demo-login,
+body.dark .tx-icon,
+body.dark .close{
+  background:#24282d;
+}
+
+body.dark .nav-item:hover,
+body.dark .nav-item.active{
+  background:#2a1719;
+}
+
+body.dark .status{
+  background:#173225;
 }
 
 /* RESPONSIVE */
-@media(max-width:1100px){
-  .cards-4{
+
+@media(max-width:1150px){
+
+  .stats{
     grid-template-columns:repeat(2,1fr);
   }
 
   .quick{
     grid-template-columns:repeat(3,1fr);
   }
+
+  .lower{
+    grid-template-columns:1fr;
+  }
 }
 
 @media(max-width:800px){
+
+  .topbar{
+    padding:0 16px;
+  }
+
+  .top-left{
+    gap:10px;
+  }
+
+  .top-left .logo span{
+    display:none;
+  }
+
   .menu-btn{
     display:block;
   }
@@ -757,7 +916,6 @@ body.dark .donut:after{
   .sidebar{
     transform:translateX(-100%);
     transition:.25s;
-    z-index:200;
   }
 
   .sidebar.open{
@@ -766,38 +924,40 @@ body.dark .donut:after{
 
   .main{
     margin-left:0;
-    width:100%;
     padding:20px;
-    padding-bottom:90px;
-  }
-
-  .topbar{
-    padding:0 17px;
-  }
-
-  .top-left{
-    gap:10px;
-  }
-
-  .profile-name{
-    display:none;
+    padding-bottom:95px;
   }
 
   .welcome{
     display:block;
   }
 
-  .date{
+  .current-date{
     margin-top:8px;
   }
 
-  .cards-4,
-  .cards-3{
+  .hero{
+    padding:25px;
+  }
+
+  .hero-balance{
+    font-size:34px;
+  }
+
+  .accounts{
     grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
   }
 
   .quick{
     grid-template-columns:repeat(2,1fr);
+  }
+
+  .user-info{
+    display:none;
   }
 
   .mobile-nav{
@@ -806,26 +966,66 @@ body.dark .donut:after{
     left:10px;
     right:10px;
     bottom:10px;
-    height:65px;
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:18px;
-    z-index:1000;
+    height:66px;
+    z-index:3000;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:19px;
     justify-content:space-around;
     align-items:center;
-    box-shadow:0 10px 30px rgba(0,0,0,.12);
+    box-shadow:0 12px 35px rgba(0,0,0,.15);
   }
 
   .mobile-nav button{
     border:0;
     background:none;
     color:#777;
-    font-size:11px;
-    font-weight:700;
+    font-size:10px;
+    font-weight:800;
   }
 
-  body.dark .mobile-nav{
-    background:#181b1f;
+}
+
+@media(max-width:480px){
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .quick{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .hero-balance{
+    font-size:29px;
+  }
+
+  .login-card{
+    padding:28px 22px;
+  }
+}
+
+/* PRINT */
+
+@media print{
+
+  body *{
+    visibility:hidden;
+  }
+
+  #receiptModal,
+  #receiptModal *{
+    visibility:visible;
+  }
+
+  #receiptModal{
+    position:absolute;
+    background:white;
+  }
+
+  .receipt-buttons,
+  .close{
+    display:none!important;
   }
 }
 </style>
@@ -833,317 +1033,435 @@ body.dark .donut:after{
 
 <body>
 
-<div class="demo-banner">
-  <b>DEMO / SIMULATED</b> — Fictional banking interface. No real banking, transfers, deposits, or payments are processed.
+<div class="demo-notice">
+  <strong>DEMO / SIMULATED INTERFACE</strong>
+  — Fictional data only. No real accounts, money, transfers, deposits, or payments are processed.
 </div>
 
 <!-- LOGIN -->
+
 <section id="loginPage" class="login-page">
-  <div class="login-box">
+
+  <div class="login-card">
 
     <div class="logo">
-      <div class="logo-mark">WH</div>
+      <div class="logo-icon">WH</div>
       Washington Harbor
     </div>
 
-    <h1 class="login-title">Welcome back</h1>
+    <h1>Welcome back</h1>
+
     <div class="login-sub">
-      Sign in to your simulated banking dashboard.
+      Sign in to your simulated account dashboard.
     </div>
 
     <div class="field">
-      <label>Username</label>
+      <label>USERNAME</label>
       <input id="username" placeholder="Enter username">
     </div>
 
     <div class="field">
-      <label>Password</label>
+      <label>PASSWORD</label>
       <input id="password" type="password" placeholder="Enter password">
     </div>
 
-    <button class="primary" onclick="login()">Sign In</button>
+    <button class="primary" onclick="login()">
+      Sign In
+    </button>
 
     <div class="demo-login">
-      <b>Demo access</b><br>
-      Username: demo<br>
-      Password: demo
+      <b>Demo credentials</b><br>
+      Username: <b>demo</b><br>
+      Password: <b>demo</b>
     </div>
+
   </div>
+
 </section>
 
-<!-- APPLICATION -->
+
+<!-- APP -->
+
 <section id="app" class="app hidden">
 
   <header class="topbar">
+
     <div class="top-left">
+
       <button class="menu-btn" onclick="toggleSidebar()">☰</button>
 
       <div class="logo">
-        <div class="logo-mark">WH</div>
+        <div class="logo-icon">WH</div>
         <span>Washington Harbor</span>
       </div>
 
       <div class="search">
-        <input id="globalSearch" placeholder="Search transactions..." oninput="searchTransactions()">
+        <input
+          id="searchBox"
+          placeholder="Search transactions..."
+          oninput="searchTransactions()"
+        >
       </div>
+
     </div>
 
     <div class="top-actions">
 
-      <button class="icon-btn" onclick="openModal('notificationModal')">
+      <button class="icon-btn" onclick="openModal('notificationsModal')">
         🔔
-        <span class="dot"></span>
+        <span class="notification-dot"></span>
       </button>
 
-      <button class="icon-btn" onclick="toggleDark()">◐</button>
+      <button class="icon-btn" onclick="toggleDark()">
+        ◐
+      </button>
 
-      <div class="profile">
-        <div class="avatar">DJ</div>
-        <div class="profile-name">
+      <div class="user">
+
+        <div class="avatar">DU</div>
+
+        <div class="user-info">
           <b>Demo User</b><br>
-          <small style="color:#888">Personal</small>
+          <small>Personal demo</small>
         </div>
+
       </div>
+
     </div>
+
   </header>
 
-  <div class="layout">
 
-    <aside id="sidebar" class="sidebar">
+  <aside id="sidebar" class="sidebar">
 
-      <div class="nav-title">Main</div>
+    <div class="nav-title">Dashboard</div>
 
-      <div class="nav-item active" onclick="scrollToSection('dashboard')">
-        🏠 Dashboard
-      </div>
+    <div class="nav-item active" onclick="go('dashboard')">
+      🏠 Dashboard
+    </div>
 
-      <div class="nav-item" onclick="scrollToSection('transactions')">
-        💳 Transactions
-      </div>
+    <div class="nav-item" onclick="go('transactions')">
+      💳 Transactions
+    </div>
 
-      <div class="nav-item" onclick="openModal('transferModal')">
-        ⇄ Transfer
-      </div>
+    <div class="nav-item" onclick="openModal('transferModal')">
+      ⇄ Transfer
+    </div>
 
-      <div class="nav-item" onclick="openModal('sendModal')">
-        💸 Send Money
-      </div>
+    <div class="nav-item" onclick="openModal('sendModal')">
+      💸 Send Money
+    </div>
 
-      <div class="nav-title">Manage</div>
+    <div class="nav-title">Account</div>
 
-      <div class="nav-item" onclick="openModal('accountModal')">
-        🏦 Accounts
-      </div>
+    <div class="nav-item" onclick="openModal('accountModal')">
+      🏦 Account Details
+    </div>
 
-      <div class="nav-item" onclick="openModal('notificationModal')">
-        🔔 Notifications
-      </div>
+    <div class="nav-item" onclick="openModal('profileModal')">
+      👤 Profile
+    </div>
 
-      <div class="nav-item" onclick="openModal('settingsModal')">
-        ⚙️ Settings
-      </div>
+    <div class="nav-item" onclick="openModal('notificationsModal')">
+      🔔 Notifications
+    </div>
 
-      <div class="nav-item" onclick="logout()">
-        🚪 Sign Out
-      </div>
+    <div class="nav-item" onclick="openModal('settingsModal')">
+      ⚙️ Settings
+    </div>
 
-    </aside>
+    <div class="nav-item" onclick="logout()">
+      🚪 Sign Out
+    </div>
 
-    <main class="main">
+  </aside>
 
-      <section id="dashboard">
 
-        <div class="welcome">
-          <div>
-            <h1>Good evening, Demo User</h1>
-            <p>Here's what's happening with your simulated accounts.</p>
-          </div>
-          <div class="date" id="today"></div>
+  <main class="main">
+
+    <section id="dashboard">
+
+      <div class="welcome">
+
+        <div>
+          <h1>Good evening, Demo User</h1>
+          <p>Your simulated financial overview.</p>
         </div>
 
-        <div class="hero">
-          <h2>Total Simulated Balance</h2>
-          <p>Across all demo accounts</p>
-          <div class="hero-number" id="totalBalance">$25,000,000.00</div>
-          <div class="hero-art"></div>
+        <div id="currentDate" class="current-date"></div>
+
+      </div>
+
+
+      <!-- HERO -->
+
+      <div class="hero">
+
+        <div class="hero-label">
+          Total simulated balance
         </div>
 
-        <div class="grid cards-4">
+        <h2>All Demo Accounts</h2>
 
-          <div class="card">
-            <div class="stat-label">Total Balance</div>
-            <div class="stat-value" id="statTotal">$25M</div>
-            <div class="stat-change">▲ 4.8% simulated</div>
-          </div>
-
-          <div class="card">
-            <div class="stat-label">Monthly Spending</div>
-            <div class="stat-value">$12,840</div>
-            <div class="stat-change">▼ 8.2% simulated</div>
-          </div>
-
-          <div class="card">
-            <div class="stat-label">Incoming</div>
-            <div class="stat-value">$48,500</div>
-            <div class="stat-change">▲ 13.4% simulated</div>
-          </div>
-
-          <div class="card">
-            <div class="stat-label">Account Status</div>
-            <div class="stat-value">Active</div>
-            <div class="stat-change">Demo account</div>
-          </div>
-
+        <div id="heroBalance" class="hero-balance">
+          $25,000,000.00
         </div>
 
-        <br>
-
-        <div class="grid cards-3">
-
-          <div class="account-card checking">
-            <div class="account-top">
-              <span>CHECKING</span>
-              <span>SIMULATED</span>
-            </div>
-            <div class="account-balance" id="checkingBalance">
-              $10,000,000.00
-            </div>
-            <div class="account-number">•••• 4821</div>
-          </div>
-
-          <div class="account-card savings">
-            <div class="account-top">
-              <span>SAVINGS</span>
-              <span>SIMULATED</span>
-            </div>
-            <div class="account-balance" id="savingsBalance">
-              $15,000,000.00
-            </div>
-            <div class="account-number">•••• 7714</div>
-          </div>
-
-          <div class="card">
-            <div class="section-head">
-              <h2>Account overview</h2>
-            </div>
-
-            <p style="color:#777;font-size:13px">
-              Your accounts and balances shown here are fictional demo data.
-            </p>
-
-            <button class="small-btn" onclick="openModal('accountModal')">
-              View account details
-            </button>
-          </div>
-
+        <div class="hero-bottom">
+          Updated just now • Fictional demo data
         </div>
 
-        <br>
+        <div class="hero-circle"></div>
+
+      </div>
+
+
+      <!-- STATS -->
+
+      <div class="grid stats">
 
         <div class="card">
-          <div class="section-head">
-            <h2>Quick actions</h2>
-          </div>
-
-          <div class="quick">
-            <button onclick="openModal('transferModal')">⇄<br>Transfer</button>
-            <button onclick="openModal('sendModal')">💸<br>Send Money</button>
-            <button onclick="openModal('depositModal')">＋<br>Deposit</button>
-            <button onclick="openModal('billModal')">🧾<br>Pay Bill</button>
-            <button onclick="openModal('receiptModal')">🧾<br>Last Receipt</button>
-          </div>
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">TOTAL BALANCE</div>
+          <div id="statTotal" class="stat-value">$25.00M</div>
+          <div class="stat-change">▲ 4.8% simulated</div>
         </div>
 
-        <br>
+        <div class="card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-label">MONTHLY SPENDING</div>
+          <div class="stat-value">$12,840</div>
+          <div class="stat-change">▼ 8.2% simulated</div>
+        </div>
 
-        <div class="grid cards-3">
+        <div class="card">
+          <div class="stat-icon">↓</div>
+          <div class="stat-label">INCOMING</div>
+          <div class="stat-value">$48,500</div>
+          <div class="stat-change">▲ 13.4% simulated</div>
+        </div>
 
-          <div class="card" style="grid-column:span 2">
-            <div class="section-head">
-              <h2>Recent activity</h2>
-              <button class="small-btn" onclick="scrollToSection('transactions')">
-                View all
-              </button>
-            </div>
+        <div class="card">
+          <div class="stat-icon">✓</div>
+          <div class="stat-label">ACCOUNT STATUS</div>
+          <div class="stat-value">Active</div>
+          <div class="stat-change">Demo environment</div>
+        </div>
 
-            <div class="transactions">
-              <table>
-                <tbody id="recentTransactions"></tbody>
-              </table>
-            </div>
+      </div>
+
+
+      <!-- ACCOUNTS -->
+
+      <div class="grid accounts">
+
+        <div class="account checking">
+
+          <div class="account-head">
+            <span>CHECKING</span>
+            <span>SIMULATED</span>
           </div>
 
-          <div class="card">
-            <div class="section-head">
-              <h2>Spending</h2>
-            </div>
+          <div class="chip"></div>
 
-            <div class="chart-wrap">
-              <div class="donut"></div>
+          <div id="checkingBalance" class="account-balance">
+            $10,000,000.00
+          </div>
 
-              <div class="legend">
-                <div><span style="background:#9d1118"></span>Housing 42%</div>
-                <div><span style="background:#d5a84b"></span>Shopping 25%</div>
-                <div><span style="background:#5d6775"></span>Travel 17%</div>
-                <div><span style="background:#dfe2e6"></span>Other 16%</div>
-              </div>
-            </div>
+          <div class="account-number">
+            •••• •••• •••• 4821
           </div>
 
         </div>
 
-      </section>
 
-      <br>
+        <div class="account savings">
 
-      <section id="transactions" class="card">
+          <div class="account-head">
+            <span>SAVINGS</span>
+            <span>SIMULATED</span>
+          </div>
+
+          <div class="chip"></div>
+
+          <div id="savingsBalance" class="account-balance">
+            $15,000,000.00
+          </div>
+
+          <div class="account-number">
+            •••• •••• •••• 7714
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- QUICK ACTIONS -->
+
+      <div class="card quick-card">
 
         <div class="section-head">
-          <div>
-            <h2>Transaction History</h2>
-            <small style="color:#888">
-              Simulated transactions only
-            </small>
+          <h2>Quick actions</h2>
+          <small>Demo controls</small>
+        </div>
+
+        <div class="quick">
+
+          <button onclick="openModal('transferModal')">
+            ⇄<br>Transfer
+          </button>
+
+          <button onclick="openModal('sendModal')">
+            💸<br>Send Money
+          </button>
+
+          <button onclick="openModal('depositModal')">
+            ＋<br>Deposit
+          </button>
+
+          <button onclick="openModal('billModal')">
+            🧾<br>Pay Bill
+          </button>
+
+          <button onclick="openModal('accountModal')">
+            🏦<br>Accounts
+          </button>
+
+          <button onclick="openModal('receiptModal')">
+            🧾<br>Receipt
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- LOWER -->
+
+      <div class="grid lower">
+
+        <div id="transactions" class="card">
+
+          <div class="section-head">
+
+            <div>
+              <h2>Recent transactions</h2>
+              <small>Simulated activity</small>
+            </div>
+
+            <button
+              class="outline-btn"
+              onclick="resetDemo()">
+              Reset
+            </button>
+
           </div>
 
-          <button class="small-btn" onclick="resetDemo()">
-            Reset Demo Data
-          </button>
+          <div class="transactions">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>TRANSACTION</th>
+                  <th>DATE</th>
+                  <th>ACCOUNT</th>
+                  <th>STATUS</th>
+                  <th>AMOUNT</th>
+                </tr>
+              </thead>
+
+              <tbody id="transactionTable"></tbody>
+
+            </table>
+
+          </div>
+
         </div>
 
-        <div class="transactions">
-          <table>
-            <thead>
-              <tr>
-                <th>TRANSACTION</th>
-                <th>DATE</th>
-                <th>ACCOUNT</th>
-                <th>STATUS</th>
-                <th>AMOUNT</th>
-              </tr>
-            </thead>
-            <tbody id="transactionTable"></tbody>
-          </table>
+
+        <div class="card">
+
+          <div class="section-head">
+            <div>
+              <h2>Spending overview</h2>
+              <small>Illustrative data</small>
+            </div>
+          </div>
+
+          <div class="chart">
+
+            <div class="donut"></div>
+
+            <div class="legend">
+
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#9f1018"></span>
+                Housing — 42%
+              </div>
+
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#d5a84b"></span>
+                Shopping — 25%
+              </div>
+
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#66707d"></span>
+                Travel — 17%
+              </div>
+
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#dfe2e6"></span>
+                Other — 16%
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
-      </section>
+      </div>
 
-    </main>
-  </div>
+    </section>
+
+  </main>
+
+
+  <!-- MOBILE NAV -->
 
   <div class="mobile-nav">
-    <button onclick="scrollToSection('dashboard')">🏠<br>Home</button>
-    <button onclick="scrollToSection('transactions')">💳<br>Activity</button>
-    <button onclick="openModal('transferModal')">⇄<br>Transfer</button>
-    <button onclick="openModal('notificationModal')">🔔<br>Alerts</button>
-    <button onclick="openModal('settingsModal')">⚙️<br>Settings</button>
+
+    <button onclick="go('dashboard')">
+      🏠<br>Home
+    </button>
+
+    <button onclick="go('transactions')">
+      💳<br>Activity
+    </button>
+
+    <button onclick="openModal('transferModal')">
+      ⇄<br>Transfer
+    </button>
+
+    <button onclick="openModal('notificationsModal')">
+      🔔<br>Alerts
+    </button>
+
+    <button onclick="openModal('settingsModal')">
+      ⚙️<br>Settings
+    </button>
+
   </div>
 
 </section>
 
 
-<!-- TRANSFER MODAL -->
+<!-- TRANSFER -->
+
 <div id="transferModal" class="modal hidden">
+
   <div class="modal-box">
 
     <div class="modal-head">
@@ -1152,7 +1470,7 @@ body.dark .donut:after{
     </div>
 
     <div class="field">
-      <label>From Account</label>
+      <label>FROM ACCOUNT</label>
       <select id="transferFrom">
         <option value="checking">Checking •••• 4821</option>
         <option value="savings">Savings •••• 7714</option>
@@ -1160,17 +1478,17 @@ body.dark .donut:after{
     </div>
 
     <div class="field">
-      <label>Recipient</label>
+      <label>RECIPIENT</label>
       <input id="recipient" placeholder="Recipient name">
     </div>
 
     <div class="field">
-      <label>Amount</label>
-      <input id="transferAmount" type="number" placeholder="0.00">
+      <label>AMOUNT</label>
+      <input id="transferAmount" type="number" min="0" placeholder="0.00">
     </div>
 
     <div class="field">
-      <label>Memo</label>
+      <label>MEMO</label>
       <input id="transferMemo" placeholder="Optional memo">
     </div>
 
@@ -1179,26 +1497,29 @@ body.dark .donut:after{
     </button>
 
   </div>
+
 </div>
 
 
-<!-- SEND MODAL -->
+<!-- SEND -->
+
 <div id="sendModal" class="modal hidden">
+
   <div class="modal-box">
 
     <div class="modal-head">
-      <h2>Send Money</h2>
+      <h2>Send Simulated Money</h2>
       <button class="close" onclick="closeModal('sendModal')">×</button>
     </div>
 
     <div class="field">
-      <label>Recipient</label>
-      <input id="sendRecipient" placeholder="Name or username">
+      <label>RECIPIENT</label>
+      <input id="sendRecipient" placeholder="Recipient">
     </div>
 
     <div class="field">
-      <label>Amount</label>
-      <input id="sendAmount" type="number" placeholder="0.00">
+      <label>AMOUNT</label>
+      <input id="sendAmount" type="number" min="0" placeholder="0.00">
     </div>
 
     <button class="primary" onclick="sendMoney()">
@@ -1206,11 +1527,14 @@ body.dark .donut:after{
     </button>
 
   </div>
+
 </div>
 
 
 <!-- DEPOSIT -->
+
 <div id="depositModal" class="modal hidden">
+
   <div class="modal-box">
 
     <div class="modal-head">
@@ -1219,7 +1543,7 @@ body.dark .donut:after{
     </div>
 
     <div class="field">
-      <label>Deposit To</label>
+      <label>ACCOUNT</label>
       <select id="depositAccount">
         <option value="checking">Checking</option>
         <option value="savings">Savings</option>
@@ -1227,8 +1551,8 @@ body.dark .donut:after{
     </div>
 
     <div class="field">
-      <label>Amount</label>
-      <input id="depositAmount" type="number" placeholder="0.00">
+      <label>AMOUNT</label>
+      <input id="depositAmount" type="number" min="0" placeholder="0.00">
     </div>
 
     <button class="primary" onclick="depositMoney()">
@@ -1236,26 +1560,29 @@ body.dark .donut:after{
     </button>
 
   </div>
+
 </div>
 
 
 <!-- BILL -->
+
 <div id="billModal" class="modal hidden">
+
   <div class="modal-box">
 
     <div class="modal-head">
-      <h2>Pay Simulated Bill</h2>
+      <h2>Simulated Bill Payment</h2>
       <button class="close" onclick="closeModal('billModal')">×</button>
     </div>
 
     <div class="field">
-      <label>Biller</label>
-      <input id="biller" placeholder="Electricity, internet, etc.">
+      <label>BILLER</label>
+      <input id="biller" placeholder="Example: Internet">
     </div>
 
     <div class="field">
-      <label>Amount</label>
-      <input id="billAmount" type="number" placeholder="0.00">
+      <label>AMOUNT</label>
+      <input id="billAmount" type="number" min="0" placeholder="0.00">
     </div>
 
     <button class="primary" onclick="payBill()">
@@ -1263,11 +1590,14 @@ body.dark .donut:after{
     </button>
 
   </div>
+
 </div>
 
 
-<!-- ACCOUNT -->
+<!-- ACCOUNT DETAILS -->
+
 <div id="accountModal" class="modal hidden">
+
   <div class="modal-box">
 
     <div class="modal-head">
@@ -1276,55 +1606,135 @@ body.dark .donut:after{
     </div>
 
     <div class="card">
+
       <b>Checking Account</b>
-      <p>Account ending: •••• 4821</p>
-      <p>Routing number: DEMO-0001</p>
-      <p>Balance: <b id="detailChecking">$10,000,000.00</b></p>
+
+      <p>Account: •••• 4821</p>
+      <p>Routing: DEMO-0001</p>
+      <p>
+        Balance:
+        <strong id="detailChecking">$10,000,000.00</strong>
+      </p>
+
     </div>
 
     <br>
 
     <div class="card">
+
       <b>Savings Account</b>
-      <p>Account ending: •••• 7714</p>
-      <p>Routing number: DEMO-0002</p>
-      <p>Balance: <b id="detailSavings">$15,000,000.00</b></p>
+
+      <p>Account: •••• 7714</p>
+      <p>Routing: DEMO-0002</p>
+      <p>
+        Balance:
+        <strong id="detailSavings">$15,000,000.00</strong>
+      </p>
+
     </div>
 
+    <p style="font-size:11px;color:#999;margin-top:18px">
+      Account information displayed here is fictional demo data.
+    </p>
+
   </div>
+
+</div>
+
+
+<!-- PROFILE -->
+
+<div id="profileModal" class="modal hidden">
+
+  <div class="modal-box profile-box">
+
+    <div class="modal-head">
+      <h2>Profile</h2>
+      <button class="close" onclick="closeModal('profileModal')">×</button>
+    </div>
+
+    <div class="big-avatar">DU</div>
+
+    <h2>Demo User</h2>
+
+    <p style="color:#888">
+      demo@example.invalid
+    </p>
+
+    <div class="field" style="text-align:left">
+      <label>DISPLAY NAME</label>
+      <input value="Demo User">
+    </div>
+
+    <div class="field" style="text-align:left">
+      <label>EMAIL</label>
+      <input value="demo@example.invalid">
+    </div>
+
+    <button
+      class="primary"
+      onclick="alert('Profile changes saved locally in this demo.');closeModal('profileModal')">
+      Save Demo Profile
+    </button>
+
+  </div>
+
 </div>
 
 
 <!-- NOTIFICATIONS -->
-<div id="notificationModal" class="modal hidden">
+
+<div id="notificationsModal" class="modal hidden">
+
   <div class="modal-box">
 
     <div class="modal-head">
       <h2>Notifications</h2>
-      <button class="close" onclick="closeModal('notificationModal')">×</button>
+      <button class="close" onclick="closeModal('notificationsModal')">×</button>
     </div>
 
     <div class="notification">
-      <b>Welcome to the demo</b>
-      <small>This is a simulated banking environment.</small>
+
+      <div class="notification-icon">✓</div>
+
+      <div>
+        <b>Welcome to Washington Harbor Demo</b>
+        <p>This is a fictional banking interface.</p>
+      </div>
+
     </div>
 
     <div class="notification">
-      <b>Demo transaction available</b>
-      <small>Your fictional transaction history has been updated.</small>
+
+      <div class="notification-icon">💳</div>
+
+      <div>
+        <b>Transaction activity</b>
+        <p>Your simulated transaction list is available.</p>
+      </div>
+
     </div>
 
     <div class="notification">
-      <b>Security reminder</b>
-      <small>Never enter real banking passwords into demo websites.</small>
+
+      <div class="notification-icon">🔐</div>
+
+      <div>
+        <b>Security reminder</b>
+        <p>Never enter real banking credentials into demo websites.</p>
+      </div>
+
     </div>
 
   </div>
+
 </div>
 
 
 <!-- SETTINGS -->
+
 <div id="settingsModal" class="modal hidden">
+
   <div class="modal-box">
 
     <div class="modal-head">
@@ -1332,30 +1742,41 @@ body.dark .donut:after{
       <button class="close" onclick="closeModal('settingsModal')">×</button>
     </div>
 
+    <button
+      class="outline-btn"
+      style="width:100%;margin-bottom:12px"
+      onclick="toggleDark()">
+      ◐ Toggle Dark Mode
+    </button>
+
+    <button
+      class="outline-btn"
+      style="width:100%;margin-bottom:12px"
+      onclick="resetDemo();closeModal('settingsModal')">
+      ↻ Reset Demo Data
+    </button>
+
     <div class="card">
-      <b>Profile</b>
-      <p style="color:#888">Demo User</p>
-      <p style="color:#888">demo@example.invalid</p>
+
+      <b>Demo Environment</b>
+
+      <p style="font-size:12px;color:#888;line-height:1.6">
+        This interface stores demonstration data only.
+        It does not connect to a bank, payment network,
+        card processor, or financial institution.
+      </p>
+
     </div>
 
-    <br>
-
-    <button class="small-btn" onclick="toggleDark();closeModal('settingsModal')">
-      Toggle Dark Mode
-    </button>
-
-    <br><br>
-
-    <button class="small-btn" onclick="resetDemo();closeModal('settingsModal')">
-      Reset Demo Data
-    </button>
-
   </div>
+
 </div>
 
 
 <!-- RECEIPT -->
+
 <div id="receiptModal" class="modal hidden">
+
   <div class="modal-box receipt">
 
     <div class="modal-head">
@@ -1363,19 +1784,19 @@ body.dark .donut:after{
       <button class="close" onclick="closeModal('receiptModal')">×</button>
     </div>
 
-    <div class="receipt-icon">✓</div>
+    <div class="success">✓</div>
 
-    <small style="color:#777">
+    <div class="receipt-label">
       DEMO / SIMULATED TRANSACTION
-    </small>
+    </div>
 
-    <div class="receipt-amount" id="receiptAmount">
+    <div id="receiptAmount" class="receipt-amount">
       $0.00
     </div>
 
     <div class="receipt-row">
       <span>Status</span>
-      <b style="color:#16834d">Simulated Successful</b>
+      <b class="credit">Simulated Successful</b>
     </div>
 
     <div class="receipt-row">
@@ -1384,7 +1805,7 @@ body.dark .donut:after{
     </div>
 
     <div class="receipt-row">
-      <span>From</span>
+      <span>From Account</span>
       <b id="receiptFrom">—</b>
     </div>
 
@@ -1398,74 +1819,115 @@ body.dark .donut:after{
       <b id="receiptId">—</b>
     </div>
 
-    <div class="receipt-actions">
-      <button onclick="closeModal('receiptModal')">Close</button>
-      <button class="print" onclick="window.print()">Print Receipt</button>
+    <div class="receipt-buttons">
+
+      <button onclick="closeModal('receiptModal')">
+        Close
+      </button>
+
+      <button class="print" onclick="window.print()">
+        Print
+      </button>
+
     </div>
 
-    <p style="font-size:11px;color:#999;margin-top:18px">
-      This receipt is fictional and has no banking or payment value.
+    <p style="font-size:10px;color:#999;margin-top:18px">
+      Fictional receipt — no real funds were transferred.
     </p>
 
   </div>
+
 </div>
 
 
 <script>
 
-/* -----------------------------
+/* =========================
    DEMO DATA
------------------------------ */
+========================= */
 
 let accounts = {
   checking:10000000,
   savings:15000000
 };
 
-let transactions = [
+const defaultTransactions = [
+
   {
     name:"Salary Simulation",
     date:"Sep 08, 2026",
     account:"Checking",
-    amount:48500,
-    type:"credit"
+    amount:48500
   },
+
   {
     name:"Luxury Shopping",
     date:"Sep 07, 2026",
     account:"Checking",
-    amount:-4280,
-    type:"debit"
+    amount:-4280
   },
+
   {
-    name:"Savings Transfer",
+    name:"Savings Deposit",
     date:"Sep 06, 2026",
     account:"Savings",
-    amount:25000,
-    type:"credit"
+    amount:25000
   },
+
   {
     name:"Travel Simulation",
     date:"Sep 05, 2026",
     account:"Checking",
-    amount:-3150,
-    type:"debit"
+    amount:-3150
   },
+
   {
     name:"Utility Bill",
     date:"Sep 04, 2026",
     account:"Checking",
-    amount:-850,
-    type:"debit"
+    amount:-850
+  },
+
+  {
+    name:"Restaurant Simulation",
+    date:"Sep 03, 2026",
+    account:"Checking",
+    amount:-320
   }
+
 ];
 
-let lastReceipt = null;
+let transactions = [...defaultTransactions];
 
 
-/* -----------------------------
+/* =========================
+   HELPERS
+========================= */
+
+function money(number){
+
+  return new Intl.NumberFormat("en-US",{
+    style:"currency",
+    currency:"USD"
+  }).format(number);
+
+}
+
+function safe(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
    LOGIN
------------------------------ */
+========================= */
 
 function login(){
 
@@ -1477,39 +1939,55 @@ function login(){
 
   if(username === "demo" && password === "demo"){
 
-    document.getElementById("loginPage")
+    document
+      .getElementById("loginPage")
       .classList.add("hidden");
 
-    document.getElementById("app")
+    document
+      .getElementById("app")
       .classList.remove("hidden");
 
-    loadData();
+    loadDashboard();
 
   }else{
 
     alert(
-      "Demo login only.\n\nUsername: demo\nPassword: demo"
+      "Demo login:\n\nUsername: demo\nPassword: demo"
     );
 
   }
-}
-
-
-/* -----------------------------
-   DATA
------------------------------ */
-
-function money(value){
-
-  return new Intl.NumberFormat("en-US",{
-    style:"currency",
-    currency:"USD"
-  }).format(value);
 
 }
 
 
-function loadData(){
+/* =========================
+   DASHBOARD
+========================= */
+
+function loadDashboard(){
+
+  updateBalances();
+  renderTransactions();
+
+  document.getElementById("currentDate")
+    .textContent =
+    new Date().toLocaleDateString(
+      "en-US",
+      {
+        weekday:"long",
+        month:"long",
+        day:"numeric",
+        year:"numeric"
+      }
+    );
+
+}
+
+
+function updateBalances(){
+
+  const total =
+    accounts.checking + accounts.savings;
 
   document.getElementById("checkingBalance")
     .textContent = money(accounts.checking);
@@ -1523,117 +2001,80 @@ function loadData(){
   document.getElementById("detailSavings")
     .textContent = money(accounts.savings);
 
-  const total =
-    accounts.checking + accounts.savings;
-
-  document.getElementById("totalBalance")
+  document.getElementById("heroBalance")
     .textContent = money(total);
 
   document.getElementById("statTotal")
     .textContent =
-      "$" + (total / 1000000).toFixed(2) + "M";
+    "$" + (total / 1000000).toFixed(2) + "M";
 
-  renderTransactions();
-
-  document.getElementById("today")
-    .textContent =
-      new Date().toLocaleDateString(
-        "en-US",
-        {
-          weekday:"long",
-          month:"long",
-          day:"numeric",
-          year:"numeric"
-        }
-      );
 }
 
 
-/* -----------------------------
+/* =========================
    TRANSACTIONS
------------------------------ */
+========================= */
 
 function renderTransactions(list = transactions){
 
   const table =
     document.getElementById("transactionTable");
 
-  const recent =
-    document.getElementById("recentTransactions");
-
   table.innerHTML = "";
-  recent.innerHTML = "";
 
-  list.forEach((tx,index)=>{
+  list.forEach(tx=>{
 
-    const sign =
-      tx.amount >= 0 ? "+" : "";
+    const positive = tx.amount >= 0;
 
-    const cls =
-      tx.amount >= 0 ? "credit" : "debit";
+    const sign = positive ? "+" : "";
 
-    const icon =
-      tx.amount >= 0 ? "↓" : "↑";
-
-    const row = document.createElement("tr");
+    const row =
+      document.createElement("tr");
 
     row.innerHTML = `
+
       <td>
-        <div class="tx">
-          <div class="tx-icon">${icon}</div>
+
+        <div class="transaction-name">
+
+          <div class="tx-icon">
+            ${positive ? "↓" : "↑"}
+          </div>
+
           <div>
-            <b>${escapeHTML(tx.name)}</b><br>
-            <small style="color:#888">
+            <b>${safe(tx.name)}</b><br>
+            <small style="color:#999">
               Simulated transaction
             </small>
           </div>
+
         </div>
+
       </td>
 
-      <td>${tx.date}</td>
+      <td>${safe(tx.date)}</td>
 
-      <td>${tx.account}</td>
+      <td>${safe(tx.account)}</td>
 
       <td>
-        <span class="${cls}">
+        <span class="status">
           Simulated
         </span>
       </td>
 
-      <td class="${cls}">
+      <td class="${positive ? "credit" : "debit"}">
         ${sign}${money(Math.abs(tx.amount))}
       </td>
+
     `;
+
+    row.onclick = ()=>{
+      showTransaction(tx);
+    };
+
+    row.style.cursor = "pointer";
 
     table.appendChild(row);
-
-  });
-
-
-  list.slice(0,4).forEach(tx=>{
-
-    const sign =
-      tx.amount >= 0 ? "+" : "";
-
-    const cls =
-      tx.amount >= 0 ? "credit" : "debit";
-
-    recent.innerHTML += `
-      <tr>
-        <td>
-          <div class="tx">
-            <div class="tx-icon">
-              ${tx.amount >= 0 ? "↓" : "↑"}
-            </div>
-            <b>${escapeHTML(tx.name)}</b>
-          </div>
-        </td>
-
-        <td class="${cls}">
-          ${sign}${money(Math.abs(tx.amount))}
-        </td>
-      </tr>
-    `;
 
   });
 
@@ -1642,14 +2083,14 @@ function renderTransactions(list = transactions){
 
 function searchTransactions(){
 
-  const q =
-    document.getElementById("globalSearch")
+  const query =
+    document.getElementById("searchBox")
       .value.toLowerCase();
 
   const filtered =
-    transactions.filter(tx =>
-      tx.name.toLowerCase().includes(q) ||
-      tx.account.toLowerCase().includes(q)
+    transactions.filter(tx=>
+      tx.name.toLowerCase().includes(query) ||
+      tx.account.toLowerCase().includes(query)
     );
 
   renderTransactions(filtered);
@@ -1657,9 +2098,23 @@ function searchTransactions(){
 }
 
 
-/* -----------------------------
+function showTransaction(tx){
+
+  alert(
+    "SIMULATED TRANSACTION\n\n" +
+    "Description: " + tx.name + "\n" +
+    "Date: " + tx.date + "\n" +
+    "Account: " + tx.account + "\n" +
+    "Amount: " + money(tx.amount) + "\n\n" +
+    "No real transaction occurred."
+  );
+
+}
+
+
+/* =========================
    TRANSFER
------------------------------ */
+========================= */
 
 function makeTransfer(){
 
@@ -1667,30 +2122,46 @@ function makeTransfer(){
     document.getElementById("transferFrom").value;
 
   const recipient =
-    document.getElementById("recipient").value.trim();
+    document.getElementById("recipient")
+      .value.trim();
 
   const amount =
-    Number(document.getElementById("transferAmount").value);
+    Number(
+      document.getElementById("transferAmount").value
+    );
 
   if(!recipient){
-    alert("Enter a recipient.");
+
+    alert("Please enter a recipient.");
+
     return;
   }
 
   if(!amount || amount <= 0){
+
     alert("Enter a valid simulated amount.");
+
     return;
   }
 
   if(amount > accounts[from]){
+
     alert("Insufficient simulated balance.");
+
     return;
   }
 
   accounts[from] -= amount;
 
+  const accountName =
+    from === "checking"
+    ? "Checking"
+    : "Savings";
+
   transactions.unshift({
+
     name:"Transfer to " + recipient,
+
     date:new Date().toLocaleDateString(
       "en-US",
       {
@@ -1699,27 +2170,21 @@ function makeTransfer(){
         year:"numeric"
       }
     ),
-    account:
-      from === "checking"
-      ? "Checking"
-      : "Savings",
-    amount:-amount,
-    type:"debit"
+
+    account:accountName,
+
+    amount:-amount
+
   });
 
-  lastReceipt = {
-    amount,
-    recipient,
-    from:
-      from === "checking"
-      ? "Checking •••• 4821"
-      : "Savings •••• 7714",
-    date:new Date().toLocaleString(),
-    id:"DEMO-" + Math.random()
+
+  const id =
+    "DEMO-" +
+    Math.random()
       .toString(36)
       .substring(2,10)
-      .toUpperCase()
-  };
+      .toUpperCase();
+
 
   document.getElementById("receiptAmount")
     .textContent = money(amount);
@@ -1728,30 +2193,35 @@ function makeTransfer(){
     .textContent = recipient;
 
   document.getElementById("receiptFrom")
-    .textContent = lastReceipt.from;
+    .textContent =
+    accountName + " •••• " +
+    (from === "checking" ? "4821" : "7714");
 
   document.getElementById("receiptDate")
-    .textContent = lastReceipt.date;
+    .textContent = new Date().toLocaleString();
 
   document.getElementById("receiptId")
-    .textContent = lastReceipt.id;
+    .textContent = id;
+
 
   document.getElementById("recipient").value="";
   document.getElementById("transferAmount").value="";
   document.getElementById("transferMemo").value="";
 
+
   closeModal("transferModal");
 
-  loadData();
+  updateBalances();
+  renderTransactions();
 
   openModal("receiptModal");
 
 }
 
 
-/* -----------------------------
+/* =========================
    SEND MONEY
------------------------------ */
+========================= */
 
 function sendMoney(){
 
@@ -1781,11 +2251,15 @@ function sendMoney(){
   accounts.checking -= amount;
 
   transactions.unshift({
+
     name:"Send Money to " + recipient,
+
     date:new Date().toLocaleDateString(),
+
     account:"Checking",
-    amount:-amount,
-    type:"debit"
+
+    amount:-amount
+
   });
 
   document.getElementById("sendRecipient").value="";
@@ -1793,7 +2267,8 @@ function sendMoney(){
 
   closeModal("sendModal");
 
-  loadData();
+  updateBalances();
+  renderTransactions();
 
   alert(
     "Simulated payment completed.\n\n" +
@@ -1803,9 +2278,9 @@ function sendMoney(){
 }
 
 
-/* -----------------------------
+/* =========================
    DEPOSIT
------------------------------ */
+========================= */
 
 function depositMoney(){
 
@@ -1827,21 +2302,26 @@ function depositMoney(){
   accounts[account] += amount;
 
   transactions.unshift({
+
     name:"Simulated Deposit",
+
     date:new Date().toLocaleDateString(),
+
     account:
       account === "checking"
       ? "Checking"
       : "Savings",
-    amount:amount,
-    type:"credit"
+
+    amount:amount
+
   });
 
   document.getElementById("depositAmount").value="";
 
   closeModal("depositModal");
 
-  loadData();
+  updateBalances();
+  renderTransactions();
 
   alert(
     "Simulated deposit added.\n\n" +
@@ -1851,9 +2331,9 @@ function depositMoney(){
 }
 
 
-/* -----------------------------
+/* =========================
    BILL
------------------------------ */
+========================= */
 
 function payBill(){
 
@@ -1883,11 +2363,15 @@ function payBill(){
   accounts.checking -= amount;
 
   transactions.unshift({
+
     name:"Bill: " + biller,
+
     date:new Date().toLocaleDateString(),
+
     account:"Checking",
-    amount:-amount,
-    type:"debit"
+
+    amount:-amount
+
   });
 
   document.getElementById("biller").value="";
@@ -1895,145 +2379,125 @@ function payBill(){
 
   closeModal("billModal");
 
-  loadData();
+  updateBalances();
+  renderTransactions();
 
   alert(
     "Simulated bill payment completed.\n\n" +
-    "No real payment was sent."
+    "No real payment was made."
   );
 
 }
 
 
-/* -----------------------------
+/* =========================
    MODALS
------------------------------ */
+========================= */
 
 function openModal(id){
 
-  document.getElementById(id)
+  document
+    .getElementById(id)
     .classList.remove("hidden");
 
 }
 
 function closeModal(id){
 
-  document.getElementById(id)
+  document
+    .getElementById(id)
     .classList.add("hidden");
 
 }
 
 
-/* -----------------------------
-   SIDEBAR
------------------------------ */
+/* =========================
+   NAVIGATION
+========================= */
 
-function toggleSidebar(){
+function go(id){
 
-  document.getElementById("sidebar")
-    .classList.toggle("open");
+  const element =
+    document.getElementById(id);
 
-}
+  if(element){
 
-function scrollToSection(id){
-
-  document.getElementById(id)
-    .scrollIntoView({
+    element.scrollIntoView({
       behavior:"smooth"
     });
 
-  document.getElementById("sidebar")
+  }
+
+  document
+    .getElementById("sidebar")
     .classList.remove("open");
 
 }
 
 
-/* -----------------------------
+function toggleSidebar(){
+
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
+
+}
+
+
+/* =========================
    DARK MODE
------------------------------ */
+========================= */
 
 function toggleDark(){
 
   document.body.classList.toggle("dark");
 
   localStorage.setItem(
-    "demoDark",
+    "washingtonHarborDark",
     document.body.classList.contains("dark")
   );
 
 }
 
 
-/* -----------------------------
+/* =========================
    RESET
------------------------------ */
+========================= */
 
 function resetDemo(){
 
-  if(!confirm(
-    "Reset all simulated balances and transactions?"
-  )){
-    return;
-  }
+  const yes =
+    confirm(
+      "Reset all simulated balances and transactions?"
+    );
+
+  if(!yes) return;
 
   accounts = {
     checking:10000000,
     savings:15000000
   };
 
-  transactions = [
-    {
-      name:"Salary Simulation",
-      date:"Sep 08, 2026",
-      account:"Checking",
-      amount:48500,
-      type:"credit"
-    },
-    {
-      name:"Luxury Shopping",
-      date:"Sep 07, 2026",
-      account:"Checking",
-      amount:-4280,
-      type:"debit"
-    },
-    {
-      name:"Savings Transfer",
-      date:"Sep 06, 2026",
-      account:"Savings",
-      amount:25000,
-      type:"credit"
-    },
-    {
-      name:"Travel Simulation",
-      date:"Sep 05, 2026",
-      account:"Checking",
-      amount:-3150,
-      type:"debit"
-    },
-    {
-      name:"Utility Bill",
-      date:"Sep 04, 2026",
-      account:"Checking",
-      amount:-850,
-      type:"debit"
-    }
-  ];
+  transactions = [...defaultTransactions];
 
-  loadData();
+  updateBalances();
+  renderTransactions();
 
 }
 
 
-/* -----------------------------
+/* =========================
    LOGOUT
------------------------------ */
+========================= */
 
 function logout(){
 
-  document.getElementById("app")
+  document
+    .getElementById("app")
     .classList.add("hidden");
 
-  document.getElementById("loginPage")
+  document
+    .getElementById("loginPage")
     .classList.remove("hidden");
 
   document.getElementById("username").value="";
@@ -2042,45 +2506,39 @@ function logout(){
 }
 
 
-/* -----------------------------
-   SECURITY HELP
------------------------------ */
+/* =========================
+   CLOSE MODALS OUTSIDE
+========================= */
 
-function escapeHTML(text){
+document
+  .querySelectorAll(".modal")
+  .forEach(modal=>{
 
-  return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    modal.addEventListener("click",function(e){
 
-}
+      if(e.target === modal){
 
+        modal.classList.add("hidden");
 
-/* -----------------------------
-   STARTUP
------------------------------ */
+      }
 
-if(localStorage.getItem("demoDark") === "true"){
-  document.body.classList.add("dark");
-}
-
-
-/* Close modal when clicking outside */
-
-document.querySelectorAll(".modal")
-.forEach(modal=>{
-
-  modal.addEventListener("click",e=>{
-
-    if(e.target === modal){
-      modal.classList.add("hidden");
-    }
+    });
 
   });
 
-});
+
+/* =========================
+   REMEMBER DARK MODE
+========================= */
+
+if(
+  localStorage.getItem("washingtonHarborDark")
+  === "true"
+){
+
+  document.body.classList.add("dark");
+
+}
 
 </script>
 
