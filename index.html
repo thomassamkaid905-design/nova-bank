@@ -255,63 +255,6 @@ button,input,select{font:inherit}
   margin-bottom:8px;
 }
 
-.activity{
-  background:#fff;
-  border-radius:14px;
-  overflow:hidden;
-}
-.activity-row{
-  padding:17px 20px;
-  display:flex;
-  justify-content:space-between;
-  border-bottom:1px solid #eee;
-}
-.activity-row:last-child{border-bottom:0}
-.activity-name{font-weight:bold}
-.activity-date{font-size:12px;color:#888;margin-top:5px}
-.credit{color:#16803c;font-weight:bold}
-.debit{color:#a00;font-weight:bold}
-.empty-state{
-  padding:30px;
-  text-align:center;
-  color:#888;
-}
-
-.spending{
-  margin-top:25px;
-}
-.progress{
-  height:9px;
-  background:#eee;
-  border-radius:10px;
-  margin:12px 0;
-  overflow:hidden;
-}
-.progress div{
-  width:0%;
-  height:100%;
-  background:var(--red);
-}
-
-.premium{
-  margin-top:25px;
-  background:linear-gradient(120deg,#67050d,#a80a1c);
-  color:#fff;
-  padding:25px;
-  border-radius:14px;
-}
-.premium h3{color:var(--gold);margin-bottom:8px}
-.premium button{
-  margin-top:15px;
-  background:var(--gold);
-  color:#390208;
-  border:0;
-  padding:10px 17px;
-  border-radius:7px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
 .footer{
   margin-top:35px;
   text-align:center;
@@ -357,14 +300,7 @@ button,input,select{font:inherit}
   cursor:pointer;
 }
 .modal-body{padding:22px}
-.modal-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-.modal-group{
-  margin-bottom:15px;
-}
+.modal-group{margin-bottom:15px}
 .modal-group label{
   display:block;
   font-size:13px;
@@ -382,101 +318,18 @@ button,input,select{font:inherit}
   border-radius:8px;
   cursor:pointer;
 }
-.cancel{
-  background:#eee;
-  border:0;
-}
-.submit{
-  background:var(--red);
-  color:#fff;
-  border:0;
-}
-.feature-content{
-  line-height:1.7;
-  color:#555;
-}
-.feature-list{
-  margin-top:15px;
-  list-style:none;
-}
-.feature-list li{
-  padding:13px;
-  border-bottom:1px solid #eee;
-}
-.feature-list li:last-child{border-bottom:0}
+.cancel{background:#eee;border:0}
+.submit{background:var(--red);color:#fff;border:0}
 
-/* RECEIPT */
-.receipt{
-  text-align:center;
-}
-.receipt-icon{
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  background:#e9f8ef;
-  color:#16803c;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:32px;
-  margin:0 auto 15px;
-}
-.receipt h2{color:#16803c}
-.receipt-details{
-  margin-top:20px;
-  text-align:left;
-  border-top:1px solid #eee;
-}
-.detail{
-  display:flex;
-  justify-content:space-between;
-  padding:11px 0;
-  border-bottom:1px solid #eee;
-}
-.detail span:first-child{color:#777}
-.status{
-  display:inline-block;
-  margin-top:18px;
-  padding:7px 13px;
-  border-radius:20px;
-  background:#e8f7ee;
-  color:#16773a;
-  font-weight:bold;
-  font-size:12px;
-}
-
-/* MOBILE */
-.mobile-menu{
-  display:none;
-  border:0;
-  background:transparent;
-  color:white;
-  font-size:25px;
-}
 @media(max-width:850px){
-  .mobile-menu{display:block}
   .topbar{padding:0 15px}
   .logo{font-size:19px}
   .top-actions button{display:none}
-  .sidebar{
-    position:fixed;
-    top:76px;
-    bottom:0;
-    left:-240px;
-    z-index:50;
-    transition:.25s;
-  }
+  .sidebar{position:fixed;top:76px;bottom:0;left:-240px;z-index:50;transition:.25s}
   .sidebar.open{left:0}
   .main{padding:20px 15px}
   .accounts{grid-template-columns:1fr}
   .quick-actions{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:500px){
-  .login-box{padding:25px}
-  .balance{font-size:25px}
-  .modal-row{grid-template-columns:1fr}
-  .activity-row{gap:10px}
-  .activity-row>div:last-child{text-align:right}
 }
 </style>
 </head>
@@ -488,26 +341,28 @@ button,input,select{font:inherit}
   <div class="login-box">
     <div class="brand">
       <h1>WASHINGTON HARBOR BANK</h1>
-      <p>BANKING FOR A BRIGHTER TOMORROW</p>
+      <p>ONLINE BANKING SERVICES</p>
     </div>
 
-    <h2>Online Banking</h2>
+    <h2>Account Sign In</h2>
 
-    <div class="form-group">
-      <label>Email or Username</label>
-      <input id="loginUser" type="text" placeholder="Enter username">
-    </div>
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="loginUser">Username or Email</label>
+        <input id="loginUser" type="text" autocomplete="username" required placeholder="Enter username or email">
+      </div>
 
-    <div class="form-group">
-      <label>Password</label>
-      <input id="loginPass" type="password" placeholder="Enter password">
-    </div>
+      <div class="form-group">
+        <label for="loginPass">Password</label>
+        <input id="loginPass" type="password" autocomplete="current-password" required placeholder="Enter password">
+      </div>
 
-    <button class="primary-btn" onclick="login()">Sign In</button>
+      <button type="submit" class="primary-btn">Sign In</button>
+    </form>
 
     <div class="login-links">
-      <button onclick="forgotPassword()">Forgot Password?</button>
-      <button onclick="showRegister()">Create Account</button>
+      <button type="button" onclick="openForgotPasswordModal()">Forgot Password?</button>
+      <button type="button" onclick="openRegisterModal()">Create Account</button>
     </div>
   </div>
 </section>
@@ -515,553 +370,236 @@ button,input,select{font:inherit}
 
 <!-- APPLICATION -->
 <section id="app" class="app hidden">
-
   <header class="topbar">
-    <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
-
     <div class="logo">
       WASHINGTON HARBOR BANK
-      <small>BANKING FOR A BRIGHTER TOMORROW</small>
+      <small>ONLINE BANKING SERVICES</small>
     </div>
 
     <div class="top-actions">
-      <button onclick="openFeature('Messages')">✉ Messages</button>
-      <button onclick="openFeature('Help')">? Help</button>
-      <button onclick="signOut()">Sign Out</button>
+      <button type="button" onclick="signOut()">Sign Out</button>
       <div class="profile" id="avatar">--</div>
     </div>
   </header>
 
   <div class="layout">
-
     <aside class="sidebar" id="sidebar">
-      <button class="active" onclick="home()">▣ Accounts</button>
-      <button onclick="openTransfer()">⇄ Transfer & Pay</button>
-      <button onclick="openWire()">↗ Wire Transfer</button>
-      <button onclick="openFeature('Deposit Checks')">▣ Deposit Checks</button>
-      <button onclick="openFeature('Pay Bills')">▤ Pay Bills</button>
-      <button onclick="openFeature('Cards')">▭ Cards</button>
-      <button onclick="openFeature('Statements')">▤ Statements</button>
-      <button onclick="openFeature('Security')">◉ Security</button>
-      <button onclick="openSettings()">⚙ Settings</button>
+      <button type="button" class="active">▣ Accounts</button>
+      <button type="button" onclick="openSettingsModal()">⚙ Settings</button>
     </aside>
 
     <main class="main">
-
       <div class="welcome">
-        <h2>Welcome, <span id="welcomeName">User</span></h2>
-        <p>Here's your account summary.</p>
+        <h2>Welcome back, <span id="welcomeName">User</span></h2>
+        <p>Here is your account overview.</p>
       </div>
 
       <div class="accounts">
-
         <div class="card account-card">
           <div class="account-title">
-            <span>Checking Account</span>
+            <span>Primary Checking</span>
             <span>Personal</span>
           </div>
-          <div class="account-number" id="checkingNum">•••• ----</div>
-          <div class="balance" id="checkingBal">$0.00</div>
-          <div class="available">Available balance</div>
+          <div class="account-number" id="accNumber">•••• 0000</div>
+          <div class="balance" id="accBalance">$0.00</div>
+          <div class="available">Available Balance</div>
         </div>
-
-        <div class="card account-card">
-          <div class="account-title">
-            <span>Savings Account</span>
-            <span>Personal</span>
-          </div>
-          <div class="account-number" id="savingsNum">•••• ----</div>
-          <div class="balance" id="savingsBal">$0.00</div>
-          <div class="available">Available balance</div>
-        </div>
-
-      </div>
-
-      <h3 class="section-title">Quick Actions</h3>
-
-      <div class="quick-actions">
-        <button class="action" onclick="openTransfer()">
-          <span>⇄</span>Transfer Money
-        </button>
-
-        <button class="action" onclick="openWire()">
-          <span>↗</span>Wire Transfer
-        </button>
-
-        <button class="action" onclick="openFeature('Deposit Checks')">
-          <span>▣</span>Deposit Check
-        </button>
-
-        <button class="action" onclick="openFeature('Pay Bills')">
-          <span>▤</span>Pay Bills
-        </button>
-
-        <button class="action" onclick="openFeature('Cards')">
-          <span>▭</span>Cards
-        </button>
-
-        <button class="action" onclick="openFeature('Statements')">
-          <span>▤</span>Statements
-        </button>
-
-        <button class="action" onclick="openFeature('Security')">
-          <span>◉</span>Security
-        </button>
-
-        <button class="action" onclick="openSettings()">
-          <span>⚙</span>Settings
-        </button>
-      </div>
-
-      <h3 class="section-title">Recent Activity</h3>
-
-      <div class="activity" id="activityList">
-        <div class="empty-state">No recent activity.</div>
-      </div>
-
-      <div class="card spending">
-        <h3>Spending This Month</h3>
-        <p style="margin-top:8px;color:#777">
-          Total spending: <strong id="spendingAmount">$0.00</strong>
-        </p>
-        <div class="progress"><div id="spendingProgress"></div></div>
-      </div>
-
-      <div class="premium">
-        <h3>Premium Banking</h3>
-        <p>Explore personalized financial tools and account management features.</p>
-        <button onclick="openFeature('Premium Banking')">Explore Features</button>
       </div>
 
       <div class="footer">
-        © 2026 Washington Harbor Bank
+        © <span id="currentYear"></span> Washington Harbor Bank. All rights reserved.
       </div>
-
     </main>
   </div>
 </section>
 
 
-<!-- TRANSFER MODAL -->
-<div id="transferModal" class="modal-wrap hidden">
+<!-- REGISTER MODAL -->
+<div id="registerModal" class="modal-wrap hidden">
   <div class="modal">
     <div class="modal-head">
-      <h3>Transfer Money</h3>
-      <button class="close" onclick="closeModal('transferModal')">×</button>
+      <h3>Create New Account</h3>
+      <button type="button" class="close" onclick="closeModal('registerModal')">×</button>
     </div>
 
-    <div class="modal-body">
-
-      <div class="modal-row">
-        <div class="modal-group">
-          <label>From Account</label>
-          <select id="fromAccount">
-            <option>Checking</option>
-            <option>Savings</option>
-          </select>
-        </div>
-
-        <div class="modal-group">
-          <label>To Account</label>
-          <select id="toAccount">
-            <option>Savings</option>
-            <option>Checking</option>
-          </select>
-        </div>
+    <form onsubmit="handleRegister(event)" class="modal-body">
+      <div class="modal-group">
+        <label for="regName">Full Name</label>
+        <input id="regName" type="text" required placeholder="e.g. Jane Doe">
       </div>
 
       <div class="modal-group">
-        <label>Amount</label>
-        <input id="transferAmount" type="number" min="0.01" step="0.01" placeholder="0.00">
+        <label for="regEmail">Email Address</label>
+        <input id="regEmail" type="email" required placeholder="name@example.com">
       </div>
 
       <div class="modal-group">
-        <label>Memo</label>
-        <input id="transferMemo" type="text" placeholder="Optional memo">
+        <label for="regUsername">Username</label>
+        <input id="regUsername" type="text" required placeholder="Choose a username">
+      </div>
+
+      <div class="modal-group">
+        <label for="regPass">Password</label>
+        <input id="regPass" type="password" required placeholder="Create password">
       </div>
 
       <div class="modal-actions">
-        <button class="cancel" onclick="closeModal('transferModal')">Cancel</button>
-        <button class="submit" onclick="processTransfer()">Continue</button>
+        <button type="button" class="cancel" onclick="closeModal('registerModal')">Cancel</button>
+        <button type="submit" class="submit">Create Account</button>
       </div>
-
-    </div>
+    </form>
   </div>
 </div>
 
 
-<!-- WIRE MODAL -->
-<div id="wireModal" class="modal-wrap hidden">
+<!-- FORGOT PASSWORD MODAL -->
+<div id="forgotModal" class="modal-wrap hidden">
   <div class="modal">
     <div class="modal-head">
-      <h3>Wire Transfer</h3>
-      <button class="close" onclick="closeModal('wireModal')">×</button>
+      <h3>Reset Password</h3>
+      <button type="button" class="close" onclick="closeModal('forgotModal')">×</button>
     </div>
 
-    <div class="modal-body">
-
+    <form onsubmit="handleForgotPassword(event)" class="modal-body">
       <div class="modal-group">
-        <label>Sender Name</label>
-        <input id="senderName" placeholder="Sender name">
+        <label for="forgotEmail">Registered Email Address</label>
+        <input id="forgotEmail" type="email" required placeholder="Enter registered email">
       </div>
 
       <div class="modal-group">
-        <label>Recipient Name</label>
-        <input id="recipientName" placeholder="Recipient name">
-      </div>
-
-      <div class="modal-row">
-
-        <div class="modal-group">
-          <label>Routing Number</label>
-          <input id="routingNumber" inputmode="numeric" maxlength="9" placeholder="9 digits">
-        </div>
-
-        <div class="modal-group">
-          <label>Account Number</label>
-          <input id="accountNumber" inputmode="numeric" placeholder="Account number">
-        </div>
-
-      </div>
-
-      <div class="modal-group">
-        <label>Amount</label>
-        <input id="wireAmount" type="number" min="0.01" step="0.01" placeholder="0.00">
+        <label for="newPass">New Password</label>
+        <input id="newPass" type="password" required placeholder="Enter new password">
       </div>
 
       <div class="modal-actions">
-        <button class="cancel" onclick="closeModal('wireModal')">Cancel</button>
-        <button class="submit" onclick="processWire()">Review Wire</button>
+        <button type="button" class="cancel" onclick="closeModal('forgotModal')">Cancel</button>
+        <button type="submit" class="submit">Reset Password</button>
       </div>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- FEATURE MODAL -->
-<div id="featureModal" class="modal-wrap hidden">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="featureTitle">Feature</h3>
-      <button class="close" onclick="closeModal('featureModal')">×</button>
-    </div>
-    <div class="modal-body">
-      <div id="featureBody" class="feature-content"></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- RECEIPT MODAL -->
-<div id="receiptModal" class="modal-wrap hidden">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Transaction Receipt</h3>
-      <button class="close" onclick="closeModal('receiptModal')">×</button>
-    </div>
-
-    <div class="modal-body receipt">
-
-      <div class="receipt-icon">✓</div>
-
-      <h2 id="receiptTitle">Transfer Processed</h2>
-
-      <div class="receipt-details" id="receiptDetails"></div>
-
-      <span class="status">COMPLETED</span>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- SETTINGS MODAL -->
-<div id="settingsModal" class="modal-wrap hidden">
-  <div class="modal">
-
-    <div class="modal-head">
-      <h3>Settings</h3>
-      <button class="close" onclick="closeModal('settingsModal')">×</button>
-    </div>
-
-    <div class="modal-body">
-
-      <div class="modal-group">
-        <label>Display Name</label>
-        <input id="settingsName" type="text">
-      </div>
-
-      <div class="modal-group">
-        <label>Email</label>
-        <input id="settingsEmail" type="email">
-      </div>
-
-      <div class="modal-group">
-        <label>Username</label>
-        <input id="settingsUsername" type="text">
-      </div>
-
-      <div class="modal-group">
-        <label>New Password</label>
-        <input id="settingsPassword" type="password" placeholder="Leave blank to keep current password">
-      </div>
-
-      <div class="modal-actions">
-        <button class="cancel" onclick="closeModal('settingsModal')">Cancel</button>
-        <button class="submit" onclick="saveSettings()">Save Changes</button>
-      </div>
-
-    </div>
+    </form>
   </div>
 </div>
 
 
 <script>
-function getUser(){
-  return JSON.parse(localStorage.getItem("whbUser") || "null");
+document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+// Local Storage Helpers
+function getUsers() {
+  return JSON.parse(localStorage.getItem("whb_users") || "[]");
 }
 
-function saveUser(user){
-  localStorage.setItem("whbUser", JSON.stringify(user));
+function saveUsers(users) {
+  localStorage.setItem("whb_users", JSON.stringify(users));
 }
 
-function login(){
-  const user = document.getElementById("loginUser").value.trim();
-  const pass = document.getElementById("loginPass").value;
+function getActiveUser() {
+  return JSON.parse(localStorage.getItem("whb_active_user") || "null");
+}
 
-  const account = getUser();
+function setActiveUser(user) {
+  localStorage.setItem("whb_active_user", JSON.stringify(user));
+}
 
-  if(account && user === account.username && pass === account.password){
-    showBank();
-  } else {
-    alert("Invalid credentials.");
+// Authentication
+function handleRegister(e) {
+  e.preventDefault();
+  const name = document.getElementById("regName").value.trim();
+  const email = document.getElementById("regEmail").value.trim().toLowerCase();
+  const username = document.getElementById("regUsername").value.trim().toLowerCase();
+  const password = document.getElementById("regPass").value;
+
+  const users = getUsers();
+
+  if (users.some(u => u.email === email || u.username === username)) {
+    alert("An account with this email or username already exists.");
+    return;
   }
+
+  const newUser = {
+    id: "usr_" + Date.now(),
+    name,
+    email,
+    username,
+    password,
+    accountNumber: String(Math.floor(1000 + Math.random() * 9000)),
+    balance: 5000.00
+  };
+
+  users.push(newUser);
+  saveUsers(users);
+
+  alert("Account created successfully! You can now sign in.");
+  closeModal("registerModal");
+  e.target.reset();
 }
 
-function showBank(){
-  const account = getUser() || { name: "User" };
+function handleLogin(e) {
+  e.preventDefault();
+  const loginInput = document.getElementById("loginUser").value.trim().toLowerCase();
+  const password = document.getElementById("loginPass").value;
+
+  const users = getUsers();
+  const user = users.find(u => (u.email === loginInput || u.username === loginInput) && u.password === password);
+
+  if (!user) {
+    alert("Invalid credentials. Please create an account if you haven't registered.");
+    return;
+  }
+
+  setActiveUser(user);
+  showApp();
+}
+
+function handleForgotPassword(e) {
+  e.preventDefault();
+  const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
+  const newPassword = document.getElementById("newPass").value;
+
+  const users = getUsers();
+  const userIndex = users.findIndex(u => u.email === email);
+
+  if (userIndex === -1) {
+    alert("No registered account found with that email address.");
+    return;
+  }
+
+  users[userIndex].password = newPassword;
+  saveUsers(users);
+
+  alert("Password reset successfully! Please sign in with your new password.");
+  closeModal("forgotModal");
+  e.target.reset();
+}
+
+function showApp() {
+  const user = getActiveUser();
+  if (!user) return;
 
   document.getElementById("loginPage").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
 
-  document.getElementById("welcomeName").textContent = account.name || "User";
+  document.getElementById("welcomeName").textContent = user.name;
+  document.getElementById("accNumber").textContent = "•••• " + user.accountNumber;
+  document.getElementById("accBalance").textContent = "$" + user.balance.toLocaleString('en-US', {minimumFractionDigits: 2});
 
-  const initials = account.name
-    ? account.name.split(" ").map(x => x[0]).join("").substring(0, 2).toUpperCase()
-    : "--";
-
-  document.getElementById("avatar").textContent = initials;
+  const initials = user.name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+  document.getElementById("avatar").textContent = initials || "--";
 }
 
-function signOut(){
-  localStorage.removeItem("whbLoggedIn");
+function signOut() {
+  localStorage.removeItem("whb_active_user");
   document.getElementById("app").classList.add("hidden");
   document.getElementById("loginPage").classList.remove("hidden");
-  document.getElementById("loginPass").value = "";
 }
 
-function forgotPassword(){
-  alert("Password reset option clicked.");
-}
+// Modal Handlers
+function openRegisterModal() { document.getElementById("registerModal").classList.remove("hidden"); }
+function openForgotPasswordModal() { document.getElementById("forgotModal").classList.remove("hidden"); }
+function closeModal(id) { document.getElementById(id).classList.add("hidden"); }
 
-function showRegister(){
-  alert("Account registration form required.");
-}
-
-function home(){
-  window.scrollTo({top: 0, behavior: "smooth"});
-  closeAllModals();
-}
-
-function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("open");
-}
-
-function openTransfer(){
-  document.getElementById("transferModal").classList.remove("hidden");
-}
-
-function openWire(){
-  document.getElementById("wireModal").classList.remove("hidden");
-}
-
-function processTransfer(){
-  const amount = parseFloat(document.getElementById("transferAmount").value);
-
-  if(!amount || amount <= 0){
-    alert("Enter a valid transfer amount.");
-    return;
-  }
-
-  const from = document.getElementById("fromAccount").value;
-  const to = document.getElementById("toAccount").value;
-  const memo = document.getElementById("transferMemo").value || "No memo";
-
-  closeModal("transferModal");
-
-  showReceipt(
-    "Transfer Processed",
-    [
-      ["From", from],
-      ["To", to],
-      ["Amount", formatMoney(amount)],
-      ["Memo", memo],
-      ["Date", new Date().toLocaleDateString()]
-    ]
-  );
-}
-
-function processWire(){
-  const sender = document.getElementById("senderName").value.trim();
-  const recipient = document.getElementById("recipientName").value.trim();
-  const routing = document.getElementById("routingNumber").value.trim();
-  const account = document.getElementById("accountNumber").value.trim();
-  const amount = parseFloat(document.getElementById("wireAmount").value);
-
-  if(!sender || !recipient){
-    alert("Enter both sender and recipient names.");
-    return;
-  }
-
-  if(!/^[0-9]{9}$/.test(routing)){
-    alert("Routing number must contain exactly 9 digits.");
-    return;
-  }
-
-  if(!/^[0-9]+$/.test(account)){
-    alert("Account number must contain digits only.");
-    return;
-  }
-
-  if(!amount || amount <= 0){
-    alert("Enter a valid wire amount.");
-    return;
-  }
-
-  closeModal("wireModal");
-
-  showReceipt(
-    "Wire Transfer Confirmation",
-    [
-      ["Sender", sender],
-      ["Recipient", recipient],
-      ["Routing Number", routing],
-      ["Account Number", "••••" + account.slice(-4)],
-      ["Amount", formatMoney(amount)],
-      ["Date", new Date().toLocaleDateString()]
-    ]
-  );
-}
-
-function showReceipt(title, details){
-  document.getElementById("receiptTitle").textContent = title;
-
-  const box = document.getElementById("receiptDetails");
-
-  box.innerHTML = details.map(item => `
-    <div class="detail">
-      <span>${escapeHTML(item[0])}</span>
-      <strong>${escapeHTML(item[1])}</strong>
-    </div>
-  `).join("");
-
-  document.getElementById("receiptModal").classList.remove("hidden");
-}
-
-function formatMoney(value){
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD"
-  }).format(value);
-}
-
-function openFeature(feature){
-  const title = document.getElementById("featureTitle");
-  const body = document.getElementById("featureBody");
-
-  title.textContent = feature;
-  body.innerHTML = `<p>${escapeHTML(feature)} feature loaded.</p>`;
-
-  document.getElementById("featureModal").classList.remove("hidden");
-}
-
-function openSettings(){
-  const account = getUser() || {};
-
-  document.getElementById("settingsName").value = account.name || "";
-  document.getElementById("settingsEmail").value = account.email || "";
-  document.getElementById("settingsUsername").value = account.username || "";
-  document.getElementById("settingsPassword").value = "";
-
-  document.getElementById("settingsModal").classList.remove("hidden");
-}
-
-function saveSettings(){
-  let account = getUser() || {};
-
-  account.name = document.getElementById("settingsName").value.trim();
-  account.email = document.getElementById("settingsEmail").value.trim();
-  account.username = document.getElementById("settingsUsername").value.trim();
-
-  const newPass = document.getElementById("settingsPassword").value;
-  if(newPass){
-    account.password = newPass;
-  }
-
-  saveUser(account);
-
-  document.getElementById("welcomeName").textContent = account.name || "User";
-
-  const initials = account.name
-    ? account.name.split(" ").map(x => x[0]).join("").substring(0, 2).toUpperCase()
-    : "--";
-
-  document.getElementById("avatar").textContent = initials;
-
-  closeModal("settingsModal");
-  alert("Settings updated.");
-}
-
-function closeModal(id){
-  const modal = document.getElementById(id);
-  if(modal){
-    modal.classList.add("hidden");
-  }
-}
-
-function closeAllModals(){
-  document.querySelectorAll(".modal-wrap").forEach(modal => modal.classList.add("hidden"));
-  document.getElementById("sidebar").classList.remove("open");
-}
-
-function escapeHTML(value){
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-/* Modal events */
-document.querySelectorAll(".modal-wrap").forEach(modal => {
-  modal.addEventListener("click", function(e){
-    if(e.target === modal){
-      modal.classList.add("hidden");
-    }
-  });
-});
-
-document.addEventListener("keydown", function(e){
-  if(e.key === "Escape"){
-    closeAllModals();
-  }
-});
-
-/* Check active session */
-if(localStorage.getItem("whbLoggedIn") === "true"){
-  showBank();
+// Check Session on Page Load
+if (getActiveUser()) {
+  showApp();
 }
 </script>
 
