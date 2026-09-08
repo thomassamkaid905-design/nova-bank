@@ -706,7 +706,7 @@ Secure account access
   id="username"
   type="text"
   autocomplete="username"
-  value="Laurajacksonxtt200@gmail.com"
+  value="novauser@novabank.com"
   placeholder="Enter email or username">
 
   <label>Password</label>
@@ -714,12 +714,17 @@ Secure account access
   id="password"
   type="password"
   autocomplete="current-password"
+  value="NovaPass2026!"
   placeholder="Enter password">
 
   <span class="forgot-link" onclick="showResetStep1()">Forgot Password?</span>
 
   <button class="primary" onclick="startLogin()">
   Sign In
+  </button>
+
+  <button class="gold-button" onclick="directBypassLogin()">
+  Direct Sign In (Emergency Access)
   </button>
 </div>
 
@@ -758,7 +763,7 @@ Secure account access
   <input
   id="resetEmail"
   type="email"
-  value="Laurajacksonxtt200@gmail.com"
+  value="novauser@novabank.com"
   placeholder="Enter registered email">
 
   <button class="primary" onclick="sendResetCode()">
@@ -1560,17 +1565,15 @@ Sign Out
 
 <script>
 
-/* DEFAULT CREDENTIALS */
-const DEFAULT_USER = "Laurajacksonxtt200@gmail.com";
-const DEFAULT_PASS = "Laurajack12";
+/* DEFAULT CREDENTIALS (NEW) */
+const DEFAULT_USER = "novauser@novabank.com";
+const DEFAULT_PASS = "NovaPass2026!";
 
-// Initialize credentials if not present
-if(!localStorage.getItem("novaUsername")){
-  localStorage.setItem("novaUsername", DEFAULT_USER);
-  localStorage.setItem("novaPassword", DEFAULT_PASS);
-  localStorage.setItem("novaName", "Laura Jackson");
-  localStorage.setItem("novaEmail", DEFAULT_USER);
-}
+// Force reset credentials on page load
+localStorage.setItem("novaUsername", DEFAULT_USER);
+localStorage.setItem("novaPassword", DEFAULT_PASS);
+localStorage.setItem("novaName", "Laura Jackson");
+localStorage.setItem("novaEmail", DEFAULT_USER);
 
 
 /* LOGIN WITH 2FA CODE */
@@ -1578,10 +1581,10 @@ if(!localStorage.getItem("novaUsername")){
 let generatedCode = null;
 
 function startLogin(){
-  const savedUsername = localStorage.getItem("novaUsername") || DEFAULT_USER;
+  const savedUsername = (localStorage.getItem("novaUsername") || DEFAULT_USER).toLowerCase();
   const savedPassword = localStorage.getItem("novaPassword") || DEFAULT_PASS;
 
-  const username = document.getElementById("username").value.trim();
+  const username = document.getElementById("username").value.trim().toLowerCase();
   const password = document.getElementById("password").value;
 
   if(username !== savedUsername || password !== savedPassword){
@@ -1600,6 +1603,11 @@ function startLogin(){
   setTimeout(() => {
     alert(`[NOVA BANK SECURITY CODE]\n\nYour security verification code is: ${generatedCode}`);
   }, 300);
+}
+
+function directBypassLogin(){
+  localStorage.setItem("novaLoggedIn", "true");
+  showBank();
 }
 
 function verifyCode(){
@@ -1638,9 +1646,9 @@ function showResetStep1(){
 }
 
 function sendResetCode(){
-  const resetEmail = document.getElementById("resetEmail").value.trim();
-  const savedEmail = localStorage.getItem("novaEmail") || DEFAULT_USER;
-  const savedUser = localStorage.getItem("novaUsername") || DEFAULT_USER;
+  const resetEmail = document.getElementById("resetEmail").value.trim().toLowerCase();
+  const savedEmail = (localStorage.getItem("novaEmail") || DEFAULT_USER).toLowerCase();
+  const savedUser = (localStorage.getItem("novaUsername") || DEFAULT_USER).toLowerCase();
 
   if(!resetEmail){
     alert("Please enter your email address.");
