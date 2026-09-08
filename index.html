@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +11,9 @@
 
 body{
   margin:0;
-  background:#f5f7fa;
+  background:#f5f7fb;
   color:#101828;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
 
 button,input{font:inherit}
@@ -21,34 +22,26 @@ button{cursor:pointer}
 
 .topbar{
   height:76px;
-  background:white;
-  border-bottom:1px solid #eaecf0;
+  background:#fff;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 24px;
+  padding:0 25px;
+  border-bottom:1px solid #e4e7ec;
 }
 
-.brand{
-  font-size:24px;
+.logo{
+  font-size:25px;
   font-weight:800;
-  color:#2456c5;
+  color:#2458c5;
 }
-
-.topright{
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
-
-.bell{font-size:24px}
 
 .avatar{
   width:44px;
   height:44px;
   border-radius:50%;
-  background:#3569d4;
-  color:white;
+  background:#356bd5;
+  color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -64,8 +57,8 @@ button{cursor:pointer}
 .balance-card{
   margin:0 -24px;
   padding:30px;
-  color:white;
-  background:#173b7a;
+  color:#fff;
+  background:#1b407f;
   border-radius:0 0 30px 30px;
   position:relative;
   overflow:hidden;
@@ -74,29 +67,29 @@ button{cursor:pointer}
 .balance-card:after{
   content:"";
   position:absolute;
-  width:330px;
-  height:330px;
+  width:350px;
+  height:350px;
   border-radius:50%;
-  right:-80px;
-  top:-100px;
   background:rgba(255,255,255,.07);
+  right:-100px;
+  top:-100px;
 }
 
 .greeting{
-  font-size:22px;
+  font-size:23px;
   position:relative;
   z-index:2;
 }
 
-.balance-label{
-  margin-top:40px;
+.label{
+  margin-top:38px;
   font-size:15px;
-  letter-spacing:1.5px;
-  opacity:.75;
+  letter-spacing:2px;
+  opacity:.78;
 }
 
 .balance{
-  font-size:42px;
+  font-size:40px;
   font-weight:800;
   margin-top:8px;
   position:relative;
@@ -104,17 +97,19 @@ button{cursor:pointer}
 }
 
 .quick{
+  background:#fff;
   margin-top:24px;
-  background:white;
-  border-radius:20px;
   padding:25px 8px;
+  border-radius:20px;
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  box-shadow:0 3px 12px rgba(0,0,0,.06);
+  box-shadow:0 3px 14px rgba(0,0,0,.07);
 }
 
-.quick-item{
-  text-align:center;
+.quick button{
+  border:0;
+  background:transparent;
+  color:#101828;
 }
 
 .qicon{
@@ -123,24 +118,27 @@ button{cursor:pointer}
   margin:auto;
   border-radius:50%;
   background:#edf2ff;
-  color:#3569d4;
+  color:#356bd5;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:27px;
+  font-size:26px;
 }
 
-.quick-item p{
-  font-weight:600;
-  margin:10px 0 0;
-  font-size:14px;
+.quick p{
+  font-size:13px;
+  font-weight:650;
+}
+
+.section{
+  margin-top:32px;
 }
 
 .section-head{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin:32px 7px 16px;
+  margin:0 7px 15px;
 }
 
 .section-head h2{
@@ -148,25 +146,23 @@ button{cursor:pointer}
   font-size:21px;
 }
 
-.see{
-  color:#3569d4;
-  font-weight:600;
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:23px;
+  box-shadow:0 3px 14px rgba(0,0,0,.06);
 }
 
 .account{
-  background:white;
-  border-radius:20px;
-  padding:22px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  box-shadow:0 3px 12px rgba(0,0,0,.06);
+  align-items:center;
 }
 
 .account-left{
   display:flex;
   align-items:center;
-  gap:16px;
+  gap:15px;
 }
 
 .account-icon{
@@ -177,7 +173,7 @@ button{cursor:pointer}
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:26px;
+  font-size:25px;
 }
 
 .account-name{
@@ -185,44 +181,36 @@ button{cursor:pointer}
   font-weight:700;
 }
 
-.account-number{
+.muted{
   color:#667085;
-  margin-top:5px;
-}
-
-.account-right{
-  text-align:right;
 }
 
 .amount{
-  font-size:20px;
+  font-size:19px;
   font-weight:800;
 }
 
 .available{
+  text-align:right;
   color:#667085;
-  font-size:13px;
+  font-size:12px;
   margin-top:4px;
 }
 
-.spending,.activity,.profile{
-  background:white;
-  border-radius:20px;
-  padding:24px;
-  box-shadow:0 3px 12px rgba(0,0,0,.06);
+.spending{
+  min-height:170px;
 }
 
 .spending-top{
   display:flex;
   justify-content:space-between;
   font-weight:700;
-  font-size:18px;
 }
 
 .no-spending{
   text-align:center;
   color:#667085;
-  padding:55px 0 20px;
+  margin-top:55px;
 }
 
 .transaction{
@@ -239,18 +227,18 @@ button{cursor:pointer}
 
 .tx-left{
   display:flex;
+  gap:13px;
   align-items:center;
-  gap:14px;
 }
 
 .tx-icon{
-  width:46px;
-  height:46px;
+  width:45px;
+  height:45px;
   border-radius:50%;
   background:#f2f4f7;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
 }
 
 .tx-name{
@@ -258,8 +246,8 @@ button{cursor:pointer}
 }
 
 .tx-date{
+  font-size:13px;
   color:#667085;
-  font-size:14px;
   margin-top:4px;
 }
 
@@ -267,146 +255,178 @@ button{cursor:pointer}
   font-weight:750;
 }
 
-.profile label{
-  display:block;
-  margin:18px 0 7px;
-  font-weight:600;
-}
-
-.profile input{
+.profile input,
+.transfer input{
   width:100%;
-  padding:13px;
+  padding:14px;
+  margin-top:7px;
   border:1px solid #d0d5dd;
   border-radius:9px;
 }
 
-.save{
+.profile label,
+.transfer label{
+  display:block;
+  margin-top:17px;
+  font-weight:650;
+}
+
+.primary{
   width:100%;
-  margin-top:22px;
-  padding:14px;
   border:0;
   border-radius:9px;
-  background:#3569d4;
+  background:#356bd5;
   color:white;
+  padding:15px;
+  margin-top:22px;
   font-weight:700;
 }
 
-.logout{
+.secondary{
   width:100%;
-  margin-top:25px;
-  padding:14px;
-  background:white;
   border:1px solid #d0d5dd;
   border-radius:9px;
-  font-weight:700;
+  background:#fff;
+  padding:14px;
+  margin-top:12px;
+  font-weight:650;
 }
 
-.note{
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:20;
+}
+
+.modal-box{
+  width:100%;
+  max-width:450px;
+  background:#fff;
+  border-radius:20px;
+  padding:25px;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.receipt{
+  border:1px solid #d0d5dd;
+  border-radius:12px;
+  padding:18px;
+  margin-top:20px;
+}
+
+.receipt-title{
   text-align:center;
-  color:#667085;
-  font-size:11px;
-  margin-top:24px;
+  font-weight:800;
+  font-size:20px;
+}
+
+.sandbox{
+  text-align:center;
+  color:#b42318;
+  font-size:12px;
+  font-weight:700;
+  margin-top:7px;
+}
+
+.receipt-row{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #eaecf0;
+}
+
+.receipt-row:last-child{
+  border-bottom:0;
+}
+
+.close{
+  float:right;
+  border:0;
+  background:none;
+  font-size:25px;
 }
 
 @media(max-width:600px){
-  .content{padding:0 16px 40px}
+  .content{padding:0 16px 45px}
 
   .balance-card{
     margin:0 -16px;
-    padding:27px 25px;
+    padding:28px 25px;
   }
 
-  .balance{font-size:36px}
+  .balance{font-size:34px}
 
-  .quick{padding:21px 3px}
+  .quick{padding:22px 2px}
 
   .qicon{
     width:52px;
     height:52px;
   }
 
-  .quick-item p{font-size:12px}
-
-  .account{padding:18px}
-
-  .account-name{font-size:18px}
-
-  .amount{font-size:16px}
+  .quick p{font-size:11px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- DASHBOARD -->
+<div class="topbar">
+  <div class="logo">Nova Bank</div>
+  <div class="avatar" id="avatar">N</div>
+</div>
 
-<div id="dashboard">
+<div class="content">
 
-  <div class="topbar">
-
-    <div class="brand">Nova Bank</div>
-
-    <div class="topright">
-      <div class="bell">♧</div>
-      <div class="avatar" id="avatar">S</div>
+  <div class="balance-card">
+    <div class="greeting">
+      Good morning, <span id="nameDisplay">Nova User</span>
     </div>
+
+    <div class="label">TOTAL BALANCE</div>
+
+    <div class="balance">$25,000,000.00</div>
+  </div>
+
+
+  <div class="quick">
+
+    <button onclick="openTransfer()">
+      <div class="qicon">➤</div>
+      <p>Pay &<br>Transfer</p>
+    </button>
+
+    <button onclick="showMessage('Deposits are available only in the sandbox.')">
+      <div class="qicon">↓</div>
+      <p>Deposit</p>
+    </button>
+
+    <button onclick="showMessage('Mobile payments are available only in the sandbox.')">
+      <div class="qicon">▣</div>
+      <p>Mobile</p>
+    </button>
+
+    <button onclick="showMessage('Bill payments are available only in the sandbox.')">
+      <div class="qicon">▤</div>
+      <p>Pay Bills</p>
+    </button>
 
   </div>
 
-  <div class="content">
 
-    <div class="balance-card">
-
-      <div class="greeting">
-        Good morning, <span id="greetingName">Samkaid</span>
-      </div>
-
-      <div class="balance-label">
-        TOTAL BALANCE
-      </div>
-
-      <div class="balance">
-        $25,000.00
-      </div>
-
-    </div>
-
-
-    <!-- QUICK ACTIONS -->
-
-    <div class="quick">
-
-      <div class="quick-item">
-        <div class="qicon">➤</div>
-        <p>Pay &<br>Transfer</p>
-      </div>
-
-      <div class="quick-item">
-        <div class="qicon">↓</div>
-        <p>Deposit</p>
-      </div>
-
-      <div class="quick-item">
-        <div class="qicon">▣</div>
-        <p>Mobile</p>
-      </div>
-
-      <div class="quick-item">
-        <div class="qicon">▤</div>
-        <p>Pay Bills</p>
-      </div>
-
-    </div>
-
-
-    <!-- ACCOUNTS -->
+  <div class="section">
 
     <div class="section-head">
       <h2>Your accounts</h2>
-      <span class="see">See all</span>
+      <span class="muted">See all</span>
     </div>
 
-    <div class="account">
+    <div class="card account">
 
       <div class="account-left">
 
@@ -414,146 +434,143 @@ button{cursor:pointer}
 
         <div>
           <div class="account-name">Checking</div>
-          <div class="account-number">•••• 2778</div>
+          <div class="muted">•••• 2778</div>
         </div>
 
       </div>
 
-      <div class="account-right">
-
-        <div class="amount">$25,000.00</div>
-
-        <div class="available">
-          AVAILABLE
-        </div>
-
+      <div>
+        <div class="amount">$25,000,000.00</div>
+        <div class="available">AVAILABLE</div>
       </div>
 
     </div>
 
+  </div>
 
-    <!-- SPENDING -->
+
+  <div class="section">
 
     <div class="section-head">
       <h2>Spending this month</h2>
+      <strong>$0.00</strong>
     </div>
 
-    <div class="spending">
-
-      <div class="spending-top">
-        <span>Total spending</span>
-        <span>$0.00</span>
-      </div>
-
+    <div class="card spending">
       <div class="no-spending">
         No spending this month yet.
       </div>
-
     </div>
 
+  </div>
 
-    <!-- RECENT ACTIVITY -->
+
+  <div class="section">
 
     <div class="section-head">
       <h2>Recent activity</h2>
-      <span class="see">See all</span>
     </div>
 
-    <div class="activity">
+    <div class="card" id="activity">
 
       <div class="transaction">
 
         <div class="tx-left">
-
           <div class="tx-icon">₿</div>
 
           <div>
             <div class="tx-name">Bitcoin transaction</div>
             <div class="tx-date">25 Aug</div>
           </div>
-
         </div>
 
         <div class="tx-amount">-$5,000.00</div>
 
       </div>
 
-
-      <div class="transaction">
-
-        <div class="tx-left">
-
-          <div class="tx-icon">↗</div>
-
-          <div>
-            <div class="tx-name">Mobile payment</div>
-            <div class="tx-date">24 Aug</div>
-          </div>
-
-        </div>
-
-        <div class="tx-amount">-$1.00</div>
-
-      </div>
-
-
-      <div class="transaction">
-
-        <div class="tx-left">
-
-          <div class="tx-icon">↗</div>
-
-          <div>
-            <div class="tx-name">Mobile payment</div>
-            <div class="tx-date">24 Aug</div>
-          </div>
-
-        </div>
-
-        <div class="tx-amount">-$2,000.00</div>
-
-      </div>
-
     </div>
 
+  </div>
 
-    <!-- PROFILE -->
+
+  <div class="section">
 
     <div class="section-head">
       <h2>Profile & settings</h2>
     </div>
 
-    <div class="profile">
+    <div class="card profile">
 
       <label>Name</label>
-      <input id="profileName" value="Samkaid">
+      <input id="profileName" placeholder="Your name">
 
       <label>Email</label>
-      <input id="profileEmail"
-             type="email"
-             placeholder="Enter your email">
+      <input id="profileEmail" type="email" placeholder="Your email">
 
       <label>Phone number</label>
-      <input id="profilePhone"
-             type="tel"
-             placeholder="Enter your phone number">
+      <input id="profilePhone" type="tel" placeholder="Your phone number">
 
-      <button class="save" onclick="saveProfile()">
+      <button class="primary" onclick="saveProfile()">
         Save profile
       </button>
 
-      <div id="saved" class="note"></div>
+      <div id="saveMessage" class="muted"></div>
 
     </div>
 
+  </div>
 
-    <button class="logout" onclick="logout()">
+
+  <div style="text-align:center;margin-top:25px">
+    <button class="secondary" onclick="signOut()">
       Sign out
     </button>
+  </div>
 
-    <div class="note">
-      Fictional Nova Bank sandbox interface. Displayed funds and
-      transactions are not real financial assets.
+  <div class="muted" style="text-align:center;font-size:11px;margin-top:25px">
+    Fictional Nova Bank sandbox. Displayed balance and transactions are not real funds.
+  </div>
+
+</div>
+
+
+<!-- TRANSFER MODAL -->
+
+<div id="transferModal" class="modal hidden">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeTransfer()">×</button>
+
+    <h2>Pay & Transfer</h2>
+
+    <p class="muted">
+      Create a fictional sandbox transaction.
+    </p>
+
+    <div class="transfer">
+
+      <label>Recipient name</label>
+      <input id="recipient" placeholder="Recipient name">
+
+      <label>Recipient reference</label>
+      <input id="reference" placeholder="Account/reference">
+
+      <label>Amount</label>
+      <input id="transferAmount"
+             type="number"
+             min="0.01"
+             step="0.01"
+             placeholder="0.00">
+
+      <button class="primary" onclick="makeTransfer()">
+        Review transfer
+      </button>
+
+      <div id="transferError"
+           style="color:#b42318;text-align:center;margin-top:12px">
+      </div>
+
     </div>
 
   </div>
@@ -561,7 +578,244 @@ button{cursor:pointer}
 </div>
 
 
+<!-- RECEIPT MODAL -->
+
+<div id="receiptModal" class="modal hidden">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeReceipt()">×</button>
+
+    <div class="receipt">
+
+      <div class="receipt-title">
+        Nova Bank Receipt
+      </div>
+
+      <div class="sandbox">
+        SANDBOX / FICTIONAL TRANSACTION
+      </div>
+
+      <br>
+
+      <div class="receipt-row">
+        <span>Status</span>
+        <strong>Completed</strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Recipient</span>
+        <strong id="receiptRecipient"></strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Reference</span>
+        <strong id="receiptReference"></strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Amount</span>
+        <strong id="receiptAmount"></strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Date</span>
+        <strong id="receiptDate"></strong>
+      </div>
+
+      <div class="receipt-row">
+        <span>Transaction ID</span>
+        <strong id="receiptId"></strong>
+      </div>
+
+    </div>
+
+    <button class="primary" onclick="window.print()">
+      Print / Save Receipt
+    </button>
+
+    <button class="secondary" onclick="closeReceipt()">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
 <script>
+
+let transactions =
+  JSON.parse(localStorage.getItem("novaTransactions") || "[]");
+
+
+function openTransfer(){
+  document
+    .getElementById("transferModal")
+    .classList.remove("hidden");
+}
+
+
+function closeTransfer(){
+  document
+    .getElementById("transferModal")
+    .classList.add("hidden");
+}
+
+
+function makeTransfer(){
+
+  const recipient =
+    document.getElementById("recipient").value.trim();
+
+  const reference =
+    document.getElementById("reference").value.trim();
+
+  const amount =
+    Number(document.getElementById("transferAmount").value);
+
+  const error =
+    document.getElementById("transferError");
+
+  error.textContent = "";
+
+  if(!recipient || !reference || !amount || amount <= 0){
+
+    error.textContent =
+      "Please complete all fields.";
+
+    return;
+  }
+
+  const id =
+    "NOVA-" +
+    Date.now().toString().slice(-10);
+
+  const date =
+    new Date().toLocaleString();
+
+  const transaction = {
+    id,
+    recipient,
+    reference,
+    amount,
+    date
+  };
+
+  transactions.unshift(transaction);
+
+  localStorage.setItem(
+    "novaTransactions",
+    JSON.stringify(transactions)
+  );
+
+  closeTransfer();
+
+  document.getElementById("receiptRecipient").textContent =
+    recipient;
+
+  document.getElementById("receiptReference").textContent =
+    reference;
+
+  document.getElementById("receiptAmount").textContent =
+    "$" + amount.toLocaleString("en-US",{
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+
+  document.getElementById("receiptDate").textContent =
+    date;
+
+  document.getElementById("receiptId").textContent =
+    id;
+
+  document
+    .getElementById("receiptModal")
+    .classList.remove("hidden");
+
+  renderTransactions();
+}
+
+
+function closeReceipt(){
+  document
+    .getElementById("receiptModal")
+    .classList.add("hidden");
+}
+
+
+function renderTransactions(){
+
+  const activity =
+    document.getElementById("activity");
+
+  let html = "";
+
+  transactions.forEach(tx => {
+
+    html += `
+      <div class="transaction">
+
+        <div class="tx-left">
+
+          <div class="tx-icon">↗</div>
+
+          <div>
+            <div class="tx-name">
+              Transfer to ${escapeHTML(tx.recipient)}
+            </div>
+
+            <div class="tx-date">
+              ${escapeHTML(tx.date)}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tx-amount">
+          -$${Number(tx.amount).toLocaleString("en-US",{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+          })}
+        </div>
+
+      </div>
+    `;
+  });
+
+  html += `
+    <div class="transaction">
+
+      <div class="tx-left">
+
+        <div class="tx-icon">₿</div>
+
+        <div>
+          <div class="tx-name">Bitcoin transaction</div>
+          <div class="tx-date">25 Aug</div>
+        </div>
+
+      </div>
+
+      <div class="tx-amount">-$5,000.00</div>
+
+    </div>
+  `;
+
+  activity.innerHTML = html;
+}
+
+
+function escapeHTML(value){
+
+  return value
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
 
 function saveProfile(){
 
@@ -574,54 +828,57 @@ function saveProfile(){
   const phone =
     document.getElementById("profilePhone").value.trim();
 
-  if(name){
-    document.getElementById("greetingName").textContent = name;
-    document.getElementById("avatar").textContent =
-      name.charAt(0).toUpperCase();
-  }
-
   localStorage.setItem("novaName",name);
   localStorage.setItem("novaEmail",email);
   localStorage.setItem("novaPhone",phone);
 
-  document.getElementById("saved").textContent =
+  document.getElementById("nameDisplay").textContent =
+    name || "Nova User";
+
+  document.getElementById("avatar").textContent =
+    (name || "N").charAt(0).toUpperCase();
+
+  document.getElementById("saveMessage").textContent =
     "Profile saved on this device.";
 }
 
 
 function loadProfile(){
 
-  const name = localStorage.getItem("novaName");
-  const email = localStorage.getItem("novaEmail");
-  const phone = localStorage.getItem("novaPhone");
+  const name =
+    localStorage.getItem("novaName") || "";
 
-  if(name){
-    document.getElementById("profileName").value = name;
-    document.getElementById("greetingName").textContent = name;
-    document.getElementById("avatar").textContent =
-      name.charAt(0).toUpperCase();
-  }
+  const email =
+    localStorage.getItem("novaEmail") || "";
 
-  if(email)
-    document.getElementById("profileEmail").value = email;
+  const phone =
+    localStorage.getItem("novaPhone") || "";
 
-  if(phone)
-    document.getElementById("profilePhone").value = phone;
+  document.getElementById("profileName").value = name;
+  document.getElementById("profileEmail").value = email;
+  document.getElementById("profilePhone").value = phone;
+
+  document.getElementById("nameDisplay").textContent =
+    name || "Nova User";
+
+  document.getElementById("avatar").textContent =
+    (name || "N").charAt(0).toUpperCase();
 }
 
 
-function logout(){
+function showMessage(message){
+  alert(message);
+}
 
-  alert("You have signed out of the fictional Nova Bank interface.");
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+function signOut(){
+
+  alert("Signed out of the fictional Nova Bank sandbox.");
 }
 
 
 loadProfile();
+renderTransactions();
 
 </script>
 
