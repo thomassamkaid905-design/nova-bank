@@ -16,17 +16,9 @@ background:#f5f2ed;
 color:#171b2b;
 }
 
-button,input,select{
-font:inherit;
-}
-
-button{
-cursor:pointer;
-}
-
-.hidden{
-display:none!important;
-}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 
 /* TOP BAR */
 .topbar{
@@ -58,7 +50,7 @@ margin-top:5px;
 .top-links{
 display:flex;
 align-items:center;
-gap:22px;
+gap:20px;
 }
 
 .top-links button{
@@ -93,7 +85,7 @@ min-height:calc(100vh - 108px);
 }
 
 .sidebar{
-width:200px;
+width:205px;
 flex-shrink:0;
 background:linear-gradient(#65070d,#a50d16);
 padding-top:24px;
@@ -191,6 +183,11 @@ font-size:25px;
 .customize{
 color:#6d603f;
 font-size:14px;
+cursor:pointer;
+}
+
+.customize:hover{
+text-decoration:underline;
 }
 
 /* ACCOUNTS */
@@ -206,6 +203,12 @@ border-left:9px solid #d8a52c;
 border-radius:18px;
 padding:22px 25px;
 box-shadow:0 5px 20px #0000000c;
+cursor:pointer;
+transition:.15s;
+}
+
+.account:hover{
+transform:translateY(-2px);
 }
 
 .account.savings{
@@ -253,6 +256,7 @@ transition:.15s;
 
 .quick:hover{
 transform:translateY(-2px);
+box-shadow:0 8px 25px #00000018;
 }
 
 .quick-icon{
@@ -398,6 +402,11 @@ font-size:20px;
 letter-spacing:2px;
 }
 
+.footer-note{
+font-size:10px;
+color:#8a8f99;
+}
+
 /* MODALS */
 .modal{
 position:fixed;
@@ -410,18 +419,15 @@ justify-content:center;
 padding:20px;
 }
 
-.modal.hidden{
-display:none!important;
-}
-
 .modal-box{
 width:100%;
-max-width:460px;
+max-width:500px;
 max-height:90vh;
 overflow:auto;
 background:#fff;
 border-radius:22px;
 padding:28px;
+box-shadow:0 25px 70px #0008;
 }
 
 .close{
@@ -439,6 +445,10 @@ cursor:pointer;
 .modal-box h2{
 margin-top:0;
 font-size:30px;
+}
+
+.modal-box h3{
+font-size:20px;
 }
 
 label{
@@ -483,6 +493,49 @@ border-radius:11px;
 margin-top:12px;
 font-weight:750;
 cursor:pointer;
+}
+
+.info-box{
+background:#f7f4ec;
+border-radius:14px;
+padding:18px;
+margin-top:15px;
+}
+
+.feature-card{
+background:#f8f5ee;
+border-radius:16px;
+padding:20px;
+margin-top:12px;
+}
+
+/* CARD */
+.test-card{
+background:linear-gradient(135deg,#65070d,#b5121b);
+color:white;
+border-radius:18px;
+padding:25px;
+margin:18px 0;
+box-shadow:0 10px 25px #0002;
+}
+
+.test-card-brand{
+color:#f4d271;
+font-family:Georgia,serif;
+font-size:17px;
+letter-spacing:2px;
+}
+
+.card-number{
+font-size:22px;
+letter-spacing:3px;
+margin:40px 0 25px;
+}
+
+.card-bottom{
+display:flex;
+justify-content:space-between;
+font-size:11px;
 }
 
 /* LOGIN */
@@ -540,9 +593,16 @@ padding:0 18px;
 font-size:24px;
 }
 
-.tagline,
-.top-links{
+.tagline{
 display:none;
+}
+
+.top-links{
+gap:8px;
+}
+
+.top-links button{
+font-size:12px;
 }
 
 .sidebar{
@@ -581,6 +641,14 @@ gap:10px;
 text-align:center;
 }
 
+.promo{
+gap:15px;
+}
+
+.promo button{
+padding:11px 16px;
+}
+
 }
 </style>
 </head>
@@ -597,7 +665,7 @@ NOVA BANK
 </div>
 
 <div class="login-sub">
-Secure test account access
+Secure account access
 </div>
 
 <div class="login-note">
@@ -607,26 +675,26 @@ locally in this browser for testing.
 
 <label>Username</label>
 
-<input id="username"
+<input
+id="username"
 type="text"
 autocomplete="username"
 placeholder="Enter username">
 
 <label>Password</label>
 
-<input id="password"
+<input
+id="password"
 type="password"
 autocomplete="current-password"
 placeholder="Enter password">
 
-<button class="primary"
-onclick="login()">
+<button class="primary" onclick="login()">
 Sign In
 </button>
 
-<button class="gold-button"
-onclick="createLogin()">
-Create / Reset Test Login
+<button class="gold-button" onclick="createLogin()">
+Create / Reset Login
 </button>
 
 </div>
@@ -652,9 +720,13 @@ BANKING FOR A BRIGHTER TOMORROW
 
 <div class="top-links">
 
-<button>✉ Messages</button>
+<button onclick="openFeature('Messages')">
+✉ Messages
+</button>
 
-<button>❔ Help</button>
+<button onclick="openFeature('Help')">
+❔ Help
+</button>
 
 <button onclick="signOut()">
 ⇥ Sign Out
@@ -662,8 +734,7 @@ BANKING FOR A BRIGHTER TOMORROW
 
 <div class="profile">
 
-<div class="profile-circle"
-id="avatar">
+<div class="profile-circle" id="avatar">
 LJ
 </div>
 
@@ -684,68 +755,55 @@ Laura Jackson
 
 <div class="layout">
 
-
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
 
-<button class="nav-item active">
+<button class="nav-item active" onclick="goHome(this)">
 <span class="nav-icon">⌂</span>
 Accounts
 </button>
 
-<button class="nav-item"
-onclick="openTransfer()">
+<button class="nav-item" onclick="openTransfer();setActive(this)">
 <span class="nav-icon">⇄</span>
 Transfer & Pay
 </button>
 
-<button class="nav-item"
-onclick="openWireTransfer()">
+<button class="nav-item" onclick="openWireTransfer();setActive(this)">
 <span class="nav-icon">🏦</span>
 Wire Transfer
 </button>
 
-<button class="nav-item"
-onclick="simulated('Deposit Checks')">
+<button class="nav-item" onclick="simulated('Deposit Checks');setActive(this)">
 <span class="nav-icon">▣</span>
 Deposit Checks
 </button>
 
-<button class="nav-item"
-onclick="simulated('Pay Bills')">
+<button class="nav-item" onclick="openFeature('Pay Bills');setActive(this)">
 <span class="nav-icon">▤</span>
 Pay Bills
 </button>
 
-<button class="nav-item"
-onclick="simulated('Cards')">
+<button class="nav-item" onclick="openFeature('Cards');setActive(this)">
 <span class="nav-icon">▭</span>
 Cards
 </button>
 
-<button class="nav-item"
-onclick="simulated('Statements')">
+<button class="nav-item" onclick="openFeature('Statements');setActive(this)">
 <span class="nav-icon">▤</span>
 Statements
 </button>
 
-<button class="nav-item"
-onclick="simulated('Security')">
+<button class="nav-item" onclick="openFeature('Security');setActive(this)">
 <span class="nav-icon">♢</span>
 Security
 </button>
 
-<button class="nav-item"
-onclick="openSettings()">
+<button class="nav-item" onclick="openSettings();setActive(this)">
 <span class="nav-icon">⚙</span>
 Settings
 </button>
 
 </aside>
 
-
-<!-- MAIN -->
 
 <main class="main">
 
@@ -768,16 +826,15 @@ Here's your account summary.
 
 <div class="content">
 
-
-<!-- ACCOUNTS -->
-
 <div class="section-title">
 
 <h2>
 Your accounts
 </h2>
 
-<span class="customize">
+<span
+class="customize"
+onclick="openFeature('Customize View')">
 ⚙ Customize view
 </span>
 
@@ -786,7 +843,9 @@ Your accounts
 
 <div class="accounts">
 
-<div class="account">
+<div
+class="account"
+onclick="openFeature('Checking Account')">
 
 <h3>
 Checking
@@ -807,7 +866,9 @@ Available balance
 </div>
 
 
-<div class="account savings">
+<div
+class="account savings"
+onclick="openFeature('Savings Account')">
 
 <h3>
 Savings
@@ -834,9 +895,7 @@ Available balance
 
 <div class="quick-actions">
 
-
-<button class="quick"
-onclick="openTransfer()">
+<button class="quick" onclick="openTransfer()">
 
 <div class="quick-icon">
 ⇄
@@ -849,8 +908,7 @@ Transfer Money
 </button>
 
 
-<button class="quick"
-onclick="openWireTransfer()">
+<button class="quick" onclick="openWireTransfer()">
 
 <div class="quick-icon">
 🏦
@@ -863,8 +921,7 @@ Wire Transfer
 </button>
 
 
-<button class="quick"
-onclick="simulated('Deposit Check')">
+<button class="quick" onclick="simulated('Deposit Check')">
 
 <div class="quick-icon">
 ▣
@@ -877,8 +934,7 @@ Deposit Check
 </button>
 
 
-<button class="quick"
-onclick="simulated('Pay Bills')">
+<button class="quick" onclick="openFeature('Pay Bills')">
 
 <div class="quick-icon">
 ▤
@@ -893,13 +949,11 @@ Pay Bills
 </div>
 
 
-<!-- SECOND ACTION ROW -->
+<!-- SECOND ROW -->
 
 <div class="quick-actions">
 
-
-<button class="quick"
-onclick="simulated('Cards')">
+<button class="quick" onclick="openFeature('Cards')">
 
 <div class="quick-icon">
 ▭
@@ -912,8 +966,7 @@ Cards
 </button>
 
 
-<button class="quick"
-onclick="simulated('Statements')">
+<button class="quick" onclick="openFeature('Statements')">
 
 <div class="quick-icon">
 ▤
@@ -926,8 +979,7 @@ Statements
 </button>
 
 
-<button class="quick"
-onclick="simulated('Security')">
+<button class="quick" onclick="openFeature('Security')">
 
 <div class="quick-icon">
 ♢
@@ -940,8 +992,7 @@ Security
 </button>
 
 
-<button class="quick"
-onclick="openSettings()">
+<button class="quick" onclick="openSettings()">
 
 <div class="quick-icon">
 ⚙
@@ -964,7 +1015,9 @@ Settings
 Recent activity
 </h2>
 
-<span class="customize">
+<span
+class="customize"
+onclick="openFeature('Statements')">
 View all ›
 </span>
 
@@ -973,11 +1026,9 @@ View all ›
 
 <div class="activity-card">
 
-
 <div class="activity">
 
 <div>
-
 <div class="activity-name">
 Account transfer
 </div>
@@ -985,7 +1036,6 @@ Account transfer
 <div class="activity-date">
 Yesterday • Savings
 </div>
-
 </div>
 
 <div class="positive">
@@ -998,7 +1048,6 @@ Yesterday • Savings
 <div class="activity">
 
 <div>
-
 <div class="activity-name">
 Online purchase
 </div>
@@ -1006,7 +1055,6 @@ Online purchase
 <div class="activity-date">
 Sep 6 • Checking
 </div>
-
 </div>
 
 <div class="negative">
@@ -1019,7 +1067,6 @@ Sep 6 • Checking
 <div class="activity">
 
 <div>
-
 <div class="activity-name">
 Interest credit
 </div>
@@ -1027,7 +1074,6 @@ Interest credit
 <div class="activity-date">
 Sep 5 • Savings
 </div>
-
 </div>
 
 <div class="positive">
@@ -1040,7 +1086,6 @@ Sep 5 • Savings
 <div class="activity">
 
 <div>
-
 <div class="activity-name">
 Account funding
 </div>
@@ -1048,7 +1093,6 @@ Account funding
 <div class="activity-date">
 Sep 1 • Savings
 </div>
-
 </div>
 
 <div class="positive">
@@ -1057,20 +1101,22 @@ Sep 1 • Savings
 
 </div>
 
-
 </div>
 
 
 <!-- SPENDING -->
 
-<div class="section-title"
+<div
+class="section-title"
 style="margin-top:35px">
 
 <h2>
 Spending this month
 </h2>
 
-<span class="customize">
+<span
+class="customize"
+onclick="openFeature('Spending Details')">
 View details ›
 </span>
 
@@ -1118,12 +1164,11 @@ More control. More possibilities.
 
 </div>
 
-<button onclick="simulated('Premium banking')">
+<button onclick="openFeature('Premium Banking')">
 Learn More
 </button>
 
 </div>
-
 
 </div>
 
@@ -1145,7 +1190,7 @@ Online Agreement &nbsp; | &nbsp;
 Contact Us
 </div>
 
-<div>
+<div class="footer-note">
 Fictional / simulated banking interface
 </div>
 
@@ -1156,8 +1201,7 @@ Fictional / simulated banking interface
 
 <!-- TRANSFER MODAL -->
 
-<div id="transferModal"
-class="modal hidden">
+<div id="transferModal" class="modal hidden">
 
 <div class="modal-box">
 
@@ -1171,18 +1215,24 @@ onclick="closeModal('transferModal')">
 Transfer Money
 </h2>
 
+<p style="color:#777;font-size:13px">
+Create a simulated transfer.
+</p>
+
 <label>
 Recipient
 </label>
 
-<input id="recipient"
+<input
+id="recipient"
 placeholder="Recipient name">
 
 <label>
 Amount
 </label>
 
-<input id="transferAmount"
+<input
+id="transferAmount"
 type="number"
 min="0"
 placeholder="0.00">
@@ -1214,8 +1264,7 @@ Continue
 
 <!-- WIRE TRANSFER MODAL -->
 
-<div id="wireTransferModal"
-class="modal hidden">
+<div id="wireTransferModal" class="modal hidden">
 
 <div class="modal-box">
 
@@ -1229,19 +1278,16 @@ onclick="closeModal('wireTransferModal')">
 Wire Transfer
 </h2>
 
-<p style="
-color:#777;
-font-size:13px;
-margin-top:-10px;
-">
-Simulated wire-transfer details for testing only.
+<p style="color:#777;font-size:13px">
+Simulated wire-transfer details.
 </p>
 
 <label>
 Sender / Recipient Name
 </label>
 
-<input id="wireName"
+<input
+id="wireName"
 type="text"
 placeholder="Enter name">
 
@@ -1249,17 +1295,19 @@ placeholder="Enter name">
 Routing Number
 </label>
 
-<input id="wireRouting"
+<input
+id="wireRouting"
 type="text"
 inputmode="numeric"
 maxlength="9"
-placeholder="Test routing number">
+placeholder="9-digit test routing number">
 
 <label>
 Account Number
 </label>
 
-<input id="wireAccount"
+<input
+id="wireAccount"
 type="text"
 inputmode="numeric"
 placeholder="Test account number">
@@ -1268,7 +1316,8 @@ placeholder="Test account number">
 Amount
 </label>
 
-<input id="wireAmount"
+<input
+id="wireAmount"
 type="number"
 min="0"
 placeholder="0.00">
@@ -1284,8 +1333,7 @@ Continue
 
 <!-- RECEIPT -->
 
-<div id="receiptModal"
-class="modal hidden">
+<div id="receiptModal" class="modal hidden">
 
 <div class="modal-box">
 
@@ -1307,18 +1355,11 @@ color:#16834e;
 Transfer Recorded
 </h2>
 
-<p style="
-text-align:center;
-color:#777;
-">
+<p style="text-align:center;color:#777">
 Simulated transaction confirmation
 </p>
 
-<div style="
-background:#f5f5f6;
-padding:18px;
-border-radius:13px;
-">
+<div class="info-box">
 
 <p>
 <strong>Recipient:</strong>
@@ -1351,10 +1392,32 @@ Done
 </div>
 
 
+<!-- FEATURE MODAL -->
+
+<div id="featureModal" class="modal hidden">
+
+<div class="modal-box">
+
+<button type="button"
+class="close"
+onclick="closeModal('featureModal')">
+×
+</button>
+
+<h2 id="featureTitle">
+Feature
+</h2>
+
+<div id="featureContent">
+</div>
+
+</div>
+</div>
+
+
 <!-- SETTINGS -->
 
-<div id="settingsModal"
-class="modal hidden">
+<div id="settingsModal" class="modal hidden">
 
 <div class="modal-box">
 
@@ -1372,14 +1435,16 @@ Settings
 Display name
 </label>
 
-<input id="displayName"
+<input
+id="displayName"
 type="text">
 
 <label>
 Email
 </label>
 
-<input id="displayEmail"
+<input
+id="displayEmail"
 type="email"
 placeholder="Your email">
 
@@ -1387,14 +1452,16 @@ placeholder="Your email">
 Username
 </label>
 
-<input id="newUsername"
+<input
+id="newUsername"
 type="text">
 
 <label>
-New test password
+New password
 </label>
 
-<input id="newPassword"
+<input
+id="newPassword"
 type="password"
 placeholder="Leave blank to keep current">
 
@@ -1425,32 +1492,19 @@ const password =
 document.getElementById("password").value;
 
 if(!username || !password){
-
 alert("Enter a username and password.");
-
 return;
 }
 
 if(password.length < 6){
-
 alert("Password must be at least 6 characters.");
-
 return;
 }
 
-localStorage.setItem(
-"novaUsername",
-username
-);
+localStorage.setItem("novaUsername",username);
+localStorage.setItem("novaPassword",password);
 
-localStorage.setItem(
-"novaPassword",
-password
-);
-
-alert(
-"Your test login has been saved on this browser."
-);
+alert("Your login has been saved on this browser.");
 }
 
 
@@ -1465,11 +1519,7 @@ const savedPassword =
 localStorage.getItem("novaPassword");
 
 if(!savedUsername || !savedPassword){
-
-alert(
-"Create your test login first."
-);
-
+alert("Create your login first.");
 return;
 }
 
@@ -1483,18 +1533,11 @@ if(
 username !== savedUsername ||
 password !== savedPassword
 ){
-
-alert(
-"Incorrect username or password."
-);
-
+alert("Incorrect username or password.");
 return;
 }
 
-localStorage.setItem(
-"novaLoggedIn",
-"true"
-);
+localStorage.setItem("novaLoggedIn","true");
 
 showBank();
 }
@@ -1538,6 +1581,32 @@ document
 }
 
 
+/* NAVIGATION */
+
+function setActive(button){
+
+document
+.querySelectorAll(".nav-item")
+.forEach(item =>
+item.classList.remove("active")
+);
+
+button.classList.add("active");
+}
+
+function goHome(button){
+
+setActive(button);
+
+closeAllModals();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+}
+
+
 /* SETTINGS */
 
 function openSettings(){
@@ -1570,18 +1639,13 @@ document
 }
 
 
-/* CLOSE SETTINGS */
-
 function closeSettings(){
 
 document
 .getElementById("settingsModal")
 .classList.add("hidden");
-
 }
 
-
-/* SAVE SETTINGS */
 
 function saveSettings(){
 
@@ -1606,48 +1670,25 @@ document
 .value;
 
 if(name){
-
-localStorage.setItem(
-"novaName",
-name
-);
-
+localStorage.setItem("novaName",name);
 }
 
 if(email){
-
-localStorage.setItem(
-"novaEmail",
-email
-);
-
+localStorage.setItem("novaEmail",email);
 }
 
 if(username){
-
-localStorage.setItem(
-"novaUsername",
-username
-);
-
+localStorage.setItem("novaUsername",username);
 }
 
 if(password){
 
 if(password.length < 6){
-
-alert(
-"Password must be at least 6 characters."
-);
-
+alert("Password must be at least 6 characters.");
 return;
 }
 
-localStorage.setItem(
-"novaPassword",
-password
-);
-
+localStorage.setItem("novaPassword",password);
 }
 
 closeSettings();
@@ -1655,7 +1696,6 @@ closeSettings();
 showBank();
 
 alert("Settings saved.");
-
 }
 
 
@@ -1663,13 +1703,9 @@ alert("Settings saved.");
 
 function signOut(){
 
-localStorage.removeItem(
-"novaLoggedIn"
-);
+localStorage.removeItem("novaLoggedIn");
 
-document
-.getElementById("settingsModal")
-.classList.add("hidden");
+closeAllModals();
 
 document
 .getElementById("bankPage")
@@ -1682,7 +1718,6 @@ document
 document
 .getElementById("password")
 .value = "";
-
 }
 
 
@@ -1693,7 +1728,6 @@ function openTransfer(){
 document
 .getElementById("transferModal")
 .classList.remove("hidden");
-
 }
 
 
@@ -1717,16 +1751,12 @@ document
 .value;
 
 if(!recipient){
-
 alert("Enter a recipient.");
-
 return;
 }
 
 if(!amount || amount <= 0){
-
 alert("Enter a valid amount.");
-
 return;
 }
 
@@ -1739,13 +1769,10 @@ document
 .getElementById("receiptAmount")
 .textContent =
 "$" +
-amount.toLocaleString(
-"en-US",
-{
+amount.toLocaleString("en-US",{
 minimumFractionDigits:2,
 maximumFractionDigits:2
-}
-);
+});
 
 document
 .getElementById("receiptFrom")
@@ -1757,7 +1784,6 @@ closeModal("transferModal");
 document
 .getElementById("receiptModal")
 .classList.remove("hidden");
-
 }
 
 
@@ -1768,7 +1794,6 @@ function openWireTransfer(){
 document
 .getElementById("wireTransferModal")
 .classList.remove("hidden");
-
 }
 
 
@@ -1825,30 +1850,647 @@ return;
 
 closeModal("wireTransferModal");
 
-alert(
-"Wire transfer recorded as a SIMULATED transaction."
+openFeature("Wire Transfer Recorded");
+
+}
+
+
+/* FEATURES */
+
+function openFeature(feature){
+
+const title =
+document.getElementById("featureTitle");
+
+const content =
+document.getElementById("featureContent");
+
+title.textContent = feature;
+
+
+/* CARDS */
+
+if(feature === "Cards"){
+
+content.innerHTML = `
+
+<div class="test-card">
+
+<div class="test-card-brand">
+NOVA BANK
+</div>
+
+<div class="card-number">
+•••• •••• •••• 4821
+</div>
+
+<div class="card-bottom">
+
+<span>
+LAURA JACKSON
+</span>
+
+<span>
+TEST CARD
+</span>
+
+</div>
+
+</div>
+
+<div class="feature-card">
+
+<h3>
+Card Controls
+</h3>
+
+<p style="color:#707887">
+Manage your fictional card settings.
+</p>
+
+<button class="primary"
+onclick="alert('Card settings updated.')">
+Manage Card
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* STATEMENTS */
+
+else if(feature === "Statements"){
+
+content.innerHTML = `
+
+<div class="feature-card">
+
+<h3>
+Transaction History
+</h3>
+
+<div class="activity">
+
+<div>
+<div class="activity-name">
+Account transfer
+</div>
+<div class="activity-date">
+Yesterday • Savings
+</div>
+</div>
+
+<div class="positive">
++$4,250.00
+</div>
+
+</div>
+
+<div class="activity">
+
+<div>
+<div class="activity-name">
+Online purchase
+</div>
+<div class="activity-date">
+Sep 6 • Checking
+</div>
+</div>
+
+<div class="negative">
+-$185.50
+</div>
+
+</div>
+
+<div class="activity">
+
+<div>
+<div class="activity-name">
+Interest credit
+</div>
+<div class="activity-date">
+Sep 5 • Savings
+</div>
+</div>
+
+<div class="positive">
++$1,250.00
+</div>
+
+</div>
+
+<div class="activity">
+
+<div>
+<div class="activity-name">
+Account funding
+</div>
+<div class="activity-date">
+Sep 1 • Savings
+</div>
+</div>
+
+<div class="positive">
++$15,000,000.00
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* SECURITY */
+
+else if(feature === "Security"){
+
+content.innerHTML = `
+
+<div class="feature-card">
+
+<h3>
+Security Center
+</h3>
+
+<div class="info-box">
+<strong>Login protection</strong>
+<br>
+<span style="color:#777">
+Enabled
+</span>
+</div>
+
+<div class="info-box">
+<strong>Two-step verification</strong>
+<br>
+<span style="color:#777">
+Available as a setting
+</span>
+</div>
+
+<div class="info-box">
+<strong>Session security</strong>
+<br>
+<span style="color:#777">
+Browser session protected
+</span>
+</div>
+
+<button class="primary"
+onclick="alert('Security settings updated.')">
+Update Security
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* PAY BILLS */
+
+else if(feature === "Pay Bills"){
+
+content.innerHTML = `
+
+<p style="color:#777;font-size:13px">
+Create a simulated bill payment.
+</p>
+
+<label>
+Biller
+</label>
+
+<input
+id="billName"
+placeholder="Enter biller name">
+
+<label>
+Amount
+</label>
+
+<input
+id="billAmount"
+type="number"
+min="0"
+placeholder="0.00">
+
+<label>
+From account
+</label>
+
+<select id="billAccount">
+
+<option>
+Checking — $10,000,000.00
+</option>
+
+<option>
+Savings — $15,000,000.00
+</option>
+
+</select>
+
+<button class="primary"
+onclick="submitBill()">
+Pay Bill
+</button>
+
+`;
+
+}
+
+
+/* PREMIUM */
+
+else if(feature === "Premium Banking"){
+
+content.innerHTML = `
+
+<div style="
+background:linear-gradient(100deg,#850c14,#be171f);
+color:white;
+padding:25px;
+border-radius:17px;
+">
+
+<h3 style="font-size:23px;margin-top:0">
+Premium Banking
+</h3>
+
+<p style="color:#ffe8aa">
+More control. More possibilities.
+</p>
+
+<p>
+Explore additional features available in this
+fictional banking interface.
+</p>
+
+</div>
+
+`;
+
+}
+
+
+/* ACCOUNT */
+
+else if(
+feature === "Checking Account" ||
+feature === "Savings Account"
+){
+
+const checking =
+feature === "Checking Account";
+
+const amount =
+checking
+? "$10,000,000.00"
+: "$15,000,000.00";
+
+const number =
+checking
+? "•••• 2778"
+: "•••• 8842";
+
+content.innerHTML = `
+
+<div class="feature-card">
+
+<h3>
+${checking ? "Checking Account" : "Savings Account"}
+</h3>
+
+<p style="color:#777">
+Account number ${number}
+</p>
+
+<div style="
+font-size:34px;
+font-weight:800;
+margin:25px 0 5px;
+">
+${amount}
+</div>
+
+<p style="color:#777">
+Available balance
+</p>
+
+<button class="primary"
+onclick="openTransfer();closeModal('featureModal')">
+Transfer Money
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* CUSTOMIZE */
+
+else if(feature === "Customize View"){
+
+content.innerHTML = `
+
+<div class="feature-card">
+
+<h3>
+Customize Dashboard
+</h3>
+
+<label>
+Show account balances
+</label>
+
+<select>
+<option>Yes</option>
+<option>No</option>
+</select>
+
+<label>
+Show recent activity
+</label>
+
+<select>
+<option>Yes</option>
+<option>No</option>
+</select>
+
+<label>
+Show spending
+</label>
+
+<select>
+<option>Yes</option>
+<option>No</option>
+</select>
+
+<button class="primary"
+onclick="
+closeModal('featureModal');
+alert('Dashboard preferences saved.')
+">
+Save Preferences
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* SPENDING */
+
+else if(feature === "Spending Details"){
+
+content.innerHTML = `
+
+<div class="feature-card">
+
+<h3>
+Spending Details
+</h3>
+
+<div class="info-box">
+
+<strong>Total spending</strong>
+
+<div style="
+font-size:30px;
+font-weight:800;
+margin-top:8px;
+">
+$185.50
+</div>
+
+</div>
+
+<div class="info-box">
+
+<strong>
+Online purchase
+</strong>
+
+<br>
+
+<span style="color:#777">
+Sep 6 • Checking
+</span>
+
+<br><br>
+
+<strong>
+-$185.50
+</strong>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* WIRE RESULT */
+
+else if(feature === "Wire Transfer Recorded"){
+
+content.innerHTML = `
+
+<div style="
+text-align:center;
+font-size:55px;
+color:#16834e;
+">
+✓
+</div>
+
+<h3 style="text-align:center">
+Wire Transfer Recorded
+</h3>
+
+<p style="text-align:center;color:#777">
+The wire was recorded as a simulated transaction.
+</p>
+
+<div class="info-box">
+
+<strong>
+Status:
+</strong>
+
+SIMULATED
+
+</div>
+
+<button class="primary"
+onclick="closeModal('featureModal')">
+Done
+</button>
+
+`;
+
+}
+
+
+/* MESSAGES */
+
+else if(feature === "Messages"){
+
+content.innerHTML = `
+
+<div class="feature-card">
+
+<h3>
+Messages
+</h3>
+
+<div class="info-box">
+
+<strong>
+Welcome to Nova Bank
+</strong>
+
+<br>
+
+<span style="color:#777">
+There are no new messages.
+</span>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* HELP */
+
+else if(feature === "Help"){
+
+content.innerHTML = `
+
+<div class="feature-card">
+
+<h3>
+Help Center
+</h3>
+
+<p style="color:#777">
+Select an area for assistance.
+</p>
+
+<button class="gold-button"
+onclick="
+alert('Transfer help: open Transfer Money to create a simulated transfer.')
+">
+Transfer Help
+</button>
+
+<button class="gold-button"
+onclick="
+alert('Settings help: open Settings to update your profile.')
+">
+Settings Help
+</button>
+
+<button class="gold-button"
+onclick="
+alert('Cards help: open Cards to view the card interface.')
+">
+Cards Help
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* DEFAULT */
+
+else{
+
+content.innerHTML = `
+
+<div class="feature-card">
+
+<h3>
+${feature}
+</h3>
+
+<p style="color:#777">
+This section is available in the fictional banking interface.
+</p>
+
+</div>
+
+`;
+
+}
+
+document
+.getElementById("featureModal")
+.classList.remove("hidden");
+
+}
+
+
+/* BILL PAYMENT */
+
+function submitBill(){
+
+const biller =
+document
+.getElementById("billName")
+.value.trim();
+
+const amount =
+Number(
+document
+.getElementById("billAmount")
+.value
 );
 
+if(!biller){
+
+alert("Enter a biller name.");
+return;
+}
+
+if(!amount || amount <= 0){
+
+alert("Enter a valid amount.");
+return;
+}
+
+alert(
+"Bill payment recorded as a simulated transaction."
+);
+
+closeModal("featureModal");
+
 }
 
 
-/* CLOSE MODALS */
-
-function closeModal(id){
-
-const modal =
-document.getElementById(id);
-
-if(modal){
-
-modal.classList.add("hidden");
-
-}
-
-}
-
-
-/* OTHER BUTTONS */
+/* DEPOSIT CHECK */
 
 function simulated(feature){
 
@@ -1856,6 +2498,33 @@ alert(
 feature +
 " is simulated in this fictional interface."
 );
+
+}
+
+
+/* CLOSE MODAL */
+
+function closeModal(id){
+
+const modal =
+document.getElementById(id);
+
+if(modal){
+modal.classList.add("hidden");
+}
+
+}
+
+
+/* CLOSE ALL */
+
+function closeAllModals(){
+
+document
+.querySelectorAll(".modal")
+.forEach(modal => {
+modal.classList.add("hidden");
+});
 
 }
 
