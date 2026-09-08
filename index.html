@@ -210,6 +210,7 @@ button,input,select{font:inherit}
   justify-content:space-between;
   color:#666;
   font-size:14px;
+  font-weight:bold;
 }
 .account-number{
   margin-top:5px;
@@ -424,25 +425,27 @@ button,input,select{font:inherit}
     </div>
 
     <div class="top-actions">
+      <button type="button" onclick="openSettingsModal()">⚙ Settings</button>
       <button type="button" onclick="resetBalancesToDefault()">Reset Balances</button>
       <button type="button" onclick="signOut()">Sign Out</button>
-      <div class="profile" id="avatar">--</div>
+      <div class="profile" id="avatar">LJ</div>
     </div>
   </header>
 
   <div class="layout">
     <aside class="sidebar">
       <button type="button" class="active">▣ Dashboard</button>
-      <button type="button" onclick="openTransferModal()">⇄ Internal Transfer</button>
+      <button type="button" onclick="openTransferModal()">⇄ Transfer Money</button>
       <button type="button" onclick="openWireModal()">↗ Wire Transfer</button>
       <button type="button" onclick="openDepositModal()">▣ Deposit Check</button>
       <button type="button" onclick="openBillModal()">▤ Pay Bills</button>
       <button type="button" onclick="openSendModal()">➢ Send Money</button>
+      <button type="button" onclick="openSettingsModal()">⚙ Account Settings</button>
     </aside>
 
     <main class="main">
       <div class="welcome">
-        <h2>Welcome back, <span id="welcomeName">User</span></h2>
+        <h2>Welcome back, <span id="welcomeName">Laura Jackson</span></h2>
         <p>Account Overview</p>
       </div>
 
@@ -451,9 +454,8 @@ button,input,select{font:inherit}
         <div class="card account-card">
           <div class="account-title">
             <span>Checking Account</span>
-            <span>Personal</span>
           </div>
-          <div class="account-number" id="chkNumber">•••• 1001</div>
+          <div class="account-number" id="chkNumber">•••• 1174</div>
           <div class="balance" id="chkBalance">$10,000,000.00</div>
           <div class="available">Available Balance</div>
         </div>
@@ -461,9 +463,8 @@ button,input,select{font:inherit}
         <div class="card account-card">
           <div class="account-title">
             <span>Savings Account</span>
-            <span>Personal</span>
           </div>
-          <div class="account-number" id="savNumber">•••• 2002</div>
+          <div class="account-number" id="savNumber">•••• 2017</div>
           <div class="balance" id="savBalance">$15,000,000.00</div>
           <div class="available">Available Balance</div>
         </div>
@@ -474,7 +475,7 @@ button,input,select{font:inherit}
       <div class="action-grid">
         <div class="action-card" onclick="openTransferModal()">
           <div class="action-icon-circle">⇄</div>
-          <div class="action-label">Internal Transfer</div>
+          <div class="action-label">Transfer Money</div>
         </div>
 
         <div class="action-card" onclick="openWireModal()">
@@ -502,7 +503,7 @@ button,input,select{font:inherit}
       <!-- RECENT ACTIVITY -->
       <h3 class="section-title">Recent Activity</h3>
       <div class="activity" id="activityList">
-        <div class="empty-state">No recent activity.</div>
+        <!-- Rendered via Javascript -->
       </div>
 
       <div class="footer">
@@ -511,6 +512,53 @@ button,input,select{font:inherit}
     </main>
   </div>
 </section>
+
+
+<!-- ACCOUNT SETTINGS MODAL -->
+<div id="settingsModal" class="modal-wrap hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Account Settings & Figures</h3>
+      <button type="button" class="close" onclick="closeModal('settingsModal')">×</button>
+    </div>
+
+    <form onsubmit="handleSettingsSubmit(event)" class="modal-body">
+      <div class="modal-group">
+        <label for="setAccountName">Account Holder Name</label>
+        <input id="setAccountName" type="text" required placeholder="Laura Jackson">
+      </div>
+
+      <div class="modal-row">
+        <div class="modal-group">
+          <label for="setChkNum">Checking Last 4 Digits</label>
+          <input id="setChkNum" type="text" maxlength="4" required placeholder="1174">
+        </div>
+
+        <div class="modal-group">
+          <label for="setSavNum">Savings Last 4 Digits</label>
+          <input id="setSavNum" type="text" maxlength="4" required placeholder="2017">
+        </div>
+      </div>
+
+      <div class="modal-row">
+        <div class="modal-group">
+          <label for="setChkBal">Checking Balance ($)</label>
+          <input id="setChkBal" type="number" step="0.01" required placeholder="10000000.00">
+        </div>
+
+        <div class="modal-group">
+          <label for="setSavBal">Savings Balance ($)</label>
+          <input id="setSavBal" type="number" step="0.01" required placeholder="15000000.00">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel" onclick="closeModal('settingsModal')">Cancel</button>
+        <button type="submit" class="submit">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 
 <!-- REGISTER MODAL -->
@@ -583,7 +631,7 @@ button,input,select{font:inherit}
 <div id="transferModal" class="modal-wrap hidden">
   <div class="modal">
     <div class="modal-head">
-      <h3>Internal Transfer</h3>
+      <h3>Transfer Money</h3>
       <button type="button" class="close" onclick="closeModal('transferModal')">×</button>
     </div>
 
@@ -787,6 +835,53 @@ document.getElementById('currentYear').textContent = new Date().getFullYear();
 const DEFAULT_CHECKING = 10000000.00;
 const DEFAULT_SAVINGS = 15000000.00;
 
+function getDefaultTransactions() {
+  return [
+    {
+      id: "tx_1",
+      description: "Initial Deposit - Checking",
+      amount: DEFAULT_CHECKING,
+      date: "08/09/2026",
+      type: "credit"
+    },
+    {
+      id: "tx_2",
+      description: "Initial Deposit - Savings",
+      amount: DEFAULT_SAVINGS,
+      date: "08/09/2026",
+      type: "credit"
+    },
+    {
+      id: "tx_3",
+      description: "Direct Deposit - Executive Payroll",
+      amount: 125000.00,
+      date: "08/15/2026",
+      type: "credit"
+    },
+    {
+      id: "tx_4",
+      description: "Wire Transfer Disbursement - Escrow Services",
+      amount: 45000.00,
+      date: "08/20/2026",
+      type: "debit"
+    },
+    {
+      id: "tx_5",
+      description: "Investment Portfolio Interest / Dividend",
+      amount: 18450.00,
+      date: "08/28/2026",
+      type: "credit"
+    },
+    {
+      id: "tx_6",
+      description: "Washington Harbor Premier Bill Payment",
+      amount: 3200.00,
+      date: "09/02/2026",
+      type: "debit"
+    }
+  ];
+}
+
 // Storage Helpers
 function getUsers() {
   return JSON.parse(localStorage.getItem("whb_users") || "[]");
@@ -830,26 +925,11 @@ function handleRegister(e) {
     email,
     username,
     password,
-    checkingNumber: "1001",
-    savingsNumber: "2002",
+    checkingNumber: "1174",
+    savingsNumber: "2017",
     checkingBalance: DEFAULT_CHECKING,
     savingsBalance: DEFAULT_SAVINGS,
-    transactions: [
-      {
-        id: "tx_1",
-        description: "Initial Deposit - Checking",
-        amount: DEFAULT_CHECKING,
-        date: new Date().toLocaleDateString(),
-        type: "credit"
-      },
-      {
-        id: "tx_2",
-        description: "Initial Deposit - Savings",
-        amount: DEFAULT_SAVINGS,
-        date: new Date().toLocaleDateString(),
-        type: "credit"
-      }
-    ]
+    transactions: getDefaultTransactions()
   };
 
   users.push(newUser);
@@ -874,10 +954,9 @@ function handleLogin(e) {
     return;
   }
 
-  // Force minimum default balances if missing or zero
-  if (!user.checkingBalance) user.checkingBalance = DEFAULT_CHECKING;
-  if (!user.savingsBalance) user.savingsBalance = DEFAULT_SAVINGS;
-  if (!user.transactions) user.transactions = [];
+  if (!user.transactions || user.transactions.length < 3) {
+    user.transactions = getDefaultTransactions();
+  }
 
   setActiveUser(user);
   showApp();
@@ -909,58 +988,78 @@ function resetBalancesToDefault() {
   let user = getActiveUser();
   if (!user) {
     user = {
-      id: "usr_guest",
+      id: "usr_default",
       name: "Laura Jackson",
-      checkingNumber: "1001",
-      savingsNumber: "2002",
+      checkingNumber: "1174",
+      savingsNumber: "2017",
       checkingBalance: DEFAULT_CHECKING,
       savingsBalance: DEFAULT_SAVINGS,
-      transactions: []
+      transactions: getDefaultTransactions()
     };
   } else {
     user.checkingBalance = DEFAULT_CHECKING;
     user.savingsBalance = DEFAULT_SAVINGS;
+    user.transactions = getDefaultTransactions();
   }
   
   setActiveUser(user);
   showApp();
-  alert("Balances successfully updated to $10M Checking / $15M Savings!");
+  alert("Balances & Recent Activity reset to default ($10M Checking / $15M Savings)!");
+}
+
+// Settings Submission
+function openSettingsModal() {
+  const user = getActiveUser() || {
+    name: "Laura Jackson",
+    checkingNumber: "1174",
+    savingsNumber: "2017",
+    checkingBalance: DEFAULT_CHECKING,
+    savingsBalance: DEFAULT_SAVINGS
+  };
+
+  document.getElementById("setAccountName").value = user.name || "Laura Jackson";
+  document.getElementById("setChkNum").value = user.checkingNumber || "1174";
+  document.getElementById("setSavNum").value = user.savingsNumber || "2017";
+  document.getElementById("setChkBal").value = user.checkingBalance;
+  document.getElementById("setSavBal").value = user.savingsBalance;
+
+  document.getElementById("settingsModal").classList.remove("hidden");
+}
+
+function handleSettingsSubmit(e) {
+  e.preventDefault();
+  let user = getActiveUser() || {
+    id: "usr_default",
+    transactions: getDefaultTransactions()
+  };
+
+  user.name = document.getElementById("setAccountName").value.trim();
+  user.checkingNumber = document.getElementById("setChkNum").value.trim();
+  user.savingsNumber = document.getElementById("setSavNum").value.trim();
+  user.checkingBalance = parseFloat(document.getElementById("setChkBal").value);
+  user.savingsBalance = parseFloat(document.getElementById("setSavBal").value);
+
+  setActiveUser(user);
+  showApp();
+  closeModal("settingsModal");
+  alert("Account settings and figures updated!");
 }
 
 // App View Render
 function showApp() {
   let user = getActiveUser();
-  
-  // Auto-upgrade empty fallback/guest accounts
+
+  // Enforce defaults and fix any zero balance issues
   if (!user) {
     user = {
       id: "usr_default",
       name: "Laura Jackson",
-      checkingNumber: "1001",
-      savingsNumber: "2002",
+      checkingNumber: "1174",
+      savingsNumber: "2017",
       checkingBalance: DEFAULT_CHECKING,
       savingsBalance: DEFAULT_SAVINGS,
-      transactions: [
-        {
-          id: "tx_1",
-          description: "Initial Deposit - Checking",
-          amount: DEFAULT_CHECKING,
-          date: new Date().toLocaleDateString(),
-          type: "credit"
-        },
-        {
-          id: "tx_2",
-          description: "Initial Deposit - Savings",
-          amount: DEFAULT_SAVINGS,
-          date: new Date().toLocaleDateString(),
-          type: "credit"
-        }
-      ]
+      transactions: getDefaultTransactions()
     };
-    setActiveUser(user);
-  } else if (!user.checkingBalance || !user.savingsBalance) {
-    user.checkingBalance = user.checkingBalance || DEFAULT_CHECKING;
-    user.savingsBalance = user.savingsBalance || DEFAULT_SAVINGS;
     setActiveUser(user);
   }
 
@@ -968,13 +1067,13 @@ function showApp() {
   document.getElementById("app").classList.remove("hidden");
 
   document.getElementById("welcomeName").textContent = user.name || "Laura Jackson";
-  document.getElementById("chkNumber").textContent = "•••• " + (user.checkingNumber || "1001");
-  document.getElementById("savNumber").textContent = "•••• " + (user.savingsNumber || "2002");
+  document.getElementById("chkNumber").textContent = "•••• " + (user.checkingNumber || "1174");
+  document.getElementById("savNumber").textContent = "•••• " + (user.savingsNumber || "2017");
   
   document.getElementById("chkBalance").textContent = formatMoney(user.checkingBalance);
   document.getElementById("savBalance").textContent = formatMoney(user.savingsBalance);
 
-  const initials = (user.name || "LJ").split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+  const initials = (user.name || "Laura Jackson").split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
   document.getElementById("avatar").textContent = initials || "LJ";
 
   renderActivityList(user.transactions || []);
@@ -1034,7 +1133,7 @@ function handleTransferSubmit(e) {
     id: "tx_" + Date.now(),
     description: `Transfer (${fromAcc.toUpperCase()} → ${toAcc.toUpperCase()}): ${memo}`,
     amount: amount,
-    date: new Date().toLocaleDateString(),
+    date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
     type: "debit"
   });
 
@@ -1070,7 +1169,7 @@ function handleWireSubmit(e) {
     id: "tx_" + Date.now(),
     description: `Wire Transfer Out to ${recipient} (•••• ${accountNum.slice(-4)})`,
     amount: amount,
-    date: new Date().toLocaleDateString(),
+    date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
     type: "debit"
   });
 
@@ -1099,7 +1198,7 @@ function handleDepositSubmit(e) {
     id: "tx_" + Date.now(),
     description: `Mobile Check Deposit from ${payer}`,
     amount: amount,
-    date: new Date().toLocaleDateString(),
+    date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
     type: "credit"
   });
 
@@ -1134,7 +1233,7 @@ function handleBillSubmit(e) {
     id: "tx_" + Date.now(),
     description: `Bill Payment to ${biller}`,
     amount: amount,
-    date: new Date().toLocaleDateString(),
+    date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
     type: "debit"
   });
 
@@ -1169,7 +1268,7 @@ function handleSendSubmit(e) {
     id: "tx_" + Date.now(),
     description: `Money Sent to ${recipient}`,
     amount: amount,
-    date: new Date().toLocaleDateString(),
+    date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
     type: "debit"
   });
 
