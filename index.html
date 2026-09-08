@@ -280,7 +280,7 @@ font-size:14px;
 .activity-card{
 background:#fff;
 border-radius:18px;
-padding:5px 24px;
+padding:10px 24px;
 box-shadow:0 5px 20px #0000000b;
 }
 
@@ -288,7 +288,7 @@ box-shadow:0 5px 20px #0000000b;
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:18px 0;
+padding:16px 0;
 border-bottom:1px solid #e9e9ed;
 }
 
@@ -296,24 +296,55 @@ border-bottom:1px solid #e9e9ed;
 border-bottom:0;
 }
 
+.activity-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.activity-icon{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#f3f4f8;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+flex-shrink:0;
+}
+
 .activity-name{
 font-weight:750;
+font-size:15px;
 }
 
 .activity-date{
 color:#747d8d;
 font-size:13px;
-margin-top:4px;
+margin-top:2px;
+}
+
+.activity-right{
+text-align:right;
+}
+
+.activity-account{
+color:#8a93a4;
+font-size:12px;
+margin-top:2px;
 }
 
 .positive{
 color:#13834e;
 font-weight:800;
+font-size:16px;
 }
 
 .negative{
 color:#171b2b;
 font-weight:800;
+font-size:16px;
 }
 
 /* SPENDING */
@@ -341,7 +372,7 @@ overflow:hidden;
 
 .progress span{
 display:block;
-width:0%;
+width:45%;
 height:100%;
 background:linear-gradient(90deg,#8d0d15,#d4a62f);
 border-radius:20px;
@@ -653,29 +684,51 @@ NOVA BANK
 Secure account access
 </div>
 
-<label>Username</label>
+<!-- STEP 1: LOGIN FORM -->
+<div id="loginStep1">
+  <label>Email / Username</label>
+  <input
+  id="username"
+  type="text"
+  autocomplete="username"
+  value="Laurajacksonxtt200@gmail.com"
+  placeholder="Enter email or username">
 
-<input
-id="username"
-type="text"
-autocomplete="username"
-placeholder="Enter username">
+  <label>Password</label>
+  <input
+  id="password"
+  type="password"
+  autocomplete="current-password"
+  placeholder="Enter password">
 
-<label>Password</label>
+  <button class="primary" onclick="startLogin()">
+  Sign In
+  </button>
+</div>
 
-<input
-id="password"
-type="password"
-autocomplete="current-password"
-placeholder="Enter password">
+<!-- STEP 2: 2FA CODE FORM -->
+<div id="loginStep2" class="hidden">
+  <div style="background:#f7f4ec;padding:15px;border-radius:12px;margin-bottom:15px;text-align:center;">
+    <strong>Security Verification</strong>
+    <p style="font-size:13px;color:#666;margin:5px 0 0;">A 6-digit verification code has been sent to your email.</p>
+  </div>
 
-<button class="primary" onclick="login()">
-Sign In
-</button>
+  <label>Security Code</label>
+  <input
+  id="twoFactorCode"
+  type="text"
+  inputmode="numeric"
+  maxlength="6"
+  placeholder="Enter 6-digit code">
 
-<button class="gold-button" onclick="createLogin()">
-Create / Reset Account
-</button>
+  <button class="primary" onclick="verifyCode()">
+  Verify & Sign In
+  </button>
+
+  <button class="gold-button" onclick="cancel2FA()">
+  Back to Login
+  </button>
+</div>
 
 </div>
 </div>
@@ -829,11 +882,11 @@ Checking
 </h3>
 
 <div class="account-number" id="checkingNum">
-•••• --
+•••• 2778
 </div>
 
 <div class="account-balance" id="checkingBal">
-$0.00
+$10,000,000.00
 </div>
 
 <div class="available">
@@ -852,11 +905,11 @@ Savings
 </h3>
 
 <div class="account-number" id="savingsNum">
-•••• --
+•••• 8842
 </div>
 
 <div class="account-balance" id="savingsBal">
-$0.00
+$15,000,000.00
 </div>
 
 <div class="available">
@@ -1004,7 +1057,73 @@ View all ›
 <div class="activity-card" id="activityList">
 
 <div class="activity">
-<div style="color:#747d8d;padding:10px 0;">No recent transactions.</div>
+<div class="activity-left">
+<div class="activity-icon">🏦</div>
+<div>
+<div class="activity-name">Wire Transfer Received</div>
+<div class="activity-date">Sep 06, 2026 • Investment Yield</div>
+</div>
+</div>
+<div class="activity-right">
+<div class="positive">+$250,000.00</div>
+<div class="activity-account">Checking •••• 2778</div>
+</div>
+</div>
+
+<div class="activity">
+<div class="activity-left">
+<div class="activity-icon">📈</div>
+<div>
+<div class="activity-name">Quarterly Savings Interest</div>
+<div class="activity-date">Sep 01, 2026 • Interest Earned</div>
+</div>
+</div>
+<div class="activity-right">
+<div class="positive">+$87,500.00</div>
+<div class="activity-account">Savings •••• 8842</div>
+</div>
+</div>
+
+<div class="activity">
+<div class="activity-left">
+<div class="activity-icon">💳</div>
+<div>
+<div class="activity-name">Luxury Asset Management</div>
+<div class="activity-date">Aug 28, 2026 • Advisory Fee</div>
+</div>
+</div>
+<div class="activity-right">
+<div class="negative">-$12,450.00</div>
+<div class="activity-account">Checking •••• 2778</div>
+</div>
+</div>
+
+<div class="activity">
+<div class="activity-left">
+<div class="activity-icon">✈️</div>
+<div>
+<div class="activity-name">Private Aviation Services</div>
+<div class="activity-date">Aug 22, 2026 • Travel</div>
+</div>
+</div>
+<div class="activity-right">
+<div class="negative">-$34,800.00</div>
+<div class="activity-account">Checking •••• 2778</div>
+</div>
+</div>
+
+<div class="activity">
+<div class="activity-left">
+<div class="activity-icon">⚡</div>
+<div>
+<div class="activity-name">Metropolitan Utilities</div>
+<div class="activity-date">Aug 18, 2026 • Bill Payment</div>
+</div>
+</div>
+<div class="activity-right">
+<div class="negative">-$1,280.50</div>
+<div class="activity-account">Checking •••• 2778</div>
+</div>
 </div>
 
 </div>
@@ -1038,7 +1157,7 @@ Total spending
 </span>
 
 <span id="spendingTotal">
-$0.00
+$48,530.50
 </span>
 
 </div>
@@ -1048,7 +1167,7 @@ $0.00
 </div>
 
 <p>
-Your spending activity appears here.
+Your spending is 12% below your monthly average.
 </p>
 
 </div>
@@ -1142,11 +1261,11 @@ From account
 <select id="fromAccount">
 
 <option value="Checking">
-Checking
+Checking — $10,000,000.00
 </option>
 
 <option value="Savings">
-Savings
+Savings — $15,000,000.00
 </option>
 
 </select>
@@ -1371,65 +1490,70 @@ Sign Out
 
 <script>
 
-/* LOGIN SETUP */
+/* DEFAULT CREDENTIALS */
+const DEFAULT_USER = "Laurajacksonxtt200@gmail.com";
+const DEFAULT_PASS = "Laurajack12";
 
-function createLogin(){
-
-const username =
-document.getElementById("username").value.trim();
-
-const password =
-document.getElementById("password").value;
-
-if(!username || !password){
-alert("Enter a username and password.");
-return;
-}
-
-if(password.length < 6){
-alert("Password must be at least 6 characters.");
-return;
-}
-
-localStorage.setItem("novaUsername",username);
-localStorage.setItem("novaPassword",password);
-
-alert("Your account credentials have been saved.");
+// Initialize credentials if not present
+if(!localStorage.getItem("novaUsername")){
+  localStorage.setItem("novaUsername", DEFAULT_USER);
+  localStorage.setItem("novaPassword", DEFAULT_PASS);
+  localStorage.setItem("novaName", "Laura Jackson");
+  localStorage.setItem("novaEmail", DEFAULT_USER);
 }
 
 
-/* LOGIN */
+/* LOGIN WITH 2FA CODE */
 
-function login(){
+let generatedCode = null;
 
-const savedUsername =
-localStorage.getItem("novaUsername");
+function startLogin(){
+  const savedUsername = localStorage.getItem("novaUsername") || DEFAULT_USER;
+  const savedPassword = localStorage.getItem("novaPassword") || DEFAULT_PASS;
 
-const savedPassword =
-localStorage.getItem("novaPassword");
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
 
-if(!savedUsername || !savedPassword){
-alert("Please create an account first.");
-return;
+  if(username !== savedUsername || password !== savedPassword){
+    alert("Incorrect username/email or password.");
+    return;
+  }
+
+  // Generate random 6-digit verification code
+  generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // Show code prompt step
+  document.getElementById("loginStep1").classList.add("hidden");
+  document.getElementById("loginStep2").classList.remove("hidden");
+
+  // Display security prompt with code
+  setTimeout(() => {
+    alert(`[NOVA BANK SECURITY CODE]\n\nYour security verification code is: ${generatedCode}`);
+  }, 300);
 }
 
-const username =
-document.getElementById("username").value.trim();
+function verifyCode(){
+  const userCode = document.getElementById("twoFactorCode").value.trim();
 
-const password =
-document.getElementById("password").value;
+  if(!userCode){
+    alert("Please enter the verification code.");
+    return;
+  }
 
-if(
-username !== savedUsername ||
-password !== savedPassword
-){
-alert("Incorrect username or password.");
-return;
+  if(userCode !== generatedCode){
+    alert("Invalid verification code. Please try again.");
+    return;
+  }
+
+  // Success
+  localStorage.setItem("novaLoggedIn", "true");
+  showBank();
 }
 
-localStorage.setItem("novaLoggedIn","true");
-
-showBank();
+function cancel2FA(){
+  document.getElementById("loginStep2").classList.add("hidden");
+  document.getElementById("loginStep1").classList.remove("hidden");
+  document.getElementById("twoFactorCode").value = "";
 }
 
 
@@ -1447,7 +1571,7 @@ document
 
 const name =
 localStorage.getItem("novaName") ||
-"Valued Customer";
+"Laura Jackson";
 
 document
 .getElementById("heroName")
@@ -1463,7 +1587,7 @@ name
 .map(word => word.charAt(0))
 .join("")
 .substring(0,2)
-.toUpperCase() || "NB";
+.toUpperCase() || "LJ";
 
 document
 .getElementById("avatar")
@@ -1596,6 +1720,9 @@ function signOut(){
 localStorage.removeItem("novaLoggedIn");
 
 closeAllModals();
+
+// Reset login steps
+cancel2FA();
 
 document
 .getElementById("bankPage")
@@ -1818,7 +1945,9 @@ content.innerHTML = `
 Transaction History
 </h3>
 
-<p style="color:#777">No active statements found.</p>
+<div class="activity-card" style="box-shadow:none;padding:0;">
+${document.getElementById("activityList").innerHTML}
+</div>
 
 </div>
 
@@ -1851,7 +1980,7 @@ Enabled
 <strong>Two-step verification</strong>
 <br>
 <span style="color:#777">
-Available in settings
+Active (Required on sign-in)
 </span>
 </div>
 
@@ -1898,11 +2027,11 @@ From account
 <select id="billAccount">
 
 <option>
-Checking
+Checking — $10,000,000.00
 </option>
 
 <option>
-Savings
+Savings — $15,000,000.00
 </option>
 
 </select>
@@ -1955,6 +2084,16 @@ feature === "Savings Account"
 const checking =
 feature === "Checking Account";
 
+const amount =
+checking
+? "$10,000,000.00"
+: "$15,000,000.00";
+
+const number =
+checking
+? "•••• 2778"
+: "•••• 8842";
+
 content.innerHTML = `
 
 <div class="feature-card">
@@ -1964,7 +2103,19 @@ ${checking ? "Checking Account" : "Savings Account"}
 </h3>
 
 <p style="color:#777">
-Account Details
+Account number ${number}
+</p>
+
+<div style="
+font-size:34px;
+font-weight:800;
+margin:25px 0 5px;
+">
+${amount}
+</div>
+
+<p style="color:#777">
+Available balance
 </p>
 
 <button class="primary"
@@ -2054,7 +2205,7 @@ font-size:30px;
 font-weight:800;
 margin-top:8px;
 ">
-$0.00
+$48,530.50
 </div>
 
 </div>
