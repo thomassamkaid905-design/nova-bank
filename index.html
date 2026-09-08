@@ -232,7 +232,7 @@ button,input,select{font:inherit}
   font-size:19px;
 }
 
-/* MATCHED ACTION BUTTONS DESIGN */
+/* QUICK ACTION CARDS DESIGN */
 .action-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -433,6 +433,7 @@ button,input,select{font:inherit}
     <aside class="sidebar">
       <button type="button" class="active">▣ Dashboard</button>
       <button type="button" onclick="openTransferModal()">⇄ Transfer Money</button>
+      <button type="button" onclick="openWireModal()">↗ Wire Transfer</button>
       <button type="button" onclick="openDepositModal()">▣ Deposit Check</button>
       <button type="button" onclick="openBillModal()">▤ Pay Bills</button>
       <button type="button" onclick="openSendModal()">➢ Send Money</button>
@@ -452,7 +453,7 @@ button,input,select{font:inherit}
             <span>Personal</span>
           </div>
           <div class="account-number" id="chkNumber">•••• 0000</div>
-          <div class="balance" id="chkBalance">$0.00</div>
+          <div class="balance" id="chkBalance">$10,000,000.00</div>
           <div class="available">Available Balance</div>
         </div>
 
@@ -462,12 +463,12 @@ button,input,select{font:inherit}
             <span>Personal</span>
           </div>
           <div class="account-number" id="savNumber">•••• 0000</div>
-          <div class="balance" id="savBalance">$0.00</div>
+          <div class="balance" id="savBalance">$15,000,000.00</div>
           <div class="available">Available Balance</div>
         </div>
       </div>
 
-      <!-- QUICK ACTIONS (IMAGE MATCHED) -->
+      <!-- QUICK ACTIONS -->
       <h3 class="section-title">Quick Actions</h3>
       <div class="action-grid">
         <div class="action-card" onclick="openTransferModal()">
@@ -623,6 +624,54 @@ button,input,select{font:inherit}
 </div>
 
 
+<!-- WIRE TRANSFER MODAL -->
+<div id="wireModal" class="modal-wrap hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Wire Transfer</h3>
+      <button type="button" class="close" onclick="closeModal('wireModal')">×</button>
+    </div>
+
+    <form onsubmit="handleWireSubmit(event)" class="modal-body">
+      <div class="modal-group">
+        <label for="wireFrom">Source Account</label>
+        <select id="wireFrom" required>
+          <option value="checking">Checking Account</option>
+          <option value="savings">Savings Account</option>
+        </select>
+      </div>
+
+      <div class="modal-group">
+        <label for="wireRecipient">Recipient Name</label>
+        <input id="wireRecipient" type="text" required placeholder="Recipient / Business Name">
+      </div>
+
+      <div class="modal-row">
+        <div class="modal-group">
+          <label for="wireRouting">Routing Number</label>
+          <input id="wireRouting" inputmode="numeric" maxlength="9" pattern="[0-9]{9}" required placeholder="9 Digits">
+        </div>
+
+        <div class="modal-group">
+          <label for="wireAccount">Account Number</label>
+          <input id="wireAccount" inputmode="numeric" required placeholder="Destination Account">
+        </div>
+      </div>
+
+      <div class="modal-group">
+        <label for="wireAmount">Amount ($)</label>
+        <input id="wireAmount" type="number" min="0.01" step="0.01" required placeholder="0.00">
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel" onclick="closeModal('wireModal')">Cancel</button>
+        <button type="submit" class="submit">Send Wire</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 <!-- DEPOSIT CHECK MODAL -->
 <div id="depositModal" class="modal-wrap hidden">
   <div class="modal">
@@ -757,7 +806,7 @@ function setActiveUser(user) {
   }
 }
 
-// User Registration
+// User Registration with Default Balances & Activity
 function handleRegister(e) {
   e.preventDefault();
   const name = document.getElementById("regName").value.trim();
@@ -779,8 +828,8 @@ function handleRegister(e) {
     password,
     checkingNumber: String(Math.floor(1000 + Math.random() * 9000)),
     savingsNumber: String(Math.floor(1000 + Math.random() * 9000)),
-    checkingBalance: 10000000.00,
-    savingsBalance: 15000000.00,
+    checkingBalance: 10000000.00, // $10 Million
+    savingsBalance: 15000000.00,  // $15 Million
     transactions: [
       {
         id: "tx_1",
@@ -892,7 +941,7 @@ function renderActivityList(transactions) {
   `).join("");
 }
 
-// Quick Actions Logic
+// Transactions Processing
 function handleTransferSubmit(e) {
   e.preventDefault();
   const fromAcc = document.getElementById("fromAccount").value;
@@ -933,6 +982,43 @@ function handleTransferSubmit(e) {
   showApp();
   closeModal("transferModal");
   e.target.reset();
+  alert("Transfer processed successfully.");
+}
+
+function handleWireSubmit(e) {
+  e.preventDefault();
+  const fromAcc = document.getElementById("wireFrom").value;
+  const recipient = document.getElementById("wireRecipient").value.trim();
+  const accountNum = document.getElementById("wireAccount").value.trim();
+  const amount = parseFloat(document.getElementById("wireAmount").value);
+
+  const user = getActiveUser();
+  const srcBalance = fromAcc === "checking" ? user.checkingBalance : user.savingsBalance;
+
+  if (amount > srcBalance) {
+    alert("Insufficient funds for wire transfer.");
+    return;
+  }
+
+  if (fromAcc === "checking") {
+    user.checkingBalance -= amount;
+  } else {
+    user.savingsBalance -= amount;
+  }
+
+  user.transactions.push({
+    id: "tx_" + Date.now(),
+    description: `Wire Transfer Out to ${recipient} (•••• ${accountNum.slice(-4)})`,
+    amount: amount,
+    date: new Date().toLocaleDateString(),
+    type: "debit"
+  });
+
+  setActiveUser(user);
+  showApp();
+  closeModal("wireModal");
+  e.target.reset();
+  alert("Wire transfer submitted successfully.");
 }
 
 function handleDepositSubmit(e) {
@@ -1044,6 +1130,7 @@ function signOut() {
 function openRegisterModal() { document.getElementById("registerModal").classList.remove("hidden"); }
 function openForgotPasswordModal() { document.getElementById("forgotModal").classList.remove("hidden"); }
 function openTransferModal() { document.getElementById("transferModal").classList.remove("hidden"); }
+function openWireModal() { document.getElementById("wireModal").classList.remove("hidden"); }
 function openDepositModal() { document.getElementById("depositModal").classList.remove("hidden"); }
 function openBillModal() { document.getElementById("billModal").classList.remove("hidden"); }
 function openSendModal() { document.getElementById("sendModal").classList.remove("hidden"); }
