@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Washington Harbor — Demo Banking</title>
+<title>Washington Harbor — Banking</title>
 
 <style>
 :root{
@@ -41,26 +41,6 @@ button{
 
 .hidden{
   display:none!important;
-}
-
-/* DEMO NOTICE */
-
-.demo-notice{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:99999;
-  background:#101010;
-  color:white;
-  text-align:center;
-  padding:7px 12px;
-  font-size:11px;
-  letter-spacing:.35px;
-}
-
-.demo-notice strong{
-  color:#ffd46b;
 }
 
 /* LOGIN */
@@ -153,21 +133,10 @@ button{
   box-shadow:0 8px 18px rgba(159,16,24,.2);
 }
 
-.demo-login{
-  margin-top:16px;
-  padding:13px;
-  background:#f5f6f8;
-  border-radius:12px;
-  color:#777;
-  font-size:12px;
-  line-height:1.7;
-}
-
 /* APP */
 
 .app{
   min-height:100vh;
-  padding-top:27px;
 }
 
 .topbar{
@@ -175,7 +144,7 @@ button{
   background:var(--card);
   border-bottom:1px solid var(--line);
   position:sticky;
-  top:27px;
+  top:0;
   z-index:900;
   display:flex;
   align-items:center;
@@ -261,7 +230,7 @@ button{
 .sidebar{
   position:fixed;
   left:0;
-  top:99px;
+  top:72px;
   bottom:0;
   width:245px;
   background:var(--card);
@@ -859,7 +828,6 @@ body.dark .field select{
   border-color:#30353b;
 }
 
-body.dark .demo-login,
 body.dark .tx-icon,
 body.dark .close{
   background:#24282d;
@@ -914,6 +882,7 @@ body.dark .status{
   }
 
   .sidebar{
+    top:72px;
     transform:translateX(-100%);
     transition:.25s;
   }
@@ -1033,11 +1002,6 @@ body.dark .status{
 
 <body>
 
-<div class="demo-notice">
-  <strong>DEMO / SIMULATED INTERFACE</strong>
-  — Fictional data only. No real accounts, money, transfers, deposits, or payments are processed.
-</div>
-
 <!-- LOGIN -->
 
 <section id="loginPage" class="login-page">
@@ -1052,7 +1016,7 @@ body.dark .status{
     <h1>Welcome back</h1>
 
     <div class="login-sub">
-      Sign in to your simulated account dashboard.
+      Sign in to your account dashboard.
     </div>
 
     <div class="field">
@@ -1068,12 +1032,6 @@ body.dark .status{
     <button class="primary" onclick="login()">
       Sign In
     </button>
-
-    <div class="demo-login">
-      <b>Demo credentials</b><br>
-      Username: <b>demo</b><br>
-      Password: <b>demo</b>
-    </div>
 
   </div>
 
@@ -1118,11 +1076,11 @@ body.dark .status{
 
       <div class="user">
 
-        <div class="avatar">DU</div>
+        <div class="avatar" id="userAvatar">US</div>
 
         <div class="user-info">
-          <b>Demo User</b><br>
-          <small>Personal demo</small>
+          <b id="userNameDisplay">User</b><br>
+          <small>Personal Account</small>
         </div>
 
       </div>
@@ -1184,8 +1142,8 @@ body.dark .status{
       <div class="welcome">
 
         <div>
-          <h1>Good evening, Demo User</h1>
-          <p>Your simulated financial overview.</p>
+          <h1 id="welcomeHeader">Good evening, User</h1>
+          <p>Your financial overview.</p>
         </div>
 
         <div id="currentDate" class="current-date"></div>
@@ -1198,17 +1156,17 @@ body.dark .status{
       <div class="hero">
 
         <div class="hero-label">
-          Total simulated balance
+          Total balance
         </div>
 
-        <h2>All Demo Accounts</h2>
+        <h2>All Accounts</h2>
 
         <div id="heroBalance" class="hero-balance">
           $25,000,000.00
         </div>
 
         <div class="hero-bottom">
-          Updated just now • Fictional demo data
+          Updated just now
         </div>
 
         <div class="hero-circle"></div>
@@ -1224,28 +1182,27 @@ body.dark .status{
           <div class="stat-icon">💰</div>
           <div class="stat-label">TOTAL BALANCE</div>
           <div id="statTotal" class="stat-value">$25.00M</div>
-          <div class="stat-change">▲ 4.8% simulated</div>
+          <div class="stat-change">▲ 4.8%</div>
         </div>
 
         <div class="card">
           <div class="stat-icon">📊</div>
           <div class="stat-label">MONTHLY SPENDING</div>
           <div class="stat-value">$12,840</div>
-          <div class="stat-change">▼ 8.2% simulated</div>
+          <div class="stat-change">▼ 8.2%</div>
         </div>
 
         <div class="card">
           <div class="stat-icon">↓</div>
           <div class="stat-label">INCOMING</div>
           <div class="stat-value">$48,500</div>
-          <div class="stat-change">▲ 13.4% simulated</div>
+          <div class="stat-change">▲ 13.4%</div>
         </div>
 
         <div class="card">
           <div class="stat-icon">✓</div>
           <div class="stat-label">ACCOUNT STATUS</div>
           <div class="stat-value">Active</div>
-          <div class="stat-change">Demo environment</div>
         </div>
 
       </div>
@@ -1259,7 +1216,7 @@ body.dark .status{
 
           <div class="account-head">
             <span>CHECKING</span>
-            <span>SIMULATED</span>
+            <span>PRIMARY</span>
           </div>
 
           <div class="chip"></div>
@@ -1279,7 +1236,7 @@ body.dark .status{
 
           <div class="account-head">
             <span>SAVINGS</span>
-            <span>SIMULATED</span>
+            <span>HIGH YIELD</span>
           </div>
 
           <div class="chip"></div>
@@ -1303,7 +1260,6 @@ body.dark .status{
 
         <div class="section-head">
           <h2>Quick actions</h2>
-          <small>Demo controls</small>
         </div>
 
         <div class="quick">
@@ -1347,13 +1303,13 @@ body.dark .status{
 
             <div>
               <h2>Recent transactions</h2>
-              <small>Simulated activity</small>
+              <small>Account activity</small>
             </div>
 
             <button
               class="outline-btn"
               onclick="resetDemo()">
-              Reset
+              Reset View
             </button>
 
           </div>
@@ -1386,7 +1342,6 @@ body.dark .status{
           <div class="section-head">
             <div>
               <h2>Spending overview</h2>
-              <small>Illustrative data</small>
             </div>
           </div>
 
@@ -1465,7 +1420,7 @@ body.dark .status{
   <div class="modal-box">
 
     <div class="modal-head">
-      <h2>Simulated Transfer</h2>
+      <h2>Transfer Funds</h2>
       <button class="close" onclick="closeModal('transferModal')">×</button>
     </div>
 
@@ -1493,7 +1448,7 @@ body.dark .status{
     </div>
 
     <button class="primary" onclick="makeTransfer()">
-      Complete Simulated Transfer
+      Complete Transfer
     </button>
 
   </div>
@@ -1508,7 +1463,7 @@ body.dark .status{
   <div class="modal-box">
 
     <div class="modal-head">
-      <h2>Send Simulated Money</h2>
+      <h2>Send Money</h2>
       <button class="close" onclick="closeModal('sendModal')">×</button>
     </div>
 
@@ -1523,7 +1478,7 @@ body.dark .status{
     </div>
 
     <button class="primary" onclick="sendMoney()">
-      Send Simulated Payment
+      Send Payment
     </button>
 
   </div>
@@ -1538,7 +1493,7 @@ body.dark .status{
   <div class="modal-box">
 
     <div class="modal-head">
-      <h2>Simulated Deposit</h2>
+      <h2>Deposit Funds</h2>
       <button class="close" onclick="closeModal('depositModal')">×</button>
     </div>
 
@@ -1556,7 +1511,7 @@ body.dark .status{
     </div>
 
     <button class="primary" onclick="depositMoney()">
-      Add Simulated Deposit
+      Add Deposit
     </button>
 
   </div>
@@ -1571,13 +1526,13 @@ body.dark .status{
   <div class="modal-box">
 
     <div class="modal-head">
-      <h2>Simulated Bill Payment</h2>
+      <h2>Pay Bill</h2>
       <button class="close" onclick="closeModal('billModal')">×</button>
     </div>
 
     <div class="field">
       <label>BILLER</label>
-      <input id="biller" placeholder="Example: Internet">
+      <input id="biller" placeholder="Example: Utilities">
     </div>
 
     <div class="field">
@@ -1586,7 +1541,7 @@ body.dark .status{
     </div>
 
     <button class="primary" onclick="payBill()">
-      Pay Simulated Bill
+      Pay Bill
     </button>
 
   </div>
@@ -1610,7 +1565,7 @@ body.dark .status{
       <b>Checking Account</b>
 
       <p>Account: •••• 4821</p>
-      <p>Routing: DEMO-0001</p>
+      <p>Routing: 051000017</p>
       <p>
         Balance:
         <strong id="detailChecking">$10,000,000.00</strong>
@@ -1625,17 +1580,13 @@ body.dark .status{
       <b>Savings Account</b>
 
       <p>Account: •••• 7714</p>
-      <p>Routing: DEMO-0002</p>
+      <p>Routing: 051000020</p>
       <p>
         Balance:
         <strong id="detailSavings">$15,000,000.00</strong>
       </p>
 
     </div>
-
-    <p style="font-size:11px;color:#999;margin-top:18px">
-      Account information displayed here is fictional demo data.
-    </p>
 
   </div>
 
@@ -1653,28 +1604,28 @@ body.dark .status{
       <button class="close" onclick="closeModal('profileModal')">×</button>
     </div>
 
-    <div class="big-avatar">DU</div>
+    <div class="big-avatar" id="modalAvatar">US</div>
 
-    <h2>Demo User</h2>
+    <h2 id="profileName">User</h2>
 
-    <p style="color:#888">
-      demo@example.invalid
+    <p id="profileEmail" style="color:#888">
+      user@washingtonharbor.com
     </p>
 
     <div class="field" style="text-align:left">
       <label>DISPLAY NAME</label>
-      <input value="Demo User">
+      <input id="displayNameInput" value="User">
     </div>
 
     <div class="field" style="text-align:left">
       <label>EMAIL</label>
-      <input value="demo@example.invalid">
+      <input id="emailInput" value="user@washingtonharbor.com">
     </div>
 
     <button
       class="primary"
-      onclick="alert('Profile changes saved locally in this demo.');closeModal('profileModal')">
-      Save Demo Profile
+      onclick="saveProfile()">
+      Save Profile
     </button>
 
   </div>
@@ -1698,8 +1649,8 @@ body.dark .status{
       <div class="notification-icon">✓</div>
 
       <div>
-        <b>Welcome to Washington Harbor Demo</b>
-        <p>This is a fictional banking interface.</p>
+        <b>Welcome to Washington Harbor</b>
+        <p>Your online banking access is active.</p>
       </div>
 
     </div>
@@ -1710,7 +1661,7 @@ body.dark .status{
 
       <div>
         <b>Transaction activity</b>
-        <p>Your simulated transaction list is available.</p>
+        <p>Your latest transaction summary has been updated.</p>
       </div>
 
     </div>
@@ -1720,8 +1671,8 @@ body.dark .status{
       <div class="notification-icon">🔐</div>
 
       <div>
-        <b>Security reminder</b>
-        <p>Never enter real banking credentials into demo websites.</p>
+        <b>Security update</b>
+        <p>Your account security settings are up to date.</p>
       </div>
 
     </div>
@@ -1753,20 +1704,8 @@ body.dark .status{
       class="outline-btn"
       style="width:100%;margin-bottom:12px"
       onclick="resetDemo();closeModal('settingsModal')">
-      ↻ Reset Demo Data
+      ↻ Reset Activity Data
     </button>
-
-    <div class="card">
-
-      <b>Demo Environment</b>
-
-      <p style="font-size:12px;color:#888;line-height:1.6">
-        This interface stores demonstration data only.
-        It does not connect to a bank, payment network,
-        card processor, or financial institution.
-      </p>
-
-    </div>
 
   </div>
 
@@ -1787,7 +1726,7 @@ body.dark .status{
     <div class="success">✓</div>
 
     <div class="receipt-label">
-      DEMO / SIMULATED TRANSACTION
+      TRANSACTION CONFIRMATION
     </div>
 
     <div id="receiptAmount" class="receipt-amount">
@@ -1796,7 +1735,7 @@ body.dark .status{
 
     <div class="receipt-row">
       <span>Status</span>
-      <b class="credit">Simulated Successful</b>
+      <b class="credit">Completed</b>
     </div>
 
     <div class="receipt-row">
@@ -1831,10 +1770,6 @@ body.dark .status{
 
     </div>
 
-    <p style="font-size:10px;color:#999;margin-top:18px">
-      Fictional receipt — no real funds were transferred.
-    </p>
-
   </div>
 
 </div>
@@ -1843,7 +1778,7 @@ body.dark .status{
 <script>
 
 /* =========================
-   DEMO DATA
+   ACCOUNT DATA
 ========================= */
 
 let accounts = {
@@ -1854,7 +1789,7 @@ let accounts = {
 const defaultTransactions = [
 
   {
-    name:"Salary Simulation",
+    name:"Salary Deposit",
     date:"Sep 08, 2026",
     account:"Checking",
     amount:48500
@@ -1868,14 +1803,14 @@ const defaultTransactions = [
   },
 
   {
-    name:"Savings Deposit",
+    name:"Savings Transfer",
     date:"Sep 06, 2026",
     account:"Savings",
     amount:25000
   },
 
   {
-    name:"Travel Simulation",
+    name:"Travel Expenses",
     date:"Sep 05, 2026",
     account:"Checking",
     amount:-3150
@@ -1889,7 +1824,7 @@ const defaultTransactions = [
   },
 
   {
-    name:"Restaurant Simulation",
+    name:"Dining Out",
     date:"Sep 03, 2026",
     account:"Checking",
     amount:-320
@@ -1937,7 +1872,7 @@ function login(){
   const password =
     document.getElementById("password").value;
 
-  if(username === "demo" && password === "demo"){
+  if(username && password){
 
     document
       .getElementById("loginPage")
@@ -1947,13 +1882,21 @@ function login(){
       .getElementById("app")
       .classList.remove("hidden");
 
+    const formattedName = username.charAt(0).toUpperCase() + username.slice(1);
+    const initials = formattedName.substring(0, 2).toUpperCase();
+
+    document.getElementById("userNameDisplay").textContent = formattedName;
+    document.getElementById("welcomeHeader").textContent = "Good evening, " + formattedName;
+    document.getElementById("userAvatar").textContent = initials;
+    document.getElementById("modalAvatar").textContent = initials;
+    document.getElementById("profileName").textContent = formattedName;
+    document.getElementById("displayNameInput").value = formattedName;
+
     loadDashboard();
 
   }else{
 
-    alert(
-      "Demo login:\n\nUsername: demo\nPassword: demo"
-    );
+    alert("Please enter a valid username and password.");
 
   }
 
@@ -2044,7 +1987,7 @@ function renderTransactions(list = transactions){
           <div>
             <b>${safe(tx.name)}</b><br>
             <small style="color:#999">
-              Simulated transaction
+              Completed
             </small>
           </div>
 
@@ -2058,7 +2001,7 @@ function renderTransactions(list = transactions){
 
       <td>
         <span class="status">
-          Simulated
+          Completed
         </span>
       </td>
 
@@ -2101,12 +2044,11 @@ function searchTransactions(){
 function showTransaction(tx){
 
   alert(
-    "SIMULATED TRANSACTION\n\n" +
+    "TRANSACTION DETAILS\n\n" +
     "Description: " + tx.name + "\n" +
     "Date: " + tx.date + "\n" +
     "Account: " + tx.account + "\n" +
-    "Amount: " + money(tx.amount) + "\n\n" +
-    "No real transaction occurred."
+    "Amount: " + money(tx.amount)
   );
 
 }
@@ -2139,14 +2081,14 @@ function makeTransfer(){
 
   if(!amount || amount <= 0){
 
-    alert("Enter a valid simulated amount.");
+    alert("Enter a valid amount.");
 
     return;
   }
 
   if(amount > accounts[from]){
 
-    alert("Insufficient simulated balance.");
+    alert("Insufficient balance.");
 
     return;
   }
@@ -2179,7 +2121,7 @@ function makeTransfer(){
 
 
   const id =
-    "DEMO-" +
+    "TXN-" +
     Math.random()
       .toString(36)
       .substring(2,10)
@@ -2243,7 +2185,7 @@ function sendMoney(){
 
   if(amount > accounts.checking){
 
-    alert("Insufficient simulated balance.");
+    alert("Insufficient balance.");
 
     return;
   }
@@ -2269,11 +2211,6 @@ function sendMoney(){
 
   updateBalances();
   renderTransactions();
-
-  alert(
-    "Simulated payment completed.\n\n" +
-    "No real money was transferred."
-  );
 
 }
 
@@ -2303,7 +2240,7 @@ function depositMoney(){
 
   transactions.unshift({
 
-    name:"Simulated Deposit",
+    name:"Deposit",
 
     date:new Date().toLocaleDateString(),
 
@@ -2322,11 +2259,6 @@ function depositMoney(){
 
   updateBalances();
   renderTransactions();
-
-  alert(
-    "Simulated deposit added.\n\n" +
-    "No real funds were deposited."
-  );
 
 }
 
@@ -2355,7 +2287,7 @@ function payBill(){
 
   if(amount > accounts.checking){
 
-    alert("Insufficient simulated balance.");
+    alert("Insufficient balance.");
 
     return;
   }
@@ -2382,11 +2314,6 @@ function payBill(){
   updateBalances();
   renderTransactions();
 
-  alert(
-    "Simulated bill payment completed.\n\n" +
-    "No real payment was made."
-  );
-
 }
 
 
@@ -2407,6 +2334,33 @@ function closeModal(id){
   document
     .getElementById(id)
     .classList.add("hidden");
+
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function saveProfile(){
+
+  const name = document.getElementById("displayNameInput").value.trim();
+  const email = document.getElementById("emailInput").value.trim();
+
+  if(name){
+    const initials = name.substring(0, 2).toUpperCase();
+    document.getElementById("userNameDisplay").textContent = name;
+    document.getElementById("welcomeHeader").textContent = "Good evening, " + name;
+    document.getElementById("profileName").textContent = name;
+    document.getElementById("userAvatar").textContent = initials;
+    document.getElementById("modalAvatar").textContent = initials;
+  }
+
+  if(email){
+    document.getElementById("profileEmail").textContent = email;
+  }
+
+  closeModal("profileModal");
 
 }
 
@@ -2468,7 +2422,7 @@ function resetDemo(){
 
   const yes =
     confirm(
-      "Reset all simulated balances and transactions?"
+      "Reset all balances and transactions?"
     );
 
   if(!yes) return;
